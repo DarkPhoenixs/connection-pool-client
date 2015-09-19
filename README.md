@@ -16,7 +16,7 @@ API documentation is available at [this]()
 
 ## KafkaConnectionPool
 
-Use the [KafkaConnectionPool](https://github.com/darkphoenixs/connection-pool-client/blob/master/src/main/java/org/darkphoenixs/pool/kafka/KafkaConnectionPool.java) must instantiate `PoolConfig` and `Properties`
+Use the [KafkaConnectionPool](https://github.com/darkphoenixs/connection-pool-client/blob/master/src/main/java/org/darkphoenixs/pool/kafka/KafkaConnectionPool.java) need instantiate `PoolConfig` and `Properties`
 
 For example, the following 
 ```java
