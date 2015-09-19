@@ -4,9 +4,9 @@ Connection Pool Client
   
   基于[Apache Commons Pool ™](http://commons.apache.org/proper/commons-pool/)框架
   * [Documentation](#documentation)
-  * [KafkaConnectionPool](#kafkaConnectionPool)
-  * [HbaseConnectionPool](#hbaseConnectionPool)
-  * [RedisConnectionPool](#redisConnectionPool)
+  * [KafkaConnectionPool](#kafkaconnectionpool)
+  * [HbaseConnectionPool](#hbaseconnectionpool)
+  * [RedisConnectionPool](#redisconnectionpool)
 
 
 ## Documentation
