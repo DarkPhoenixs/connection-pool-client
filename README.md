@@ -32,7 +32,7 @@ For example, the following
 		props.setProperty("compression.codec", "snappy");
 		props.setProperty("batch.num.messages", "200");
 
-		/* kafkaConnectionPool */
+		/* connection pool */
 		KafkaConnectionPool pool = new KafkaConnectionPool(config, props);
 
 		/* pool getConnection */
