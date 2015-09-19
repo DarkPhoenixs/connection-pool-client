@@ -79,9 +79,6 @@ For example, the following
 
 		...
 
-		/* table put */
-		table.put(...);
-
 		/* table close */
 		table.close();
 		
@@ -89,3 +86,25 @@ For example, the following
 		pool.returnConnection(conn);
 ```
 ## RedisConnectionPool
+Use the [RedisConnectionPool](https://github.com/darkphoenixs/connection-pool-client/blob/master/src/main/java/org/darkphoenixs/pool/redis/RedisConnectionPool.java) need instantiate `PoolConfig` 
+
+For example, the following 
+```java
+		/* poolConfig */
+		PoolConfig config = new PoolConfig();
+		config.setMaxTotal(20);
+		config.setMaxIdle(5);
+		config.setMaxWaitMillis(1000);
+		config.setTestOnBorrow(true);
+		
+		/* connection pool */
+		RedisConnectionPool pool = new RedisConnectionPool(config, "localhost", 6379);
+		
+		/* pool getConnection */
+		Jedis jedis = pool.getConnection();
+			
+		...
+		
+		/* pool getConnection */
+		pool.returnConnection(jedis);
+```
