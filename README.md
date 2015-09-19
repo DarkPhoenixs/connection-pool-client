@@ -41,11 +41,10 @@ For example, the following
 		/* pool getConnection */
 		Producer<byte[], byte[]> producer = pool.getConnection();
 
-		/* message */
-		KeyedMessage<byte[], byte[]> message = new KeyedMessage<>(...);
+		...
 
 		/* producer send */
-		producer.send(message);
+		producer.send(...);
 
 		/* pool returnConnection */
 		pool.returnConnection(producer);
