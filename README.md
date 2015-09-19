@@ -35,19 +35,15 @@ For example, the following
 		/* kafkaConnectionPool */
 		KafkaConnectionPool pool = new KafkaConnectionPool(config, props);
 
-		for (int i = 0; i < 1000; i++) {
+		/* pool getConnection */
+		Producer<byte[], byte[]> producer = pool.getConnection();
 
-			/* pool getConnection */
-			Producer<byte[], byte[]> producer = pool.getConnection();
+		/* message */
+		KeyedMessage<byte[], byte[]> message = new KeyedMessage<>(...);
 
-			KeyedMessage<byte[], byte[]> message = new KeyedMessage<>(
-					"QUEUE.TEST", String.valueOf(i).getBytes(), String.valueOf(
-							"Test" + i).getBytes());
+		/* producer send */
+		producer.send(message);
 
-			/* producer send */
-			producer.send(message);
-
-			/* pool returnConnection */
-			pool.returnConnection(producer);
-		}
+		/* pool returnConnection */
+		pool.returnConnection(producer);
 ```
