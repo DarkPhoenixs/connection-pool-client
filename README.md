@@ -4,5 +4,5 @@ Connection Pool Client
   
   基于[Apache Commons Pool ™](http://commons.apache.org/proper/commons-pool/)框架
   * [KafkaConnectionPool](https://github.com/darkphoenixs/connection-pool-client/blob/master/src/main/java/org/darkphoenixs/pool/kafka/KafkaConnectionPool.java)
-  * [HbaseConnectionPool](#documentation)
-  * [RedisConnectionPool](#configuration)
+  * [HbaseConnectionPool](https://github.com/darkphoenixs/connection-pool-client/blob/master/src/main/java/org/darkphoenixs/pool/hbase/HbaseConnectionPool.java)
+  * [RedisConnectionPool](https://github.com/darkphoenixs/connection-pool-client/blob/master/src/main/java/org/darkphoenixs/pool/redis/RedisConnectionPool.java)
