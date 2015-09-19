@@ -14,3 +14,12 @@ API documentation is available at [this]()
 ## KafkaConnectionPool
 
 Use the [KafkaConnectionPool](https://github.com/darkphoenixs/connection-pool-client/blob/master/src/main/java/org/darkphoenixs/pool/kafka/KafkaConnectionPool.java) must instantiate `PoolConfig` and `Properties`
+
+`PoolConfig` For example, the following 
+```java
+		PoolConfig config = new PoolConfig();
+		config.setMaxTotal(20);
+		config.setMaxIdle(5);
+		config.setMaxWaitMillis(1000);
+		config.setTestOnBorrow(true);
+```
