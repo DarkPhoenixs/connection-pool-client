@@ -50,5 +50,42 @@ For example, the following
 		pool.returnConnection(producer);
 ```
 ## HbaseConnectionPool
+Use the [HbaseConnectionPool](https://github.com/darkphoenixs/connection-pool-client/blob/master/src/main/java/org/darkphoenixs/pool/hbase/HbaseConnectionPool.java) need instantiate `PoolConfig` and `Configuration`
 
+For example, the following 
+```java
+		/* poolConfig */
+		PoolConfig config = new PoolConfig();
+		config.setMaxTotal(20);
+		config.setMaxIdle(5);
+		config.setMaxWaitMillis(1000);
+		config.setTestOnBorrow(true);
+		
+		/* configuration */
+		Configuration hbaseConfig = new Configuration();
+		hbaseConfig.set("hbase.zookeeper.quorum", "localhost");
+		hbaseConfig.set("hbase.zookeeper.property.clientPort", "2181");
+		hbaseConfig.set("hbase.master", "localhost:60000");
+		hbaseConfig.set("hbase.rootdir", "hdfs://localhost:9000/hbase");
+		
+		/* connection pool */
+		HbaseConnectionPool pool = new HbaseConnectionPool(config, hbaseConfig);
+
+		/* pool getConnection */
+		Connection conn = pool.getConnection();
+
+		/* conn getTable */
+		Table table = conn.getTable(TableName.valueOf("TableTest"));
+
+		...
+
+		/* table put */
+		table.put(...);
+
+		/* table close */
+		table.close();
+		
+		/* pool returnConnection */
+		pool.returnConnection(conn);
+```
 ## RedisConnectionPool
