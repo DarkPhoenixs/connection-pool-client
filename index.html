@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Connection Pool Client by DarkPhoenixs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Connection Pool Client</h1>
+      <h2 class="project-tagline">Kafka &amp; Hbase &amp; Redis 连接池客户端</h2>
+      <a href="https://github.com/DarkPhoenixs/connection-pool-client" class="btn">View on GitHub</a>
+      <a href="https://github.com/DarkPhoenixs/connection-pool-client/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/DarkPhoenixs/connection-pool-client/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="connection-pool-client" class="anchor" href="#connection-pool-client" aria-hidden="true"><span class="octicon octicon-link"></span></a>Connection Pool Client</h1>
+
+<p>基于 <a href="http://commons.apache.org/proper/commons-pool/">Apache Commons Pool ™</a> 框架</p>
+
+<p>连接池客户端 ( <a href="http://kafka.apache.org/">Apache Kafka</a> &amp; <a href="http://hbase.apache.org/">Apache Hbase</a> &amp; <a href="http://redis.io/">Redis</a> )</p>
+
+<ul>
+<li><a href="#documentation">Documentation</a></li>
+<li><a href="#kafkaconnectionpool">KafkaConnectionPool</a></li>
+<li><a href="#hbaseconnectionpool">HbaseConnectionPool</a></li>
+<li><a href="#redisconnectionpool">RedisConnectionPool</a></li>
+</ul>
+
+<h2>
+<a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Documentation</h2>
+
+<p>API documentation is available at <a href="http://htmlpreview.github.io/?https://raw.githubusercontent.com/darkphoenixs/connection-pool-client/v1.0/doc/index.html">this</a></p>
+
+<h2>
+<a id="kafkaconnectionpool" class="anchor" href="#kafkaconnectionpool" aria-hidden="true"><span class="octicon octicon-link"></span></a>KafkaConnectionPool</h2>
+
+<p>Use the <a href="https://github.com/darkphoenixs/connection-pool-client/blob/master/src/main/java/org/darkphoenixs/pool/kafka/KafkaConnectionPool.java">KafkaConnectionPool</a> need instantiate <code>PoolConfig</code> and <code>Properties</code></p>
+
+<p>For example, the following </p>
+
+<div class="highlight highlight-source-java"><pre>        <span class="pl-c">/* poolConfig */</span>
+        <span class="pl-smi">PoolConfig</span> config <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">PoolConfig</span>();
+        config<span class="pl-k">.</span>setMaxTotal(<span class="pl-c1">20</span>);
+        config<span class="pl-k">.</span>setMaxIdle(<span class="pl-c1">5</span>);
+        config<span class="pl-k">.</span>setMaxWaitMillis(<span class="pl-c1">1000</span>);
+        config<span class="pl-k">.</span>setTestOnBorrow(<span class="pl-c1">true</span>);
+
+        <span class="pl-c">/* properties */</span>
+        <span class="pl-smi">Properties</span> props <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Properties</span>();
+        props<span class="pl-k">.</span>setProperty(<span class="pl-s"><span class="pl-pds">"</span>metadata.broker.list<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>localhost:9092<span class="pl-pds">"</span></span>);
+        props<span class="pl-k">.</span>setProperty(<span class="pl-s"><span class="pl-pds">"</span>producer.type<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>async<span class="pl-pds">"</span></span>);
+        props<span class="pl-k">.</span>setProperty(<span class="pl-s"><span class="pl-pds">"</span>request.required.acks<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>0<span class="pl-pds">"</span></span>);
+        props<span class="pl-k">.</span>setProperty(<span class="pl-s"><span class="pl-pds">"</span>compression.codec<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>snappy<span class="pl-pds">"</span></span>);
+        props<span class="pl-k">.</span>setProperty(<span class="pl-s"><span class="pl-pds">"</span>batch.num.messages<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>200<span class="pl-pds">"</span></span>);
+
+        <span class="pl-c">/* connection pool */</span>
+        <span class="pl-smi">KafkaConnectionPool</span> pool <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">KafkaConnectionPool</span>(config, props);
+
+        <span class="pl-c">/* pool getConnection */</span>
+        <span class="pl-k">Producer&lt;byte[], byte[]&gt;</span> producer <span class="pl-k">=</span> pool<span class="pl-k">.</span>getConnection();
+
+        <span class="pl-c1">...</span>
+
+        <span class="pl-c">/* producer send */</span>
+        producer<span class="pl-k">.</span>send(<span class="pl-c1">...</span>);
+
+        <span class="pl-c">/* pool returnConnection */</span>
+        pool<span class="pl-k">.</span>returnConnection(producer);</pre></div>
+
+<h2>
+<a id="hbaseconnectionpool" class="anchor" href="#hbaseconnectionpool" aria-hidden="true"><span class="octicon octicon-link"></span></a>HbaseConnectionPool</h2>
+
+<p>Use the <a href="https://github.com/darkphoenixs/connection-pool-client/blob/master/src/main/java/org/darkphoenixs/pool/hbase/HbaseConnectionPool.java">HbaseConnectionPool</a> need instantiate <code>PoolConfig</code> and <code>Configuration</code></p>
+
+<p>For example, the following </p>
+
+<div class="highlight highlight-source-java"><pre>        <span class="pl-c">/* poolConfig */</span>
+        <span class="pl-smi">PoolConfig</span> config <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">PoolConfig</span>();
+        config<span class="pl-k">.</span>setMaxTotal(<span class="pl-c1">20</span>);
+        config<span class="pl-k">.</span>setMaxIdle(<span class="pl-c1">5</span>);
+        config<span class="pl-k">.</span>setMaxWaitMillis(<span class="pl-c1">1000</span>);
+        config<span class="pl-k">.</span>setTestOnBorrow(<span class="pl-c1">true</span>);
+
+        <span class="pl-c">/* configuration */</span>
+        <span class="pl-smi">Configuration</span> hbaseConfig <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">Configuration</span>();
+        hbaseConfig<span class="pl-k">.</span>set(<span class="pl-s"><span class="pl-pds">"</span>hbase.zookeeper.quorum<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>localhost<span class="pl-pds">"</span></span>);
+        hbaseConfig<span class="pl-k">.</span>set(<span class="pl-s"><span class="pl-pds">"</span>hbase.zookeeper.property.clientPort<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>2181<span class="pl-pds">"</span></span>);
+        hbaseConfig<span class="pl-k">.</span>set(<span class="pl-s"><span class="pl-pds">"</span>hbase.master<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>localhost:60000<span class="pl-pds">"</span></span>);
+        hbaseConfig<span class="pl-k">.</span>set(<span class="pl-s"><span class="pl-pds">"</span>hbase.rootdir<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>hdfs://localhost:9000/hbase<span class="pl-pds">"</span></span>);
+
+        <span class="pl-c">/* connection pool */</span>
+        <span class="pl-smi">HbaseConnectionPool</span> pool <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">HbaseConnectionPool</span>(config, hbaseConfig);
+
+        <span class="pl-c">/* pool getConnection */</span>
+        <span class="pl-smi">Connection</span> conn <span class="pl-k">=</span> pool<span class="pl-k">.</span>getConnection();
+
+        <span class="pl-c">/* conn getTable */</span>
+        <span class="pl-smi">Table</span> table <span class="pl-k">=</span> conn<span class="pl-k">.</span>getTable(<span class="pl-smi">TableName</span><span class="pl-k">.</span>valueOf(<span class="pl-s"><span class="pl-pds">"</span>TableTest<span class="pl-pds">"</span></span>));
+
+        <span class="pl-c1">...</span>
+
+        <span class="pl-c">/* table close */</span>
+        table<span class="pl-k">.</span>close();
+
+        <span class="pl-c">/* pool returnConnection */</span>
+        pool<span class="pl-k">.</span>returnConnection(conn);</pre></div>
+
+<h2>
+<a id="redisconnectionpool" class="anchor" href="#redisconnectionpool" aria-hidden="true"><span class="octicon octicon-link"></span></a>RedisConnectionPool</h2>
+
+<p>Use the <a href="https://github.com/darkphoenixs/connection-pool-client/blob/master/src/main/java/org/darkphoenixs/pool/redis/RedisConnectionPool.java">RedisConnectionPool</a> need instantiate <code>PoolConfig</code> </p>
+
+<p>For example, the following </p>
+
+<div class="highlight highlight-source-java"><pre>        <span class="pl-c">/* poolConfig */</span>
+        <span class="pl-smi">PoolConfig</span> config <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">PoolConfig</span>();
+        config<span class="pl-k">.</span>setMaxTotal(<span class="pl-c1">20</span>);
+        config<span class="pl-k">.</span>setMaxIdle(<span class="pl-c1">5</span>);
+        config<span class="pl-k">.</span>setMaxWaitMillis(<span class="pl-c1">1000</span>);
+        config<span class="pl-k">.</span>setTestOnBorrow(<span class="pl-c1">true</span>);
+
+        <span class="pl-c">/* connection pool */</span>
+        <span class="pl-smi">RedisConnectionPool</span> pool <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">RedisConnectionPool</span>(config, <span class="pl-s"><span class="pl-pds">"</span>localhost<span class="pl-pds">"</span></span>, <span class="pl-c1">6379</span>);
+
+        <span class="pl-c">/* pool getConnection */</span>
+        <span class="pl-smi">Jedis</span> jedis <span class="pl-k">=</span> pool<span class="pl-k">.</span>getConnection();
+
+        <span class="pl-c1">...</span>
+
+        <span class="pl-c">/* pool getConnection */</span>
+        pool<span class="pl-k">.</span>returnConnection(jedis);</pre></div>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/DarkPhoenixs/connection-pool-client">Connection Pool Client</a> is maintained by <a href="https://github.com/DarkPhoenixs">DarkPhoenixs</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
