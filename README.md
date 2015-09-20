@@ -12,7 +12,7 @@ Connection Pool Client
 
 ## Documentation
 
-API documentation is available at [this]()
+API documentation is available at [this](http://htmlpreview.github.io/?https://raw.githubusercontent.com/darkphoenixs/connection-pool-client/v1.1/doc/index.html)
 
 ## KafkaConnectionPool
 
