@@ -100,7 +100,7 @@ public class RedisShardedConnPool extends PoolBase<ShardedJedis> implements
 	 * @see ConnectionFactory
 	 * @version 1.0
 	 */
-	private static class RedisShardedConnFactory implements
+	protected static class RedisShardedConnFactory implements
 			ConnectionFactory<ShardedJedis> {
 
 		/** serialVersionUID */
