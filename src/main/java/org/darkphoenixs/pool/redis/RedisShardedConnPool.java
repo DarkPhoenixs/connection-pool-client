@@ -87,7 +87,7 @@ public class RedisShardedConnPool extends PoolBase<ShardedJedis> implements
 	 */
 	public RedisShardedConnPool(final PoolConfig poolConfig,
 			List<JedisShardInfo> shards, Hashing algo, Pattern keyTagPattern) {
-		super(poolConfig, new RedisShardedConnFactory(shards, algo,
+		initPool(poolConfig, new RedisShardedConnFactory(shards, algo,
 				keyTagPattern));
 	}
 
@@ -100,7 +100,7 @@ public class RedisShardedConnPool extends PoolBase<ShardedJedis> implements
 	 * @see ConnectionFactory
 	 * @version 1.0
 	 */
-	protected static class RedisShardedConnFactory implements
+	protected class RedisShardedConnFactory implements
 			ConnectionFactory<ShardedJedis> {
 
 		/** serialVersionUID */
