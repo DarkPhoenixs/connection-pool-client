@@ -21,7 +21,7 @@ import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
  * @see Serializable
  * @version 1.0
  */
-public class PoolConfig extends GenericObjectPoolConfig implements Serializable{
+public class PoolConfig extends GenericObjectPoolConfig implements Serializable {
 
 	/** serialVersionUID */
 	private static final long serialVersionUID = -2414567557372345057L;
