@@ -58,7 +58,7 @@ public abstract class PoolBase<T> implements Closeable, Serializable {
 	 * @param poolConfig 池配置
 	 * @param factory 池对象工厂
 	 */
-	public void initPool(final GenericObjectPoolConfig poolConfig,
+	protected void initPool(final GenericObjectPoolConfig poolConfig,
 			PooledObjectFactory<T> factory) {
 		if (this.internalPool != null)
 			this.destroy();
@@ -70,7 +70,7 @@ public abstract class PoolBase<T> implements Closeable, Serializable {
 	 * <p>Title: destroy</p>
 	 * <p>Description: 销毁对象池</p>
 	 */
-	public void destroy() {
+	protected void destroy() {
 		this.close();
 	}
 	  
@@ -80,7 +80,7 @@ public abstract class PoolBase<T> implements Closeable, Serializable {
 	 *
 	 * @return 池对象
 	 */
-	public T getResource() {
+	protected T getResource() {
 		try {
 			return internalPool.borrowObject();
 		} catch (Exception e) {
@@ -95,7 +95,7 @@ public abstract class PoolBase<T> implements Closeable, Serializable {
 	 *
 	 * @param resource 池对象
 	 */
-	public void returnResource(final T resource) {
+	protected void returnResource(final T resource) {
 		if (null != resource)
 		try {
 			internalPool.returnObject(resource);
@@ -111,7 +111,7 @@ public abstract class PoolBase<T> implements Closeable, Serializable {
 	 *
 	 * @param resource 池对象
 	 */
-	public void invalidateResource(final T resource) {
+	protected void invalidateResource(final T resource) {
 		if (null != resource)
 		try {
 			internalPool.invalidateObject(resource);
@@ -227,7 +227,7 @@ public abstract class PoolBase<T> implements Closeable, Serializable {
 	 *
 	 * @param count 池对象数量
 	 */
-	public void addObjects(final int count) {
+	protected void addObjects(final int count) {
 		try {
 			for (int i = 0; i < count; i++) {
 				this.internalPool.addObject();
