@@ -4,7 +4,7 @@
 
 	<groupId>org.darkphoenixs</groupId>
 	<artifactId>connectionpool-client</artifactId>
-	<version>1.0</version>
+	<version>1.1</version>
 	<packaging>jar</packaging>
 
 	<name>ConnectionPoolClient</name>
@@ -21,6 +21,7 @@
 		<kafka.version>0.8.2.1</kafka.version>
 		<hbase.version>1.1.1</hbase.version>
 		<redis.version>2.7.3</redis.version>
+		<oracle.version>11.2.0.1.0</oracle.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -30,6 +31,7 @@
 			<groupId>org.apache.kafka</groupId>
 			<artifactId>kafka_2.10</artifactId>
 			<version>${kafka.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<!-- Kafka -->
 
@@ -38,6 +40,7 @@
 			<groupId>org.apache.hbase</groupId>
 			<artifactId>hbase-client</artifactId>
 			<version>${hbase.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<!-- Hbase -->
 
@@ -46,8 +49,24 @@
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
 			<version>${redis.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<!-- Redis -->
+
+		<!-- Oracle -->
+		<dependency>
+			<groupId>oracle</groupId>
+			<artifactId>oracle-ojdbc6</artifactId>
+			<version>${oracle.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>oracle</groupId>
+			<artifactId>oracle-orai18n</artifactId>
+			<version>${oracle.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- Oracle -->
 
 		<!-- Other -->
 		<dependency>
