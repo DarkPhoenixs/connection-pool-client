@@ -139,17 +139,22 @@ class RedisConnectionFactory implements ConnectionFactory<Jedis> {
 		Jedis jedis = new Jedis(hostAndPort.getHost(), hostAndPort.getPort(),
 				this.connectionTimeout, this.soTimeout);
 
-		jedis.connect();
-		if (null != this.password) {
-			jedis.auth(this.password);
+		try {
+			jedis.connect();
+			if (null != this.password) {
+				jedis.auth(this.password);
+			}
+			if (this.database != 0) {
+				jedis.select(this.database);
+			}
+			if (this.clientName != null) {
+				jedis.clientSetname(this.clientName);
+			}
+		} catch (Exception je) {
+			jedis.close();
+			throw je;
 		}
-		if (this.database != 0) {
-			jedis.select(this.database);
-		}
-		if (this.clientName != null) {
-			jedis.clientSetname(this.clientName);
-		}
-
+		
 		return jedis;
 	}
 

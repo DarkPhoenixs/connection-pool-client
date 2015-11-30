@@ -314,8 +314,8 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 				log.fine("Found Redis master at " + master);
 				break;
 			} catch (Exception e) {
-				log.warning("Cannot connect to sentinel running @ " + hap
-						+ ". Trying next one.");
+				log.warning("Cannot get master address from sentinel running @ " + hap 
+						+ ". Reason: " + e + ". Trying next one.");
 			} finally {
 				if (jedis != null) {
 					jedis.close();
@@ -382,7 +382,7 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 				// connected to the correct master
 				return jedis;
 			} else {
-				returnConnection(jedis);
+				invalidateResource(jedis);
 			}
 		}
 	}
