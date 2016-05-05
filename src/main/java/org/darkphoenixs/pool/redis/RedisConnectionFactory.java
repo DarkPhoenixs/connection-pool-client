@@ -40,7 +40,7 @@ class RedisConnectionFactory implements ConnectionFactory<Jedis> {
 	private static final long serialVersionUID = 5692815845396189037L;
 
 	/** hostAndPort */
-	private final AtomicReference<HostAndPort> hostAndPort = new AtomicReference<>();
+	private final AtomicReference<HostAndPort> hostAndPort = new AtomicReference<HostAndPort>();
 	/** connectionTimeout */
 	private final int connectionTimeout;
 	/** soTimeout */
@@ -89,7 +89,7 @@ class RedisConnectionFactory implements ConnectionFactory<Jedis> {
 
 		Jedis jedis = this.createConnection();
 		
-		return new DefaultPooledObject<>(jedis);
+		return new DefaultPooledObject<Jedis>(jedis);
 	}
 
 	@Override

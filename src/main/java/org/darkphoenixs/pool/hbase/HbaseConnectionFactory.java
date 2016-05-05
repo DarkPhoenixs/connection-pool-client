@@ -72,7 +72,7 @@ class HbaseConnectionFactory implements ConnectionFactory<Connection> {
 		
 		Connection connection = this.createConnection();
 		
-		return new DefaultPooledObject<>(connection);	
+		return new DefaultPooledObject<Connection>(connection);	
 	}
 
 	@Override

@@ -32,7 +32,7 @@ public class KafkaTest {
 
 			Producer<byte[], byte[]> producer = pool.getConnection();
 
-			KeyedMessage<byte[], byte[]> message = new KeyedMessage<>(
+			KeyedMessage<byte[], byte[]> message = new KeyedMessage<byte[], byte[]>(
 					"QUEUE.TEST", String.valueOf(i).getBytes(), String.valueOf(
 							"Test" + i).getBytes());
 
