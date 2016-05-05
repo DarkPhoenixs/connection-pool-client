@@ -9,7 +9,7 @@
 
 	<name>ConnectionPoolClient</name>
 	<url>http://darkphoenixs.org/connection-pool-client/</url>
-	<description>A multi-purpose connection pool client (Kafka &amp; Hbase &amp; Redis)</description>
+	<description>A simple multi-purpose connection pool client (Kafka &amp; Hbase &amp; Redis)</description>
 	<inceptionYear>2015</inceptionYear>
 
 	<organization>
@@ -265,6 +265,13 @@
 			<scope>provided</scope>
 		</dependency>
 		<!-- MySQL -->
+
+		<dependency>
+			<groupId>oracle</groupId>
+			<artifactId>oracle-ojdbc6</artifactId>
+			<version>11.2.0.1.0</version>
+			<scope>provided</scope>
+		</dependency>
 
 		<!-- Other -->
 		<dependency>
