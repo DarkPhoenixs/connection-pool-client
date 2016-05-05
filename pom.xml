@@ -266,13 +266,6 @@
 		</dependency>
 		<!-- MySQL -->
 
-		<dependency>
-			<groupId>oracle</groupId>
-			<artifactId>oracle-ojdbc6</artifactId>
-			<version>11.2.0.1.0</version>
-			<scope>provided</scope>
-		</dependency>
-
 		<!-- Other -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
