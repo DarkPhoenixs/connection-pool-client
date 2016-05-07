@@ -7,7 +7,7 @@
 	<version>1.2.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>ConnectionPoolClient</name>
+	<name>Connection Pool Client</name>
 	<url>http://darkphoenixs.org/connection-pool-client/</url>
 	<description>A simple multi-purpose connection pool client (Kafka &amp; Hbase &amp; Redis)</description>
 	<inceptionYear>2015</inceptionYear>
