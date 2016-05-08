@@ -20,6 +20,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.apache.commons.pool2.PooledObject;
 import org.apache.commons.pool2.impl.DefaultPooledObject;
+import org.darkphoenixs.pool.ConnectionException;
 import org.darkphoenixs.pool.ConnectionFactory;
 
 import redis.clients.jedis.BinaryJedis;
@@ -91,13 +92,17 @@ class RedisConnectionFactory implements ConnectionFactory<Jedis> {
 	 */
 	public RedisConnectionFactory(final Properties properties) {
 		
-		this.hostAndPort.set(new HostAndPort(properties.getProperty("address").split(":")[0], 
-				Integer.parseInt(properties.getProperty("address").split(":")[1])));
-		this.connectionTimeout = Integer.parseInt(properties.getProperty("connectionTimeout", "0"));
-		this.soTimeout = Integer.parseInt(properties.getProperty("soTimeout", "0"));
-		this.database = Integer.parseInt(properties.getProperty("database", "0"));
-		this.password = properties.getProperty("password");
-		this.clientName = properties.getProperty("clientName");
+		String address = properties.getProperty(RedisConfig.ADDRESS_PROPERTY);
+		if (address == null)
+			throw new ConnectionException("[" + RedisConfig.ADDRESS_PROPERTY + "] is required !");
+
+		this.hostAndPort.set(new HostAndPort(address.split(":")[0], Integer.parseInt(address.split(":")[1])));
+		
+		this.connectionTimeout = Integer.parseInt(properties.getProperty(RedisConfig.CONN_TIMEOUT_PROPERTY, String.valueOf(RedisConfig.DEFAULT_TIMEOUT)));
+		this.soTimeout = Integer.parseInt(properties.getProperty(RedisConfig.SO_TIMEOUT_PROPERTY, String.valueOf(RedisConfig.DEFAULT_TIMEOUT)));
+		this.database = Integer.parseInt(properties.getProperty(RedisConfig.DATABASE_PROPERTY, String.valueOf(RedisConfig.DEFAULT_DATABASE)));
+		this.password = properties.getProperty(RedisConfig.PASSWORD_PROPERTY);
+		this.clientName = properties.getProperty(RedisConfig.CLIENTNAME_PROPERTY);
 	}
 	
 	@Override

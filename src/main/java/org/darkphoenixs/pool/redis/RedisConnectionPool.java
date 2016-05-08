@@ -45,7 +45,7 @@ public class RedisConnectionPool extends PoolBase<Jedis> implements ConnectionPo
 	 *
 	 */
 	public RedisConnectionPool() {
-		this("localhost", 6379);
+		this(RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT);
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class RedisConnectionPool extends PoolBase<Jedis> implements ConnectionPo
 	 * @param host 地址
 	 */
 	public RedisConnectionPool(final PoolConfig poolConfig, final String host) {
-		this(poolConfig, host, 6379, 2000, null, 0, null);
+		this(poolConfig, host, RedisConfig.DEFAULT_PORT, RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_PASSWORD, RedisConfig.DEFAULT_DATABASE, RedisConfig.DEFAULT_CLIENTNAME);
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class RedisConnectionPool extends PoolBase<Jedis> implements ConnectionPo
 	 * @param port 端口
 	 */
 	public RedisConnectionPool(final String host, final int port) {
-		this(new PoolConfig(), host, port, 2000, null, 0, null);
+		this(new PoolConfig(), host, port, RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_PASSWORD, RedisConfig.DEFAULT_DATABASE, RedisConfig.DEFAULT_CLIENTNAME);
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class RedisConnectionPool extends PoolBase<Jedis> implements ConnectionPo
 	 */
 	public RedisConnectionPool(final PoolConfig poolConfig, final String host, final int port,
 			final int timeout, final String password) {
-		this(poolConfig, host, port, timeout, password, 0, null);
+		this(poolConfig, host, port, timeout, password, RedisConfig.DEFAULT_DATABASE, RedisConfig.DEFAULT_CLIENTNAME);
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class RedisConnectionPool extends PoolBase<Jedis> implements ConnectionPo
 	 * @param port 端口
 	 */
 	public RedisConnectionPool(final PoolConfig poolConfig, final String host, final int port) {
-		this(poolConfig, host, port, 2000, null, 0, null);
+		this(poolConfig, host, port, RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_PASSWORD, RedisConfig.DEFAULT_DATABASE, RedisConfig.DEFAULT_CLIENTNAME);
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class RedisConnectionPool extends PoolBase<Jedis> implements ConnectionPo
 	 */
 	public RedisConnectionPool(final PoolConfig poolConfig, final String host, final int port,
 			final int timeout) {
-		this(poolConfig, host, port, timeout, null, 0, null);
+		this(poolConfig, host, port, timeout, RedisConfig.DEFAULT_PASSWORD, RedisConfig.DEFAULT_DATABASE, RedisConfig.DEFAULT_CLIENTNAME);
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class RedisConnectionPool extends PoolBase<Jedis> implements ConnectionPo
 	 */
 	public RedisConnectionPool(final PoolConfig poolConfig, final String host, final int port,
 			final int timeout, final String password, final int database) {
-		this(poolConfig, host, port, timeout, password, database, null);
+		this(poolConfig, host, port, timeout, password, database, RedisConfig.DEFAULT_CLIENTNAME);
 	}
 
 	/**

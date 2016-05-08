@@ -54,19 +54,19 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 	protected PoolConfig poolConfig;
 
 	/** connectionTimeout */
-	protected int connectionTimeout = 2000;
+	protected int connectionTimeout = RedisConfig.DEFAULT_TIMEOUT;
 
 	/** soTimeout */
-	protected int soTimeout = 2000;
+	protected int soTimeout = RedisConfig.DEFAULT_TIMEOUT;
 
 	/** password */
-	protected String password;
+	protected String password = RedisConfig.DEFAULT_PASSWORD;
 
 	/** database */
-	protected int database = 0;
+	protected int database = RedisConfig.DEFAULT_DATABASE;
 
 	/** clientName */
-	protected String clientName;
+	protected String clientName = RedisConfig.DEFAULT_CLIENTNAME;
 
 	/** masterListeners */
 	protected Set<RedisMasterListener> masterListeners = new HashSet<RedisMasterListener>();
@@ -90,7 +90,7 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 	 */
 	public RedisSentinelConnPool(String masterName, Set<String> sentinels,
 			final PoolConfig poolConfig) {
-		this(masterName, sentinels, poolConfig, 2000, null, 0);
+		this(masterName, sentinels, poolConfig, RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_PASSWORD, RedisConfig.DEFAULT_DATABASE);
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 	 * @param sentinels 哨兵列表
 	 */
 	public RedisSentinelConnPool(String masterName, Set<String> sentinels) {
-		this(masterName, sentinels, new PoolConfig(), 2000, null, 0);
+		this(masterName, sentinels, new PoolConfig(), RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_PASSWORD, RedisConfig.DEFAULT_DATABASE);
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 	 */
 	public RedisSentinelConnPool(String masterName, Set<String> sentinels,
 			String password) {
-		this(masterName, sentinels, new PoolConfig(), 2000, password);
+		this(masterName, sentinels, new PoolConfig(), RedisConfig.DEFAULT_TIMEOUT, password);
 	}
 
 	/**
@@ -129,7 +129,7 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 	 */
 	public RedisSentinelConnPool(String masterName, Set<String> sentinels,
 			final PoolConfig poolConfig, int timeout, final String password) {
-		this(masterName, sentinels, poolConfig, timeout, password, 0);
+		this(masterName, sentinels, poolConfig, timeout, password, RedisConfig.DEFAULT_DATABASE);
 	}
 
 	/**
@@ -143,7 +143,7 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 	 */
 	public RedisSentinelConnPool(String masterName, Set<String> sentinels,
 			final PoolConfig poolConfig, final int timeout) {
-		this(masterName, sentinels, poolConfig, timeout, null, 0);
+		this(masterName, sentinels, poolConfig, timeout, RedisConfig.DEFAULT_PASSWORD, RedisConfig.DEFAULT_DATABASE);
 	}
 
 	/**
@@ -157,7 +157,7 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 	 */
 	public RedisSentinelConnPool(String masterName, Set<String> sentinels,
 			final PoolConfig poolConfig, final String password) {
-		this(masterName, sentinels, poolConfig, 2000, password);
+		this(masterName, sentinels, poolConfig, RedisConfig.DEFAULT_TIMEOUT, password);
 	}
 
 	/**
@@ -213,7 +213,7 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 			final PoolConfig poolConfig, final int timeout,
 			final int soTimeout, final String password, final int database) {
 		this(masterName, sentinels, poolConfig, timeout, soTimeout, password,
-				database, null);
+				database, RedisConfig.DEFAULT_CLIENTNAME);
 	}
 
 	/**
@@ -252,15 +252,27 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 	public RedisSentinelConnPool(final PoolConfig poolConfig, final Properties properties) {
 		
 		this.poolConfig = poolConfig;
-		this.connectionTimeout = Integer.parseInt(properties.getProperty("connectionTimeout", "2000"));
-		this.soTimeout = Integer.parseInt(properties.getProperty("soTimeout", "2000"));
-		this.database = Integer.parseInt(properties.getProperty("database", "0"));
-		this.password = properties.getProperty("password");
-		this.clientName = properties.getProperty("clientName");
+		
+		if (null != properties.getProperty(RedisConfig.CONN_TIMEOUT_PROPERTY))
+			this.connectionTimeout = Integer.parseInt(properties.getProperty(RedisConfig.CONN_TIMEOUT_PROPERTY));
+		if (null != properties.getProperty(RedisConfig.SO_TIMEOUT_PROPERTY))
+			this.soTimeout = Integer.parseInt(properties.getProperty(RedisConfig.SO_TIMEOUT_PROPERTY));
+		if (null != properties.getProperty(RedisConfig.DATABASE_PROPERTY))
+			this.database = Integer.parseInt(properties.getProperty(RedisConfig.DATABASE_PROPERTY));
+	
+		this.password = properties.getProperty(RedisConfig.PASSWORD_PROPERTY);
+		this.clientName = properties.getProperty(RedisConfig.CLIENTNAME_PROPERTY);
 
-		String masterName = properties.getProperty("masterName");
-		String sentinels = properties.getProperty("sentinels");
+		String masterName = properties.getProperty(RedisConfig.MASTERNAME_PROPERTY);
+		if (masterName == null)
+			throw new ConnectionException("[" + RedisConfig.MASTERNAME_PROPERTY + "] is required !");
+		
+		String sentinels = properties.getProperty(RedisConfig.SENTINELS_PROPERTY);
+		if (sentinels == null)
+			throw new ConnectionException("[" + RedisConfig.SENTINELS_PROPERTY + "] is required !");
+		
 		HostAndPort master = initSentinels(new HashSet<String>(Arrays.asList(sentinels.split(","))), masterName);
+		
 		initPool(master);
 	}
 
