@@ -40,8 +40,8 @@ public interface HbaseConfig {
 	/** ZOOKEEPER_CLIENTPORT_PROPERTY */
 	public static final String ZOOKEEPER_CLIENTPORT_PROPERTY = "hbase.zookeeper.property.clientPort";
 	/** MASTER_PROPERTY */
-	public static final String MASTER_PROPERTY = "master";
+	public static final String MASTER_PROPERTY = "hbase.master";
 	/** ROOTDIR_PROPERTY */
-	public static final String ROOTDIR_PROPERTY = "rootdir";
+	public static final String ROOTDIR_PROPERTY = "hbase.rootdir";
 	
 }
