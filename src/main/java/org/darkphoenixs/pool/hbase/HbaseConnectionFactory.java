@@ -21,6 +21,7 @@ import org.apache.commons.pool2.PooledObject;
 import org.apache.commons.pool2.impl.DefaultPooledObject;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.client.Connection;
+import org.darkphoenixs.pool.ConnectionException;
 import org.darkphoenixs.pool.ConnectionFactory;
 
 /**
@@ -63,10 +64,10 @@ class HbaseConnectionFactory implements ConnectionFactory<Connection> {
 	public HbaseConnectionFactory(final String host, final String port, final String master, final String rootdir) {
 
 		this.hadoopConfiguration = new Configuration();
-		this.hadoopConfiguration.set("hbase.zookeeper.quorum", host);
-		this.hadoopConfiguration.set("hbase.zookeeper.property.clientPort", port);
-		this.hadoopConfiguration.set("hbase.master", master);
-		this.hadoopConfiguration.set("hbase.rootdir", rootdir);
+		this.hadoopConfiguration.set(HbaseConfig.ZOOKEEPER_QUORUM_PROPERTY, host);
+		this.hadoopConfiguration.set(HbaseConfig.ZOOKEEPER_CLIENTPORT_PROPERTY, port);
+		this.hadoopConfiguration.set(HbaseConfig.MASTER_PROPERTY, master);
+		this.hadoopConfiguration.set(HbaseConfig.ROOTDIR_PROPERTY, rootdir);
 	}
 
 	/**
@@ -76,10 +77,24 @@ class HbaseConnectionFactory implements ConnectionFactory<Connection> {
 	public HbaseConnectionFactory(final Properties properties) {
 		
 		this.hadoopConfiguration = new Configuration();
-		this.hadoopConfiguration.set("hbase.zookeeper.quorum", properties.getProperty("hbase.zookeeper.quorum"));
-		this.hadoopConfiguration.set("hbase.zookeeper.property.clientPort", properties.getProperty("hbase.zookeeper.property.clientPort"));
-		this.hadoopConfiguration.set("hbase.master", properties.getProperty("hbase.master"));
-		this.hadoopConfiguration.set("hbase.rootdir", properties.getProperty("hbase.rootdir"));
+		
+		String host = properties.getProperty(HbaseConfig.ZOOKEEPER_QUORUM_PROPERTY);
+		if (host == null)
+			throw new ConnectionException("[" + HbaseConfig.ZOOKEEPER_QUORUM_PROPERTY + "] is required !");
+		this.hadoopConfiguration.set(HbaseConfig.ZOOKEEPER_QUORUM_PROPERTY, host);
+
+		String port = properties.getProperty(HbaseConfig.ZOOKEEPER_CLIENTPORT_PROPERTY);
+		if (port == null)
+			throw new ConnectionException("[" + HbaseConfig.ZOOKEEPER_CLIENTPORT_PROPERTY + "] is required !");
+		this.hadoopConfiguration.set(HbaseConfig.ZOOKEEPER_CLIENTPORT_PROPERTY, port);
+
+		String master = properties.getProperty(HbaseConfig.MASTER_PROPERTY);
+		if (master != null)
+			this.hadoopConfiguration.set(HbaseConfig.MASTER_PROPERTY, master);
+
+		String rootdir = properties.getProperty(HbaseConfig.ROOTDIR_PROPERTY);
+		if (rootdir != null)
+			this.hadoopConfiguration.set(HbaseConfig.ROOTDIR_PROPERTY, rootdir);
 	}
 	
 	@Override

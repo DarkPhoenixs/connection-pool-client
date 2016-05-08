@@ -45,7 +45,7 @@ public class HbaseConnectionPool extends PoolBase<Connection> implements Connect
 	 */
 	public HbaseConnectionPool() {
 		
-		this("localhost", "2181");
+		this(HbaseConfig.DEFAULT_HOST, HbaseConfig.DEFAULT_PORT);
 	}
 	
 	/**
@@ -57,7 +57,7 @@ public class HbaseConnectionPool extends PoolBase<Connection> implements Connect
 	 */
 	public HbaseConnectionPool(final String host, final String port) {
 		
-		this(new PoolConfig(), host, port, null, null);
+		this(new PoolConfig(), host, port, HbaseConfig.DEFAULT_MASTER, HbaseConfig.DEFAULT_ROOTDIR);
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class HbaseConnectionPool extends PoolBase<Connection> implements Connect
 	 */
 	public HbaseConnectionPool(final PoolConfig poolConfig, final String host, final String port) {
 		
-		this(poolConfig, host, port, null, null);
+		this(poolConfig, host, port, HbaseConfig.DEFAULT_MASTER, HbaseConfig.DEFAULT_ROOTDIR);
 	}
 	
 	/**
