@@ -22,6 +22,7 @@ import java.util.Properties;
 
 import org.apache.commons.pool2.PooledObject;
 import org.apache.commons.pool2.impl.DefaultPooledObject;
+import org.darkphoenixs.pool.ConnectionException;
 import org.darkphoenixs.pool.ConnectionFactory;
 
 /**
@@ -38,7 +39,7 @@ class SocketConnectionFactory implements ConnectionFactory<Socket> {
 	private static final long serialVersionUID = -727722488965747494L;
 
 	/** address */
-	private final InetSocketAddress address;
+	private final InetSocketAddress socketAddress;
 	/** receiveBufferSize */
 	private final int receiveBufferSize;
 	/** sendBufferSize */
@@ -61,15 +62,20 @@ class SocketConnectionFactory implements ConnectionFactory<Socket> {
 	 */
 	public SocketConnectionFactory(final Properties properties) {
 		
-		this.address = new InetSocketAddress(properties.getProperty("address").split(":")[0], Integer.parseInt(properties.getProperty("address").split(":")[1]));
-		this.receiveBufferSize = Integer.parseInt(properties.getProperty("receiveBufferSize", "0"));
-		this.sendBufferSize = Integer.parseInt(properties.getProperty("sendBufferSize", "0"));
-		this.connectionTimeout = Integer.parseInt(properties.getProperty("connectionTimeout", "0"));
-		this.soTimeout = Integer.parseInt(properties.getProperty("soTimeout", "0"));
-		this.linger = Integer.parseInt(properties.getProperty("linger", "0"));
-		this.keepAlive = Boolean.valueOf(properties.getProperty("keepAlive", "false"));
-		this.tcpNoDelay = Boolean.valueOf(properties.getProperty("tcpNoDelay", "false"));;
-		this.performance = (properties.getProperty("performance") != null) ? properties.getProperty("performance").split(",") : null;
+		String address = properties.getProperty(SocketConfig.ADDRESS_PROPERTY);
+		if (address == null)
+			throw new ConnectionException("[" + SocketConfig.ADDRESS_PROPERTY + "] is required !");
+		
+		this.socketAddress = new InetSocketAddress(address.split(":")[0], Integer.parseInt(address.split(":")[1]));
+		
+		this.receiveBufferSize = Integer.parseInt(properties.getProperty(SocketConfig.RECE_BUFFERSIZE_PROPERTY, "0"));
+		this.sendBufferSize = Integer.parseInt(properties.getProperty(SocketConfig.SEND_BUFFERSIZE_PROPERTY, "0"));
+		this.connectionTimeout = Integer.parseInt(properties.getProperty(SocketConfig.CONN_TIMEOUT_PROPERTY, "0"));
+		this.soTimeout = Integer.parseInt(properties.getProperty(SocketConfig.SO_TIMEOUT_PROPERTY, "0"));
+		this.linger = Integer.parseInt(properties.getProperty(SocketConfig.LINGER_PROPERTY, "0"));
+		this.keepAlive = Boolean.valueOf(properties.getProperty(SocketConfig.KEEPALIVE_PROPERTY, "false"));
+		this.tcpNoDelay = Boolean.valueOf(properties.getProperty(SocketConfig.TCPNODELAY_PROPERTY, "false"));;
+		this.performance = (properties.getProperty(SocketConfig.PERFORMANCE_PROPERTY) != null) ? properties.getProperty(SocketConfig.PERFORMANCE_PROPERTY).split(",") : null;
 	}
 	
 	/**
@@ -89,7 +95,7 @@ class SocketConnectionFactory implements ConnectionFactory<Socket> {
 			final int connectionTimeout, final int soTimeout, final int linger, 
 			final boolean keepAlive, final boolean tcpNoDelay,final String[] performance) {
 
-		this.address = new InetSocketAddress(host, port);
+		this.socketAddress = new InetSocketAddress(host, port);
 		this.receiveBufferSize = receiveBufferSize;
 		this.sendBufferSize = sendBufferSize;
 		this.connectionTimeout = connectionTimeout;
@@ -169,7 +175,7 @@ class SocketConnectionFactory implements ConnectionFactory<Socket> {
 			if (performance != null)
 				socket.setPerformancePreferences(Integer.parseInt(performance[0]), Integer.parseInt(performance[1]), Integer.parseInt(performance[2]));
 			
-			socket.connect(address, connectionTimeout);
+			socket.connect(socketAddress, connectionTimeout);
 			
 		} catch (Exception se) {
 			socket.close();

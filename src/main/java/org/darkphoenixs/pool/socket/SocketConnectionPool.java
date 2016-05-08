@@ -26,7 +26,7 @@ public class SocketConnectionPool extends PoolBase<Socket> implements Connection
 	 */
 	public SocketConnectionPool() {
 
-		this(new PoolConfig(), "localhost", 1234);
+		this(new PoolConfig(), SocketConfig.DEFAULT_HOST, SocketConfig.DEFAULT_PORT);
 	}
 	
 	/**
@@ -53,7 +53,7 @@ public class SocketConnectionPool extends PoolBase<Socket> implements Connection
 	 */
 	public SocketConnectionPool(final PoolConfig poolConfig, final String host, final int port) {
 		
-		this(poolConfig, host, port, 3 * 1024, 2000);
+		this(poolConfig, host, port, SocketConfig.DEFAULT_BUFFERSIZE, SocketConfig.DEFAULT_TIMEOUT);
 	}
 
 	/**
@@ -65,7 +65,7 @@ public class SocketConnectionPool extends PoolBase<Socket> implements Connection
 	 */
 	public SocketConnectionPool(final PoolConfig poolConfig, final String host, final int port, final int bufferSize, final int timeout) {
 		
-		this(poolConfig, host, port, bufferSize, timeout, 0);
+		this(poolConfig, host, port, bufferSize, timeout, SocketConfig.DEFAULT_LINGER);
 	}
 	
 	/**
@@ -78,7 +78,7 @@ public class SocketConnectionPool extends PoolBase<Socket> implements Connection
 	 */
 	public SocketConnectionPool(final PoolConfig poolConfig, final String host, final int port, final int bufferSize, final int timeout, final int linger) {
 		
-		this(poolConfig, host, port, bufferSize, timeout, linger, false, false);
+		this(poolConfig, host, port, bufferSize, timeout, linger, SocketConfig.DEFAULT_KEEPALIVE, SocketConfig.DEFAULT_TCPNODELAY);
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class SocketConnectionPool extends PoolBase<Socket> implements Connection
 	 */
 	public SocketConnectionPool(final PoolConfig poolConfig, final String host, final int port, final int bufferSize, final int timeout, final int linger, final boolean keepAlive, final boolean tcpNoDelay) {
 		
-		this(poolConfig, host, port, bufferSize, timeout, linger, keepAlive, tcpNoDelay, null);
+		this(poolConfig, host, port, bufferSize, timeout, linger, keepAlive, tcpNoDelay, SocketConfig.DEFAULT_PERFORMANCE);
 	}
 	
 	/**
