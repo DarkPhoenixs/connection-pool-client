@@ -22,6 +22,7 @@ import kafka.producer.ProducerConfig;
 
 import org.apache.commons.pool2.PooledObject;
 import org.apache.commons.pool2.impl.DefaultPooledObject;
+import org.darkphoenixs.pool.ConnectionException;
 import org.darkphoenixs.pool.ConnectionFactory;
 
 /**
@@ -65,11 +66,11 @@ class KafkaConnectionFactory implements ConnectionFactory<Producer<byte[], byte[
 	public KafkaConnectionFactory(final String brokers, final String type, final String acks, final String codec, final String batch) {
 		
 		Properties props = new Properties();
-		props.setProperty("metadata.broker.list", brokers);
-		props.setProperty("producer.type", type);
-		props.setProperty("request.required.acks", acks);
-		props.setProperty("compression.codec", codec);
-		props.setProperty("batch.num.messages", batch);
+		props.setProperty(KafkaConfig.BROKERS_LIST_PROPERTY, brokers);
+		props.setProperty(KafkaConfig.PRODUCER_TYPE_PROPERTY, type);
+		props.setProperty(KafkaConfig.REQUEST_ACKS_PROPERTY, acks);
+		props.setProperty(KafkaConfig.COMPRESSION_CODEC_PROPERTY, codec);
+		props.setProperty(KafkaConfig.BATCH_NUMBER_PROPERTY, batch);
 		this.config = new ProducerConfig(props);
 	}
 	
@@ -78,6 +79,10 @@ class KafkaConnectionFactory implements ConnectionFactory<Producer<byte[], byte[
 	 * @param properties 参数配置
 	 */
 	public KafkaConnectionFactory(final Properties properties) {
+		
+		String brokers = properties.getProperty(KafkaConfig.BROKERS_LIST_PROPERTY);
+		if (brokers == null)
+			throw new ConnectionException("[" + KafkaConfig.BROKERS_LIST_PROPERTY + "] is required !");
 		
 		this.config = new ProducerConfig(properties);
 	}

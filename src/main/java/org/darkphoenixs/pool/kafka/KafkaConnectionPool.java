@@ -46,7 +46,7 @@ public class KafkaConnectionPool extends PoolBase<Producer<byte[], byte[]>> impl
 	 */
 	public KafkaConnectionPool() {
 
-		this("localhost:9092");
+		this(KafkaConfig.DEFAULT_BROKERS);
 	}
 	
 	/**
@@ -103,7 +103,7 @@ public class KafkaConnectionPool extends PoolBase<Producer<byte[], byte[]>> impl
 	 */
 	public KafkaConnectionPool(final PoolConfig poolConfig, final String brokers) {
 
-		this(poolConfig, brokers, "sync", "0", "none", "200");
+		this(poolConfig, brokers, KafkaConfig.DEFAULT_TYPE, KafkaConfig.DEFAULT_ACKS, KafkaConfig.DEFAULT_CODEC, KafkaConfig.DEFAULT_BATCH);
 	}
 	
 	/**
@@ -116,7 +116,7 @@ public class KafkaConnectionPool extends PoolBase<Producer<byte[], byte[]>> impl
 	 */
 	public KafkaConnectionPool(final PoolConfig poolConfig, final String brokers, final String type) {
 
-		this(poolConfig, brokers, type, "0", "none", "200");
+		this(poolConfig, brokers, type, KafkaConfig.DEFAULT_ACKS, KafkaConfig.DEFAULT_CODEC, KafkaConfig.DEFAULT_BATCH);
 	}
 	
 	/**
