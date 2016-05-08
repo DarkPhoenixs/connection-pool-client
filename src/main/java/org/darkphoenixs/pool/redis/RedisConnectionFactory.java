@@ -15,6 +15,7 @@
  */
 package org.darkphoenixs.pool.redis;
 
+import java.util.Properties;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.apache.commons.pool2.PooledObject;
@@ -82,6 +83,21 @@ class RedisConnectionFactory implements ConnectionFactory<Jedis> {
 		this.password = password;
 		this.database = database;
 		this.clientName = clientName;
+	}
+	
+	/**
+	 * @since 1.2.1
+	 * @param properties 参数配置
+	 */
+	public RedisConnectionFactory(final Properties properties) {
+		
+		this.hostAndPort.set(new HostAndPort(properties.getProperty("address").split(":")[0], 
+				Integer.parseInt(properties.getProperty("address").split(":")[1])));
+		this.connectionTimeout = Integer.parseInt(properties.getProperty("connectionTimeout", "0"));
+		this.soTimeout = Integer.parseInt(properties.getProperty("soTimeout", "0"));
+		this.database = Integer.parseInt(properties.getProperty("database", "0"));
+		this.password = properties.getProperty("password");
+		this.clientName = properties.getProperty("clientName");
 	}
 	
 	@Override

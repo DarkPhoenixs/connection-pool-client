@@ -18,6 +18,7 @@ package org.darkphoenixs.pool.redis;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
@@ -240,6 +241,26 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 		this.clientName = clientName;
 
 		HostAndPort master = initSentinels(sentinels, masterName);
+		initPool(master);
+	}
+	
+	/**
+	 * @since 1.2.1
+	 * @param poolConfig 池配置
+	 * @param properties 参数配置
+	 */
+	public RedisSentinelConnPool(final PoolConfig poolConfig, final Properties properties) {
+		
+		this.poolConfig = poolConfig;
+		this.connectionTimeout = Integer.parseInt(properties.getProperty("connectionTimeout", "2000"));
+		this.soTimeout = Integer.parseInt(properties.getProperty("soTimeout", "2000"));
+		this.database = Integer.parseInt(properties.getProperty("database", "0"));
+		this.password = properties.getProperty("password");
+		this.clientName = properties.getProperty("clientName");
+
+		String masterName = properties.getProperty("masterName");
+		String sentinels = properties.getProperty("sentinels");
+		HostAndPort master = initSentinels(new HashSet<String>(Arrays.asList(sentinels.split(","))), masterName);
 		initPool(master);
 	}
 

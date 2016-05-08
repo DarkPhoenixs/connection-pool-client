@@ -15,6 +15,8 @@
  */
 package org.darkphoenixs.pool.redis;
 
+import java.util.Properties;
+
 import org.darkphoenixs.pool.ConnectionPool;
 import org.darkphoenixs.pool.PoolBase;
 import org.darkphoenixs.pool.PoolConfig;
@@ -161,6 +163,16 @@ public class RedisConnectionPool extends PoolBase<Jedis> implements ConnectionPo
 			final int database, final String clientName) {
 		super(poolConfig, new RedisConnectionFactory(host, port, connectionTimeout,
 				soTimeout, password, database, clientName));
+	}
+	
+	/**
+	 * @since 1.2.1
+	 * @param poolConfig 池配置
+	 * @param properties 参数配置
+	 */
+	public RedisConnectionPool(final PoolConfig poolConfig, final Properties properties) {
+		
+		super(poolConfig, new RedisConnectionFactory(properties));
 	}
 
 	@Override
