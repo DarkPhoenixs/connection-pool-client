@@ -15,6 +15,8 @@
  */
 package org.darkphoenixs.pool.hbase;
 
+import java.util.Properties;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.client.Connection;
 import org.darkphoenixs.pool.ConnectionPool;
@@ -121,6 +123,16 @@ public class HbaseConnectionPool extends PoolBase<Connection> implements Connect
 	public HbaseConnectionPool(final PoolConfig poolConfig, final String host, final String port, final String master, final String rootdir) {
 		
 		super(poolConfig, new HbaseConnectionFactory(host, port, master, rootdir));
+	}
+	
+	/**
+	 * @since 1.2.1
+	 * @param poolConfig 池配置
+	 * @param properties 参数配置
+	 */
+	public HbaseConnectionPool(final PoolConfig poolConfig, final Properties properties) {
+		
+		super(poolConfig, new HbaseConnectionFactory(properties));
 	}
 	
 	@Override

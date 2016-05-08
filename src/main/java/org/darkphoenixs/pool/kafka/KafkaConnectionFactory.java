@@ -73,6 +73,15 @@ class KafkaConnectionFactory implements ConnectionFactory<Producer<byte[], byte[
 		this.config = new ProducerConfig(props);
 	}
 	
+	/**
+	 * @since 1.2.1
+	 * @param properties 参数配置
+	 */
+	public KafkaConnectionFactory(final Properties properties) {
+		
+		this.config = new ProducerConfig(properties);
+	}
+	
 	@Override
 	public PooledObject<Producer<byte[], byte[]>> makeObject() throws Exception {
 

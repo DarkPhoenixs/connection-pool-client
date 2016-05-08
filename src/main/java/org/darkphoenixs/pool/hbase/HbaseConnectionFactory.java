@@ -15,6 +15,8 @@
  */
 package org.darkphoenixs.pool.hbase;
 
+import java.util.Properties;
+
 import org.apache.commons.pool2.PooledObject;
 import org.apache.commons.pool2.impl.DefaultPooledObject;
 import org.apache.hadoop.conf.Configuration;
@@ -67,6 +69,19 @@ class HbaseConnectionFactory implements ConnectionFactory<Connection> {
 		this.hadoopConfiguration.set("hbase.rootdir", rootdir);
 	}
 
+	/**
+	 * @since 1.2.1
+	 * @param properties 参数配置
+	 */
+	public HbaseConnectionFactory(final Properties properties) {
+		
+		this.hadoopConfiguration = new Configuration();
+		this.hadoopConfiguration.set("hbase.zookeeper.quorum", properties.getProperty("hbase.zookeeper.quorum"));
+		this.hadoopConfiguration.set("hbase.zookeeper.property.clientPort", properties.getProperty("hbase.zookeeper.property.clientPort"));
+		this.hadoopConfiguration.set("hbase.master", properties.getProperty("hbase.master"));
+		this.hadoopConfiguration.set("hbase.rootdir", properties.getProperty("hbase.rootdir"));
+	}
+	
 	@Override
 	public PooledObject<Connection> makeObject() throws Exception {
 		
