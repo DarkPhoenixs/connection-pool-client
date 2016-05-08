@@ -37,14 +37,13 @@ public class JdbcConnectionPool extends PoolBase<Connection> implements Connecti
 	/** serialVersionUID */
 	private static final long serialVersionUID = 2743612676107943708L;
 
-	
 	/**
 	 * <p>Title: JdbcConnectionPool</p>
 	 * <p>Description: 默认构造方法</p>
 	 */
 	public JdbcConnectionPool() {
 
-		this("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/test", "root", "root");
+		this(JdbcConfig.DEFAULT_DRIVER_CLASS, JdbcConfig.DEFAULT_JDBC_URL, JdbcConfig.DEFAULT_JDBC_USERNAME, JdbcConfig.DEFAULT_JDBC_PASSWORD);
 	}
 	
 	/**

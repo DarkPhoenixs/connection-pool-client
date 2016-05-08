@@ -22,6 +22,7 @@ import java.util.Properties;
 
 import org.apache.commons.pool2.PooledObject;
 import org.apache.commons.pool2.impl.DefaultPooledObject;
+import org.darkphoenixs.pool.ConnectionException;
 import org.darkphoenixs.pool.ConnectionFactory;
 
 /**
@@ -72,10 +73,22 @@ class JdbcConnectionFactory implements ConnectionFactory<Connection> {
 	 */
 	public JdbcConnectionFactory(final Properties properties) {
 
-		this.driverClass = properties.getProperty("driverClass");
-		this.jdbcUrl = properties.getProperty("jdbcUrl");
-		this.username = properties.getProperty("username");
-		this.password = properties.getProperty("password");
+		this.driverClass = properties.getProperty(JdbcConfig.DRIVER_CLASS_PROPERTY);
+		if (driverClass == null)
+			throw new ConnectionException("[" + JdbcConfig.DRIVER_CLASS_PROPERTY + "] is required !");
+		
+		this.jdbcUrl = properties.getProperty(JdbcConfig.JDBC_URL_PROPERTY);
+		if (jdbcUrl == null)
+			throw new ConnectionException("[" + JdbcConfig.JDBC_URL_PROPERTY + "] is required !");
+		
+		this.username = properties.getProperty(JdbcConfig.JDBC_USERNAME_PROPERTY);
+		if (username == null)
+			throw new ConnectionException("[" + JdbcConfig.JDBC_USERNAME_PROPERTY + "] is required !");
+		
+		this.password = properties.getProperty(JdbcConfig.JDBC_PASSWORD_PROPERTY);
+		if (password == null)
+			throw new ConnectionException("[" + JdbcConfig.JDBC_PASSWORD_PROPERTY + "] is required !");
+		
 		this.loadDriver();
 	}
 	
