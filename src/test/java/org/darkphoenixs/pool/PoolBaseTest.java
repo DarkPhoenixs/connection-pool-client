@@ -67,6 +67,16 @@ public class PoolBaseTest {
 		}
 		
 		try {
+			pool.returnResource(null);
+		} catch (Exception e) {
+		}
+		
+		try {
+			pool.invalidateResource(null);
+		} catch (Exception e) {
+		}
+		
+		try {
 			System.out.println("MaxBorrowWaitTimeMillis " + pool.getMaxBorrowWaitTimeMillis());
 		} catch (Exception e) {
 		}
