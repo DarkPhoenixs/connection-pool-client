@@ -43,7 +43,6 @@ public class SocketConfigTest {
 		Assert.assertEquals(SocketConfig.KEEPALIVE_PROPERTY, "keepAlive");
 		Assert.assertEquals(SocketConfig.TCPNODELAY_PROPERTY, "tcpNoDelay");
 		Assert.assertEquals(SocketConfig.PERFORMANCE_PROPERTY, "performance");
-
 	}
 	
 }

@@ -48,6 +48,7 @@ public class SocketConnectionFactoryTest {
 		th.setDaemon(true);
 		th.start();
 	}
+	
 	@Test
 	public void test_0() throws Exception {
 
