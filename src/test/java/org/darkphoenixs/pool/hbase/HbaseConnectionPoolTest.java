@@ -27,25 +27,46 @@ public class HbaseConnectionPoolTest {
 	public void test() throws Exception {
 
 		try {
-			new HbaseConnectionPool(new PoolConfig(), null, null);
+			HbaseConnectionPool pool = new HbaseConnectionPool(
+					new PoolConfig(), HbaseConfig.DEFAULT_HOST,
+					HbaseConfig.DEFAULT_PORT);
+
+			pool.close();
 
 		} catch (Exception e) {
 		}
 
 		try {
-			new HbaseConnectionPool(null, null, null, null);
+			HbaseConnectionPool pool = new HbaseConnectionPool(
+					HbaseConfig.DEFAULT_HOST, HbaseConfig.DEFAULT_PORT,
+					HbaseConfig.DEFAULT_MASTER, HbaseConfig.DEFAULT_ROOTDIR);
+
+			pool.close();
+		} catch (Exception e) {
+		}
+
+		try {
+			Configuration configuration = new Configuration();
+			configuration.set(HbaseConfig.ZOOKEEPER_QUORUM_PROPERTY,
+					HbaseConfig.DEFAULT_HOST);
+			configuration.set(HbaseConfig.ZOOKEEPER_CLIENTPORT_PROPERTY,
+					HbaseConfig.DEFAULT_PORT);
+			HbaseConnectionPool pool = new HbaseConnectionPool(configuration);
+			pool.close();
 
 		} catch (Exception e) {
 		}
 
 		try {
-			new HbaseConnectionPool(new Configuration());
+			PoolConfig poolconfig = new PoolConfig();
+			Properties prop = new Properties();
+			prop.setProperty(HbaseConfig.ZOOKEEPER_QUORUM_PROPERTY,
+					HbaseConfig.DEFAULT_HOST);
+			prop.setProperty(HbaseConfig.ZOOKEEPER_CLIENTPORT_PROPERTY,
+					HbaseConfig.DEFAULT_PORT);
+			HbaseConnectionPool pool = new HbaseConnectionPool(poolconfig, prop);
 
-		} catch (Exception e) {
-		}
-
-		try {
-			new HbaseConnectionPool(new PoolConfig(), new Properties()).close();
+			pool.close();
 		} catch (Exception e) {
 		}
 

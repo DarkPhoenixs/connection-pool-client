@@ -1,11 +1,5 @@
 package org.darkphoenixs.pool.jdbc;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.Properties;
-
-import org.darkphoenixs.pool.PoolConfig;
 import org.junit.Test;
 
 public class JdbcTest {
