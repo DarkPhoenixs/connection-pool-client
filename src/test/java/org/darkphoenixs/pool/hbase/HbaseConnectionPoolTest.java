@@ -27,14 +27,25 @@ public class HbaseConnectionPoolTest {
 	public void test() throws Exception {
 
 		try {
+			new HbaseConnectionPool(new PoolConfig(), null, null);
+
+		} catch (Exception e) {
+		}
+
+		try {
+			new HbaseConnectionPool(null, null, null, null);
+
+		} catch (Exception e) {
+		}
+
+		try {
 			new HbaseConnectionPool(new Configuration());
 
 		} catch (Exception e) {
 		}
-		
-		try {
-			new HbaseConnectionPool(new PoolConfig(), new Properties());
 
+		try {
+			new HbaseConnectionPool(new PoolConfig(), new Properties()).close();
 		} catch (Exception e) {
 		}
 
