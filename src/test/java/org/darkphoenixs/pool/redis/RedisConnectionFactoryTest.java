@@ -166,15 +166,14 @@ public class RedisConnectionFactoryTest {
 		}
 
 	}
-	
+
 	@Test
 	public void test_3() throws Exception {
-		
+
 		RedisConnectionFactory factory3 = new RedisConnectionFactory(
-				RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
-				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT,
-				RedisConfig.DEFAULT_PASSWORD, RedisConfig.DEFAULT_DATABASE,
-				RedisConfig.DEFAULT_CLIENTNAME);
+				"localhost", 1234, RedisConfig.DEFAULT_TIMEOUT,
+				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_PASSWORD,
+				RedisConfig.DEFAULT_DATABASE, RedisConfig.DEFAULT_CLIENTNAME);
 
 		try {
 			factory3.validateObject(new DefaultPooledObject<Jedis>(
