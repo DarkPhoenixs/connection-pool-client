@@ -5,6 +5,7 @@ import java.net.ServerSocket;
 import java.util.Properties;
 
 import org.apache.commons.pool2.impl.DefaultPooledObject;
+import org.junit.Before;
 import org.junit.Test;
 
 import redis.clients.jedis.HostAndPort;
@@ -12,7 +13,8 @@ import redis.clients.jedis.Jedis;
 
 public class RedisConnectionFactoryTest {
 
-	static {
+	@Before
+	public void before() throws Exception {
 
 		Thread th = new Thread(new Runnable() {
 
@@ -33,9 +35,10 @@ public class RedisConnectionFactoryTest {
 		});
 
 		th.setDaemon(true);
+		
 		th.start();
 	}
-
+	
 	@Test
 	public void test_0() throws Exception {
 
@@ -167,32 +170,32 @@ public class RedisConnectionFactoryTest {
 
 	}
 
-//	@Test
-//	public void test_3() throws Exception {
-//
-//		RedisConnectionFactory factory3 = new RedisConnectionFactory(
-//				"localhost", 1234, RedisConfig.DEFAULT_TIMEOUT,
-//				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_PASSWORD,
-//				RedisConfig.DEFAULT_DATABASE, RedisConfig.DEFAULT_CLIENTNAME);
-//
-//		try {
-//			factory3.validateObject(new DefaultPooledObject<Jedis>(
-//					new JedisConn(RedisConfig.DEFAULT_HOST, 1233)));
-//		} catch (Exception e) {
-//		}
-//
-//		try {
-//			factory3.validateObject(new DefaultPooledObject<Jedis>(
-//					new JedisConn3(RedisConfig.DEFAULT_HOST,
-//							RedisConfig.DEFAULT_PORT)));
-//		} catch (Exception e) {
-//		}
-//
-//		try {
-//			factory3.validateObject(new DefaultPooledObject<Jedis>(
-//					new JedisConn4(RedisConfig.DEFAULT_HOST,
-//							RedisConfig.DEFAULT_PORT)));
-//		} catch (Exception e) {
-//		}
-//	}
+	@Test
+	public void test_3() throws Exception {
+
+		RedisConnectionFactory factory3 = new RedisConnectionFactory(
+				"localhost", 1234, RedisConfig.DEFAULT_TIMEOUT,
+				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_PASSWORD,
+				RedisConfig.DEFAULT_DATABASE, RedisConfig.DEFAULT_CLIENTNAME);
+
+		try {
+			factory3.validateObject(new DefaultPooledObject<Jedis>(
+					new JedisConn(RedisConfig.DEFAULT_HOST, 1233)));
+		} catch (Exception e) {
+		}
+
+		try {
+			factory3.validateObject(new DefaultPooledObject<Jedis>(
+					new JedisConn3(RedisConfig.DEFAULT_HOST,
+							RedisConfig.DEFAULT_PORT)));
+		} catch (Exception e) {
+		}
+
+		try {
+			factory3.validateObject(new DefaultPooledObject<Jedis>(
+					new JedisConn4(RedisConfig.DEFAULT_HOST,
+							RedisConfig.DEFAULT_PORT)));
+		} catch (Exception e) {
+		}
+	}
 }
