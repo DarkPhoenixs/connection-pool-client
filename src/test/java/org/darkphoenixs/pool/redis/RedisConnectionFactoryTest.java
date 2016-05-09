@@ -165,16 +165,16 @@ public class RedisConnectionFactoryTest {
 		} catch (Exception e) {
 		}
 
-		RedisConnectionFactory factory3 = new RedisConnectionFactory(
-				RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
-				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT,
-				RedisConfig.DEFAULT_PASSWORD, RedisConfig.DEFAULT_DATABASE, RedisConfig.DEFAULT_CLIENTNAME);
-
-		try {
-			factory3.validateObject(new DefaultPooledObject<Jedis>(
-					new JedisConn(RedisConfig.DEFAULT_HOST, 1233)));
-		} catch (Exception e) {
-		}
+//		RedisConnectionFactory factory3 = new RedisConnectionFactory(
+//				RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
+//				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT,
+//				RedisConfig.DEFAULT_PASSWORD, RedisConfig.DEFAULT_DATABASE, RedisConfig.DEFAULT_CLIENTNAME);
+//
+//		try {
+//			factory3.validateObject(new DefaultPooledObject<Jedis>(
+//					new JedisConn(RedisConfig.DEFAULT_HOST, 1233)));
+//		} catch (Exception e) {
+//		}
 
 //		RedisConnectionFactory factory4 = new RedisConnectionFactory(
 //				RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
