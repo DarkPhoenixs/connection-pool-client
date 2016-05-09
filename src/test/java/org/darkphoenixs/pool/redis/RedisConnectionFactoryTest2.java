@@ -10,32 +10,8 @@ import redis.clients.jedis.Jedis;
 
 public class RedisConnectionFactoryTest2 {
 
-	static {
-
-		Thread th = new Thread(new Runnable() {
-
-			private ServerSocket serverSocket;
-
-			@Override
-			public void run() {
-
-				try {
-					serverSocket = new ServerSocket(RedisConfig.DEFAULT_PORT);
-
-					serverSocket.accept();
-
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		});
-
-		th.setDaemon(true);
-		th.start();
-	}
-	
 	@Test
-	public void test_3() throws Exception {
+	public void test_0() throws Exception {
 
 		RedisConnectionFactory factory = new RedisConnectionFactory(
 				RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
@@ -118,7 +94,7 @@ public class RedisConnectionFactoryTest2 {
 	}
 
 	@Test
-	public void test_4() throws Exception {
+	public void test_1() throws Exception {
 
 		RedisConnectionFactory factory = new RedisConnectionFactory(
 				RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
