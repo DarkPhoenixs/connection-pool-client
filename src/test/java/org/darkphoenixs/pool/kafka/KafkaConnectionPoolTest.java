@@ -15,6 +15,11 @@
  */
 package org.darkphoenixs.pool.kafka;
 
+import java.util.Properties;
+
+import kafka.producer.ProducerConfig;
+
+import org.darkphoenixs.pool.PoolConfig;
 import org.junit.Test;
 
 public class KafkaConnectionPoolTest {
@@ -22,5 +27,68 @@ public class KafkaConnectionPoolTest {
 	@Test
 	public void test() throws Exception {
 		
+		Properties prop = new Properties();
+
+		prop.setProperty(KafkaConfig.BROKERS_LIST_PROPERTY,
+				KafkaConfig.DEFAULT_BROKERS);
+		prop.setProperty(KafkaConfig.PRODUCER_TYPE_PROPERTY,
+				KafkaConfig.DEFAULT_TYPE);
+		prop.setProperty(KafkaConfig.REQUEST_ACKS_PROPERTY,
+				KafkaConfig.DEFAULT_ACKS);
+		prop.setProperty(KafkaConfig.COMPRESSION_CODEC_PROPERTY,
+				KafkaConfig.DEFAULT_CODEC);
+		prop.setProperty(KafkaConfig.BATCH_NUMBER_PROPERTY,
+				KafkaConfig.DEFAULT_BATCH);
+
+		ProducerConfig config = new ProducerConfig(prop);
+		
+		try {
+			KafkaConnectionPool pool = new KafkaConnectionPool(KafkaConfig.DEFAULT_BROKERS);
+			pool.close();
+		} catch (Exception e) {
+		}
+
+		try {
+			KafkaConnectionPool pool = new KafkaConnectionPool(prop);
+			pool.close();
+		} catch (Exception e) {
+		}
+		
+		try {
+			KafkaConnectionPool pool = new KafkaConnectionPool(config);
+			pool.close();
+		} catch (Exception e) {
+		}
+		
+		try {
+			KafkaConnectionPool pool = new KafkaConnectionPool(new PoolConfig(), prop);
+			pool.close();
+		} catch (Exception e) {
+		}
+		
+		try {
+			KafkaConnectionPool pool = new KafkaConnectionPool(new PoolConfig(), config);
+			pool.close();
+		} catch (Exception e) {
+		}
+		
+		KafkaConnectionPool pool = new KafkaConnectionPool();
+		
+		try {
+			pool.getConnection();
+		} catch (Exception e) {
+		}
+
+		try {
+			pool.returnConnection(null);
+		} catch (Exception e) {
+		}
+
+		try {
+			pool.invalidateConnection(null);
+		} catch (Exception e) {
+		}
+
+		pool.close();
 	}
 }
