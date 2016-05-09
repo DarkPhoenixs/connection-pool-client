@@ -21,11 +21,13 @@ import java.net.Socket;
 import java.util.Properties;
 
 import org.apache.commons.pool2.impl.DefaultPooledObject;
+import org.junit.Before;
 import org.junit.Test;
 
 public class SocketConnectionFactoryTest {
 
-	static {
+	@Before
+	public void before() throws Exception {
 		
 		Thread th = new Thread(new Runnable() {
 			

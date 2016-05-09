@@ -5,11 +5,13 @@ import java.net.ServerSocket;
 import java.util.Properties;
 
 import org.darkphoenixs.pool.PoolConfig;
+import org.junit.Before;
 import org.junit.Test;
 
 public class RedisConnectionPoolTest {
 
-	static {
+	@Before
+	public void before() throws Exception {
 
 		Thread th = new Thread(new Runnable() {
 
@@ -32,7 +34,7 @@ public class RedisConnectionPoolTest {
 		th.setDaemon(true);
 		th.start();
 	}
-	
+
 	@Test
 	public void test() throws Exception {
 

@@ -5,6 +5,7 @@ import java.net.ServerSocket;
 import java.util.Properties;
 
 import org.apache.commons.pool2.impl.DefaultPooledObject;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -179,20 +180,40 @@ public class RedisConnectionFactoryTest {
 				RedisConfig.DEFAULT_DATABASE, RedisConfig.DEFAULT_CLIENTNAME);
 
 		try {
-			factory3.validateObject(new DefaultPooledObject<Jedis>(
-					new JedisConn(RedisConfig.DEFAULT_HOST, 1233)));
+			boolean rev = factory3
+					.validateObject(new DefaultPooledObject<Jedis>(
+							new JedisConn(RedisConfig.DEFAULT_HOST, 1234)));
+			Assert.assertTrue(rev);
+
 		} catch (Exception e) {
 		}
 
 		try {
-			factory3.validateObject(new DefaultPooledObject<Jedis>(
-					new JedisConn4("localhost", 1234)));
+			boolean rev = factory3
+					.validateObject(new DefaultPooledObject<Jedis>(
+							new JedisConn2(RedisConfig.DEFAULT_HOST, 1233)));
+			Assert.assertFalse(rev);
+
 		} catch (Exception e) {
 		}
 
 		try {
-			factory3.validateObject(new DefaultPooledObject<Jedis>(
-					new JedisConn3("localhost", 1234)));
+			boolean rev = factory3
+					.validateObject(new DefaultPooledObject<Jedis>(
+							new JedisConn3("localhost", 1234)));
+
+			Assert.assertFalse(rev);
+
+		} catch (Exception e) {
+		}
+
+		try {
+			boolean rev = factory3
+					.validateObject(new DefaultPooledObject<Jedis>(
+							new JedisConn4("localhost", 1234)));
+
+			Assert.assertFalse(rev);
+
 		} catch (Exception e) {
 		}
 
