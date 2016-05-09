@@ -1,11 +1,5 @@
 package org.darkphoenixs.pool.kafka;
 
-import java.util.Properties;
-
-import kafka.javaapi.producer.Producer;
-import kafka.producer.KeyedMessage;
-
-import org.darkphoenixs.pool.PoolConfig;
 import org.junit.Test;
 
 public class KafkaTest {
