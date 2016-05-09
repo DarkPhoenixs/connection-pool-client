@@ -28,6 +28,13 @@ public class KafkaConnectionFactoryTest {
 	@Test
 	public void test() throws Exception {
 
+		try {
+			Properties prop = new Properties();
+			KafkaConnectionFactory factory = new KafkaConnectionFactory(prop);
+			factory.toString();
+		} catch (Exception e) {
+		}
+
 		Properties prop = new Properties();
 
 		prop.setProperty(KafkaConfig.BROKERS_LIST_PROPERTY,
@@ -48,13 +55,13 @@ public class KafkaConnectionFactoryTest {
 			factory.toString();
 		} catch (Exception e) {
 		}
-		
+
 		try {
 			KafkaConnectionFactory factory = new KafkaConnectionFactory(config);
 			factory.toString();
 		} catch (Exception e) {
 		}
-		
+
 		KafkaConnectionFactory factory = new KafkaConnectionFactory(
 				KafkaConfig.DEFAULT_BROKERS, KafkaConfig.DEFAULT_TYPE,
 				KafkaConfig.DEFAULT_ACKS, KafkaConfig.DEFAULT_CODEC,
