@@ -35,10 +35,10 @@ public class RedisConnectionFactoryTest {
 		});
 
 		th.setDaemon(true);
-		
+
 		th.start();
 	}
-	
+
 	@Test
 	public void test_0() throws Exception {
 
@@ -184,17 +184,20 @@ public class RedisConnectionFactoryTest {
 		} catch (Exception e) {
 		}
 
+		RedisConnectionFactory factory4 = new RedisConnectionFactory(
+				"localhost", 1234, RedisConfig.DEFAULT_TIMEOUT,
+				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_PASSWORD,
+				RedisConfig.DEFAULT_DATABASE, RedisConfig.DEFAULT_CLIENTNAME);
+
 		try {
-			factory3.validateObject(new DefaultPooledObject<Jedis>(
-					new JedisConn3(RedisConfig.DEFAULT_HOST,
-							RedisConfig.DEFAULT_PORT)));
+			factory4.validateObject(new DefaultPooledObject<Jedis>(
+					new JedisConn3("localhost", 1234)));
 		} catch (Exception e) {
 		}
 
 		try {
-			factory3.validateObject(new DefaultPooledObject<Jedis>(
-					new JedisConn4(RedisConfig.DEFAULT_HOST,
-							RedisConfig.DEFAULT_PORT)));
+			factory4.validateObject(new DefaultPooledObject<Jedis>(
+					new JedisConn4("localhost", 1234)));
 		} catch (Exception e) {
 		}
 	}
