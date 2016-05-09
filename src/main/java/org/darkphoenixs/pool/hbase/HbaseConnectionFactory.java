@@ -64,10 +64,20 @@ class HbaseConnectionFactory implements ConnectionFactory<Connection> {
 	public HbaseConnectionFactory(final String host, final String port, final String master, final String rootdir) {
 
 		this.hadoopConfiguration = new Configuration();
+		
+		if (host == null)
+			throw new ConnectionException("[" + HbaseConfig.ZOOKEEPER_QUORUM_PROPERTY + "] is required !");
 		this.hadoopConfiguration.set(HbaseConfig.ZOOKEEPER_QUORUM_PROPERTY, host);
+		
+		if (port == null)
+			throw new ConnectionException("[" + HbaseConfig.ZOOKEEPER_CLIENTPORT_PROPERTY + "] is required !");
 		this.hadoopConfiguration.set(HbaseConfig.ZOOKEEPER_CLIENTPORT_PROPERTY, port);
-		this.hadoopConfiguration.set(HbaseConfig.MASTER_PROPERTY, master);
-		this.hadoopConfiguration.set(HbaseConfig.ROOTDIR_PROPERTY, rootdir);
+		
+		if (master != null)
+			this.hadoopConfiguration.set(HbaseConfig.MASTER_PROPERTY, master);
+		
+		if (rootdir != null)
+			this.hadoopConfiguration.set(HbaseConfig.ROOTDIR_PROPERTY, rootdir);
 	}
 
 	/**
