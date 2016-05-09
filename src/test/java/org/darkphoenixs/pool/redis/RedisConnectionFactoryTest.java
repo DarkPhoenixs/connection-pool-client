@@ -112,33 +112,33 @@ public class RedisConnectionFactoryTest {
 				.makeObject().getObject()));
 	}
 
-//	@Test
-//	public void test_2() throws Exception {
-//
-//		RedisConnectionFactory factory = new RedisConnectionFactory(
-//				RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
-//				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT,
-//				RedisConfig.DEFAULT_PASSWORD, RedisConfig.DEFAULT_DATABASE,
-//				RedisConfig.DEFAULT_CLIENTNAME);
-//
-//		try {
-//			factory.activateObject(new DefaultPooledObject<Jedis>(new Jedis()));
-//		} catch (Exception e) {
-//		}
-//		try {
-//			factory.validateObject(new DefaultPooledObject<Jedis>(new Jedis()));
-//		} catch (Exception e) {
-//		}
-//		try {
-//			factory.passivateObject(new DefaultPooledObject<Jedis>(new Jedis()));
-//
-//		} catch (Exception e) {
-//		}
-//		try {
-//			factory.destroyObject(new DefaultPooledObject<Jedis>(new Jedis()));
-//		} catch (Exception e) {
-//		}
-//	}
+	@Test
+	public void test_2() throws Exception {
+
+		RedisConnectionFactory factory = new RedisConnectionFactory(
+				RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
+				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT,
+				RedisConfig.DEFAULT_PASSWORD, RedisConfig.DEFAULT_DATABASE,
+				RedisConfig.DEFAULT_CLIENTNAME);
+
+		try {
+			factory.activateObject(new DefaultPooledObject<Jedis>(new Jedis()));
+		} catch (Exception e) {
+		}
+		try {
+			factory.validateObject(new DefaultPooledObject<Jedis>(new Jedis()));
+		} catch (Exception e) {
+		}
+		try {
+			factory.passivateObject(new DefaultPooledObject<Jedis>(new Jedis()));
+
+		} catch (Exception e) {
+		}
+		try {
+			factory.destroyObject(new DefaultPooledObject<Jedis>(new Jedis()));
+		} catch (Exception e) {
+		}
+	}
 
 	@Test
 	public void test_3() throws Exception {
@@ -194,29 +194,27 @@ public class RedisConnectionFactoryTest {
 
 		} catch (Exception e) {
 		}
-		
+
 		try {
 			factory.validateObject(new DefaultPooledObject<Jedis>(
-					new JedisConn3("127.0.0.2",
-							RedisConfig.DEFAULT_PORT)));
+					new JedisConn3("127.0.0.2", RedisConfig.DEFAULT_PORT)));
 
 		} catch (Exception e) {
 		}
-		
+
 		try {
 			factory.validateObject(new DefaultPooledObject<Jedis>(
-					new JedisConn3(RedisConfig.DEFAULT_HOST,
-							1233)));
+					new JedisConn3(RedisConfig.DEFAULT_HOST, 1233)));
 		} catch (Exception e) {
 		}
-		
+
 		try {
 			factory.validateObject(new DefaultPooledObject<Jedis>(
 					new JedisConn3(RedisConfig.DEFAULT_HOST,
 							RedisConfig.DEFAULT_PORT)));
 		} catch (Exception e) {
 		}
-		
+
 		try {
 			factory.validateObject(new DefaultPooledObject<Jedis>(
 					new JedisConn4(RedisConfig.DEFAULT_HOST,
@@ -225,179 +223,35 @@ public class RedisConnectionFactoryTest {
 		}
 	}
 
-//	@Test
-//	public void test_4() throws Exception {
-//		
-//		RedisConnectionFactory factory = new RedisConnectionFactory(
-//				RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
-//				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT,
-//				"test", RedisConfig.DEFAULT_DATABASE, RedisConfig.DEFAULT_CLIENTNAME);
-//		try {
-//			factory.makeObject();
-//		} catch (Exception e) {
-//		}
-//		
-//		factory = new RedisConnectionFactory(
-//				RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
-//				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT,
-//				RedisConfig.DEFAULT_PASSWORD, 3, RedisConfig.DEFAULT_CLIENTNAME);
-//		try {
-//			factory.makeObject();
-//		} catch (Exception e) {
-//		}
-//		
-//		factory = new RedisConnectionFactory(
-//				RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
-//				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT,
-//				RedisConfig.DEFAULT_PASSWORD, RedisConfig.DEFAULT_DATABASE, "test");
-//		try {
-//			factory.makeObject();
-//		} catch (Exception e) {
-//		}
-//	}
-	
-	private static class JedisConn extends Jedis {
+	@Test
+	public void test_4() throws Exception {
 
-		public JedisConn(String arg0, int arg1) {
-			super(arg0, arg1);
+		RedisConnectionFactory factory = new RedisConnectionFactory(
+				RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
+				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT,
+				"test", RedisConfig.DEFAULT_DATABASE,
+				RedisConfig.DEFAULT_CLIENTNAME);
+		try {
+			factory.makeObject();
+		} catch (Exception e) {
 		}
 
-		@Override
-		public String select(int index) {
-
-			return String.valueOf(index);
+		factory = new RedisConnectionFactory(RedisConfig.DEFAULT_HOST,
+				RedisConfig.DEFAULT_PORT, RedisConfig.DEFAULT_TIMEOUT,
+				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_PASSWORD, 3,
+				RedisConfig.DEFAULT_CLIENTNAME);
+		try {
+			factory.makeObject();
+		} catch (Exception e) {
 		}
 
-		@Override
-		public boolean isConnected() {
-
-			return true;
-		}
-
-		@Override
-		public String ping() {
-
-			return "PONG";
-		}
-
-		@Override
-		public String quit() {
-
-			throw new RuntimeException("quit");
-		}
-
-		@Override
-		public void disconnect() {
-
-			throw new RuntimeException("disconnect");
-		}
-	}
-
-	private static class JedisConn2 extends Jedis {
-
-		public JedisConn2(String arg0, int arg1) {
-			super(arg0, arg1);
-		}
-
-		@Override
-		public String select(int index) {
-
-			return String.valueOf(index);
-		}
-
-		@Override
-		public boolean isConnected() {
-
-			return true;
-		}
-
-		@Override
-		public String ping() {
-
-			return "PONG";
-		}
-
-		@Override
-		public String quit() {
-
-			return "quit";
-		}
-
-		@Override
-		public void disconnect() {
-
-		}
-	}
-	
-	private static class JedisConn3 extends Jedis {
-
-		public JedisConn3(String arg0, int arg1) {
-			super(arg0, arg1);
-		}
-
-		@Override
-		public String select(int index) {
-
-			return String.valueOf(index);
-		}
-
-		@Override
-		public boolean isConnected() {
-
-			return false;
-		}
-
-		@Override
-		public String ping() {
-
-			return "PONG1";
-		}
-
-		@Override
-		public String quit() {
-
-			return "quit";
-		}
-
-		@Override
-		public void disconnect() {
-
-		}
-	}
-	
-	private static class JedisConn4 extends Jedis {
-
-		public JedisConn4(String arg0, int arg1) {
-			super(arg0, arg1);
-		}
-
-		@Override
-		public String select(int index) {
-
-			return String.valueOf(index);
-		}
-
-		@Override
-		public boolean isConnected() {
-
-			return true;
-		}
-
-		@Override
-		public String ping() {
-
-			return "PONG1";
-		}
-
-		@Override
-		public String quit() {
-
-			return "quit";
-		}
-
-		@Override
-		public void disconnect() {
-
+		factory = new RedisConnectionFactory(RedisConfig.DEFAULT_HOST,
+				RedisConfig.DEFAULT_PORT, RedisConfig.DEFAULT_TIMEOUT,
+				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_PASSWORD,
+				RedisConfig.DEFAULT_DATABASE, "test");
+		try {
+			factory.makeObject();
+		} catch (Exception e) {
 		}
 	}
 }
