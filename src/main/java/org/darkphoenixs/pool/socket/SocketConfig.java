@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.darkphoenixs.pool.socket;
 
 /**
@@ -22,7 +21,6 @@ package org.darkphoenixs.pool.socket;
  *
  * @since 1.2.1
  * @author Victor
- *
  */
 public interface SocketConfig {
 
