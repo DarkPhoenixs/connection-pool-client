@@ -24,6 +24,11 @@ public class SocketConnectionPoolTest {
 	@Test
 	public void test_0() throws Exception {
 
+		try {
+			new SocketConnectionPool(new Properties());
+		} catch (Exception e) {
+		}
+
 		SocketConnectionPool pool = new SocketConnectionPool();
 
 		try {
@@ -42,11 +47,6 @@ public class SocketConnectionPoolTest {
 		}
 
 		pool.close();
-
-		try {
-			new SocketConnectionPool(new Properties());
-		} catch (Exception e) {
-		}
 
 	}
 

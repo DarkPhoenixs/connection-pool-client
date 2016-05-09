@@ -1,10 +1,5 @@
 package org.darkphoenixs.pool.socket;
 
-import java.io.PrintWriter;
-import java.net.Socket;
-
-import org.darkphoenixs.pool.PoolConfig;
-import org.darkphoenixs.pool.socket.SocketConnectionPool;
 import org.junit.Test;
 
 public class SocketTest {
