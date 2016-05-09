@@ -15,6 +15,8 @@
  */
 package org.darkphoenixs.pool.socket;
 
+import java.io.IOException;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Properties;
 
@@ -23,6 +25,29 @@ import org.junit.Test;
 
 public class SocketConnectionFactoryTest {
 
+	static {
+		
+		Thread th = new Thread(new Runnable() {
+			
+			private ServerSocket serverSocket;
+
+			@Override
+			public void run() {
+				
+				try {
+					serverSocket = new ServerSocket(1234);
+					
+					serverSocket.accept();
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		th.setDaemon(true);
+		th.start();
+	}
 	@Test
 	public void test_0() throws Exception {
 
@@ -76,7 +101,6 @@ public class SocketConnectionFactoryTest {
 		try {
 			new SocketConnectionFactory(pro);
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
 
 		pro.setProperty(SocketConfig.ADDRESS_PROPERTY,
@@ -95,7 +119,17 @@ public class SocketConnectionFactoryTest {
 				SocketConfig.DEFAULT_KEEPALIVE + "");
 		pro.setProperty(SocketConfig.TCPNODELAY_PROPERTY,
 				SocketConfig.TCPNODELAY_PROPERTY + "");
-		
+
 		new SocketConnectionFactory(pro);
+
+		Properties pro2 = new Properties();
+		pro2.setProperty(SocketConfig.ADDRESS_PROPERTY,
+				SocketConfig.DEFAULT_HOST + ":" + SocketConfig.DEFAULT_PORT);
+
+		try {
+			new SocketConnectionFactory(pro2).createConnection();
+		} catch (Exception e) {
+		}
+
 	}
 }
