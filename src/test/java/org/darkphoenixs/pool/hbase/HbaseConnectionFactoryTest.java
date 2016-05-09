@@ -60,14 +60,11 @@ public class HbaseConnectionFactoryTest {
 		} catch (Exception e) {
 		}
 
+		Properties prop = new Properties();
+
 		try {
-			Properties prop = new Properties();
 			prop.setProperty(HbaseConfig.ZOOKEEPER_QUORUM_PROPERTY,
 					HbaseConfig.DEFAULT_HOST);
-			new HbaseConnectionFactory(prop);
-
-			prop.setProperty(HbaseConfig.ZOOKEEPER_CLIENTPORT_PROPERTY,
-					HbaseConfig.DEFAULT_PORT);
 			new HbaseConnectionFactory(prop);
 
 			prop.setProperty(HbaseConfig.MASTER_PROPERTY, "localhost:60000");
@@ -75,6 +72,21 @@ public class HbaseConnectionFactoryTest {
 					"hdfs://localhost:8020/hbase");
 			new HbaseConnectionFactory(prop);
 
+		} catch (Exception e) {
+		}
+
+		try {
+			prop.setProperty(HbaseConfig.ZOOKEEPER_CLIENTPORT_PROPERTY,
+					HbaseConfig.DEFAULT_PORT);
+			new HbaseConnectionFactory(prop);
+		} catch (Exception e) {
+		}
+
+		try {
+			prop.setProperty(HbaseConfig.MASTER_PROPERTY, "localhost:60000");
+			prop.setProperty(HbaseConfig.ROOTDIR_PROPERTY,
+					"hdfs://localhost:8020/hbase");
+			new HbaseConnectionFactory(prop);
 		} catch (Exception e) {
 		}
 
