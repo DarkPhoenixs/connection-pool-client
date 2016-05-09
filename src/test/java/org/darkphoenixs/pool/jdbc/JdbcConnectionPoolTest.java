@@ -46,16 +46,24 @@ public class JdbcConnectionPoolTest {
 			pool.close();
 		} catch (Exception e) {
 		}
-
+		Properties prop = new Properties();
+		prop.setProperty(JdbcConfig.DRIVER_CLASS_PROPERTY,
+				JdbcConfig.DEFAULT_DRIVER_CLASS);
+		prop.setProperty(JdbcConfig.JDBC_URL_PROPERTY,
+				JdbcConfig.DEFAULT_JDBC_URL);
+		prop.setProperty(JdbcConfig.JDBC_USERNAME_PROPERTY,
+				JdbcConfig.DEFAULT_JDBC_USERNAME);
+		prop.setProperty(JdbcConfig.JDBC_PASSWORD_PROPERTY,
+				JdbcConfig.DEFAULT_JDBC_PASSWORD);
 		try {
-			JdbcConnectionPool pool = new JdbcConnectionPool(new Properties());
+			JdbcConnectionPool pool = new JdbcConnectionPool(prop);
 			pool.close();
 		} catch (Exception e) {
 		}
 
 		try {
 			JdbcConnectionPool pool = new JdbcConnectionPool(new PoolConfig(),
-					new Properties());
+					prop);
 			pool.close();
 		} catch (Exception e) {
 		}

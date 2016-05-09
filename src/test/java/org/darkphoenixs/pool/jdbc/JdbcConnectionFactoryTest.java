@@ -214,7 +214,7 @@ public class JdbcConnectionFactoryTest {
 		@Override
 		public boolean isClosed() throws SQLException {
 			// TODO Auto-generated method stub
-			return true;
+			return false;
 		}
 
 		@Override
