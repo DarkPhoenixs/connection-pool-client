@@ -42,30 +42,41 @@ public class HbaseConnectionFactoryTest {
 		}
 
 		try {
+			new HbaseConnectionFactory(HbaseConfig.DEFAULT_HOST, null, null,
+					null);
+
+		} catch (Exception e) {
+		}
+
+		try {
 			new HbaseConnectionFactory(new Configuration());
 
 		} catch (Exception e) {
 		}
-		
+
 		try {
 			new HbaseConnectionFactory(new Properties());
 
 		} catch (Exception e) {
 		}
-		
+
 		try {
 			Properties prop = new Properties();
-			
-			prop.setProperty(HbaseConfig.ZOOKEEPER_QUORUM_PROPERTY, HbaseConfig.DEFAULT_HOST);
-			prop.setProperty(HbaseConfig.ZOOKEEPER_CLIENTPORT_PROPERTY, HbaseConfig.DEFAULT_PORT);
+			prop.setProperty(HbaseConfig.ZOOKEEPER_QUORUM_PROPERTY,
+					HbaseConfig.DEFAULT_HOST);
+			new HbaseConnectionFactory(prop);
+
+			prop.setProperty(HbaseConfig.ZOOKEEPER_CLIENTPORT_PROPERTY,
+					HbaseConfig.DEFAULT_PORT);
+			new HbaseConnectionFactory(prop);
+
 			prop.setProperty(HbaseConfig.MASTER_PROPERTY, "localhost:60000");
-			prop.setProperty(HbaseConfig.ROOTDIR_PROPERTY, "hdfs://localhost:8020/hbase");
-			
-			new HbaseConnectionFactory(new Properties());
+			prop.setProperty(HbaseConfig.ROOTDIR_PROPERTY,
+					"hdfs://localhost:8020/hbase");
+			new HbaseConnectionFactory(prop);
 
 		} catch (Exception e) {
 		}
-
 
 		HbaseConnectionFactory factory = new HbaseConnectionFactory(
 				HbaseConfig.DEFAULT_HOST, HbaseConfig.DEFAULT_PORT,
