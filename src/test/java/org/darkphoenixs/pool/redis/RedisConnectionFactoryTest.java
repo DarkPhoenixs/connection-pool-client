@@ -112,33 +112,33 @@ public class RedisConnectionFactoryTest {
 				.makeObject().getObject()));
 	}
 
-	@Test
-	public void test_2() throws Exception {
-
-		RedisConnectionFactory factory = new RedisConnectionFactory(
-				RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
-				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT,
-				RedisConfig.DEFAULT_PASSWORD, RedisConfig.DEFAULT_DATABASE,
-				RedisConfig.DEFAULT_CLIENTNAME);
-
-		try {
-			factory.activateObject(new DefaultPooledObject<Jedis>(new Jedis()));
-		} catch (Exception e) {
-		}
-		try {
-			factory.validateObject(new DefaultPooledObject<Jedis>(new Jedis()));
-		} catch (Exception e) {
-		}
-		try {
-			factory.passivateObject(new DefaultPooledObject<Jedis>(new Jedis()));
-
-		} catch (Exception e) {
-		}
-		try {
-			factory.destroyObject(new DefaultPooledObject<Jedis>(new Jedis()));
-		} catch (Exception e) {
-		}
-	}
+//	@Test
+//	public void test_2() throws Exception {
+//
+//		RedisConnectionFactory factory = new RedisConnectionFactory(
+//				RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
+//				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT,
+//				RedisConfig.DEFAULT_PASSWORD, RedisConfig.DEFAULT_DATABASE,
+//				RedisConfig.DEFAULT_CLIENTNAME);
+//
+//		try {
+//			factory.activateObject(new DefaultPooledObject<Jedis>(new Jedis()));
+//		} catch (Exception e) {
+//		}
+//		try {
+//			factory.validateObject(new DefaultPooledObject<Jedis>(new Jedis()));
+//		} catch (Exception e) {
+//		}
+//		try {
+//			factory.passivateObject(new DefaultPooledObject<Jedis>(new Jedis()));
+//
+//		} catch (Exception e) {
+//		}
+//		try {
+//			factory.destroyObject(new DefaultPooledObject<Jedis>(new Jedis()));
+//		} catch (Exception e) {
+//		}
+//	}
 
 	@Test
 	public void test_3() throws Exception {
