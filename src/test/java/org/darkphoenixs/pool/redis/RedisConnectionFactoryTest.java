@@ -176,55 +176,23 @@ public class RedisConnectionFactoryTest {
 		} catch (Exception e) {
 		}
 
-		RedisConnectionFactory factory4 = new RedisConnectionFactory(
-				RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
-				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT,
-				RedisConfig.DEFAULT_PASSWORD, RedisConfig.DEFAULT_DATABASE, RedisConfig.DEFAULT_CLIENTNAME);
-		
-		try {
-			factory4.validateObject(new DefaultPooledObject<Jedis>(
-					new JedisConn3(RedisConfig.DEFAULT_HOST,
-							RedisConfig.DEFAULT_PORT)));
-		} catch (Exception e) {
-		}
-
-		try {
-			factory4.validateObject(new DefaultPooledObject<Jedis>(
-					new JedisConn4(RedisConfig.DEFAULT_HOST,
-							RedisConfig.DEFAULT_PORT)));
-		} catch (Exception e) {
-		}
-	}
-
-//	@Test
-//	public void test_3() throws Exception {
-//
-//		RedisConnectionFactory factory = new RedisConnectionFactory(
+//		RedisConnectionFactory factory4 = new RedisConnectionFactory(
 //				RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
 //				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT,
-//				"test", RedisConfig.DEFAULT_DATABASE,
-//				RedisConfig.DEFAULT_CLIENTNAME);
+//				RedisConfig.DEFAULT_PASSWORD, RedisConfig.DEFAULT_DATABASE, RedisConfig.DEFAULT_CLIENTNAME);
+//		
 //		try {
-//			factory.makeObject();
+//			factory4.validateObject(new DefaultPooledObject<Jedis>(
+//					new JedisConn3(RedisConfig.DEFAULT_HOST,
+//							RedisConfig.DEFAULT_PORT)));
 //		} catch (Exception e) {
 //		}
 //
-//		factory = new RedisConnectionFactory(RedisConfig.DEFAULT_HOST,
-//				RedisConfig.DEFAULT_PORT, RedisConfig.DEFAULT_TIMEOUT,
-//				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_PASSWORD, 3,
-//				RedisConfig.DEFAULT_CLIENTNAME);
 //		try {
-//			factory.makeObject();
+//			factory4.validateObject(new DefaultPooledObject<Jedis>(
+//					new JedisConn4(RedisConfig.DEFAULT_HOST,
+//							RedisConfig.DEFAULT_PORT)));
 //		} catch (Exception e) {
 //		}
-//
-//		factory = new RedisConnectionFactory(RedisConfig.DEFAULT_HOST,
-//				RedisConfig.DEFAULT_PORT, RedisConfig.DEFAULT_TIMEOUT,
-//				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_PASSWORD,
-//				RedisConfig.DEFAULT_DATABASE, "test");
-//		try {
-//			factory.makeObject();
-//		} catch (Exception e) {
-//		}
-//	}
+	}
 }
