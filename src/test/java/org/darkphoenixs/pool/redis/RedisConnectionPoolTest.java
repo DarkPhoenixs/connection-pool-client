@@ -34,6 +34,13 @@ public class RedisConnectionPoolTest {
 		} catch (Exception e) {
 		}
 
+		try {
+			RedisConnectionPool pool = new RedisConnectionPool(
+					new PoolConfig(), RedisConfig.DEFAULT_HOST);
+			pool.close();
+		} catch (Exception e) {
+		}
+
 		RedisConnectionPool pool = new RedisConnectionPool();
 
 		try {
