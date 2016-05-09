@@ -24,11 +24,14 @@ public class SocketConnectionPoolTest {
 	@Test
 	public void test_0() throws Exception {
 
-		try {
-			new SocketConnectionPool(new Properties());
-		} catch (Exception e) {
-		}
-
+		Properties prop = new Properties();
+		
+		prop.setProperty("address", "localhost:1234");
+		
+		SocketConnectionPool pool0 = new SocketConnectionPool(prop);
+		
+		pool0.close();
+		
 		SocketConnectionPool pool = new SocketConnectionPool();
 
 		try {

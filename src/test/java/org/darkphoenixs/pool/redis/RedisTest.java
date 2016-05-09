@@ -1,9 +1,6 @@
 package org.darkphoenixs.pool.redis;
 
-import org.darkphoenixs.pool.PoolConfig;
 import org.junit.Test;
-
-import redis.clients.jedis.Jedis;
 
 public class RedisTest {
 
