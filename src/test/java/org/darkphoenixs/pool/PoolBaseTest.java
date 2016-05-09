@@ -57,12 +57,12 @@ public class PoolBaseTest {
 		}
 		
 		try {
-			pool.returnResource(null);
+			pool.returnResource(new Conn());
 		} catch (Exception e) {
 		}
 		
 		try {
-			pool.invalidateResource(null);
+			pool.invalidateResource(new Conn());
 		} catch (Exception e) {
 		}
 		
