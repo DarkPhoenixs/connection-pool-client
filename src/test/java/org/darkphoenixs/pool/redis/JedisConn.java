@@ -39,9 +39,4 @@ public class JedisConn extends Jedis {
 		throw new RuntimeException("disconnect");
 	}
 	
-	@Override
-	public Client getClient() {
-
-		return new Client();
-	}
 }

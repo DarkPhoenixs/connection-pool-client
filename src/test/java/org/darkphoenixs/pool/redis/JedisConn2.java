@@ -37,16 +37,4 @@ public class JedisConn2 extends Jedis {
 	public void disconnect() {
 
 	}
-
-	@Override
-	public Client getClient() {
-
-		return new Client() {
-
-			@Override
-			public boolean isBroken() {
-				return true;
-			}
-		};
-	}
 }

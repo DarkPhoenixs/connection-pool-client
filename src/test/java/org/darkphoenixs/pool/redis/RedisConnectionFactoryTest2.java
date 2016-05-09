@@ -1,8 +1,5 @@
 package org.darkphoenixs.pool.redis;
 
-import java.io.IOException;
-import java.net.ServerSocket;
-
 import org.apache.commons.pool2.impl.DefaultPooledObject;
 import org.junit.Test;
 

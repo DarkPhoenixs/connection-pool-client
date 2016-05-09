@@ -78,16 +78,6 @@ public class RedisConnectionPoolTest {
 			pool.returnConnection(pool.getConnection());
 		} catch (Exception e) {
 		}
-		
-		try {
-			pool.returnConnection(new JedisConn(RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT));
-		} catch (Exception e) {
-		}
-		
-		try {
-			pool.returnConnection(new JedisConn2(RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT));
-		} catch (Exception e) {
-		}
 
 		try {
 			pool.invalidateConnection(null);
