@@ -102,9 +102,98 @@ public class RedisConnectionFactoryTest {
 		RedisConnectionFactory factory = new RedisConnectionFactory(
 				RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
 				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT,
-				RedisConfig.DEFAULT_PASSWORD, RedisConfig.DEFAULT_DATABASE, RedisConfig.DEFAULT_CLIENTNAME);
-		
-		
-		factory.destroyObject(new DefaultPooledObject<Jedis>(factory.makeObject().getObject()));
+				RedisConfig.DEFAULT_PASSWORD, RedisConfig.DEFAULT_DATABASE,
+				RedisConfig.DEFAULT_CLIENTNAME);
+
+		factory.validateObject(new DefaultPooledObject<Jedis>(factory
+				.makeObject().getObject()));
+
+		factory.destroyObject(new DefaultPooledObject<Jedis>(factory
+				.makeObject().getObject()));
+	}
+
+	@Test
+	public void test_2() throws Exception {
+
+		RedisConnectionFactory factory = new RedisConnectionFactory(
+				RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
+				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT,
+				RedisConfig.DEFAULT_PASSWORD, RedisConfig.DEFAULT_DATABASE,
+				RedisConfig.DEFAULT_CLIENTNAME);
+
+		try {
+			factory.activateObject(new DefaultPooledObject<Jedis>(new Jedis()));
+		} catch (Exception e) {
+		}
+		try {
+			factory.validateObject(new DefaultPooledObject<Jedis>(new Jedis()));
+		} catch (Exception e) {
+		}
+		try {
+			factory.passivateObject(new DefaultPooledObject<Jedis>(new Jedis()));
+
+		} catch (Exception e) {
+		}
+		try {
+			factory.destroyObject(new DefaultPooledObject<Jedis>(new Jedis()));
+		} catch (Exception e) {
+		}
+	}
+
+	@Test
+	public void test_3() throws Exception {
+
+		RedisConnectionFactory factory = new RedisConnectionFactory(
+				RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
+				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT,
+				RedisConfig.DEFAULT_PASSWORD, 1, RedisConfig.DEFAULT_CLIENTNAME);
+
+		try {
+			factory.activateObject(new DefaultPooledObject<Jedis>(
+					new JedisConn()));
+
+		} catch (Exception e) {
+		}
+
+		try {
+			factory.validateObject(new DefaultPooledObject<Jedis>(
+					new JedisConn()));
+
+		} catch (Exception e) {
+		}
+
+		try {
+			factory.destroyObject(new DefaultPooledObject<Jedis>(
+					new JedisConn()));
+
+		} catch (Exception e) {
+		}
+	}
+
+	private static class JedisConn extends Jedis {
+
+		@Override
+		public String select(int index) {
+
+			return String.valueOf(index);
+		}
+
+		@Override
+		public boolean isConnected() {
+
+			return true;
+		}
+
+		@Override
+		public String ping() {
+
+			return "PONG";
+		}
+
+		@Override
+		public String quit() {
+
+			throw new RuntimeException();
+		}
 	}
 }
