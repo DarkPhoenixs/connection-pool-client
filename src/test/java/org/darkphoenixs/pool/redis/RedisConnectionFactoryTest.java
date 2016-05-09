@@ -165,25 +165,61 @@ public class RedisConnectionFactoryTest {
 		} catch (Exception e) {
 		}
 
+		RedisConnectionFactory factory3 = new RedisConnectionFactory(
+				RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
+				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT,
+				RedisConfig.DEFAULT_PASSWORD, RedisConfig.DEFAULT_DATABASE, RedisConfig.DEFAULT_CLIENTNAME);
+
 		try {
-			factory2.validateObject(new DefaultPooledObject<Jedis>(
+			factory3.validateObject(new DefaultPooledObject<Jedis>(
 					new JedisConn(RedisConfig.DEFAULT_HOST, 1233)));
 		} catch (Exception e) {
 		}
 
 		try {
-			factory2.validateObject(new DefaultPooledObject<Jedis>(
+			factory3.validateObject(new DefaultPooledObject<Jedis>(
 					new JedisConn3(RedisConfig.DEFAULT_HOST,
 							RedisConfig.DEFAULT_PORT)));
 		} catch (Exception e) {
 		}
 
 		try {
-			factory2.validateObject(new DefaultPooledObject<Jedis>(
+			factory3.validateObject(new DefaultPooledObject<Jedis>(
 					new JedisConn4(RedisConfig.DEFAULT_HOST,
 							RedisConfig.DEFAULT_PORT)));
 		} catch (Exception e) {
 		}
 	}
 
+	@Test
+	public void test_3() throws Exception {
+
+		RedisConnectionFactory factory = new RedisConnectionFactory(
+				RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
+				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT,
+				"test", RedisConfig.DEFAULT_DATABASE,
+				RedisConfig.DEFAULT_CLIENTNAME);
+		try {
+			factory.makeObject();
+		} catch (Exception e) {
+		}
+
+		factory = new RedisConnectionFactory(RedisConfig.DEFAULT_HOST,
+				RedisConfig.DEFAULT_PORT, RedisConfig.DEFAULT_TIMEOUT,
+				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_PASSWORD, 3,
+				RedisConfig.DEFAULT_CLIENTNAME);
+		try {
+			factory.makeObject();
+		} catch (Exception e) {
+		}
+
+		factory = new RedisConnectionFactory(RedisConfig.DEFAULT_HOST,
+				RedisConfig.DEFAULT_PORT, RedisConfig.DEFAULT_TIMEOUT,
+				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_PASSWORD,
+				RedisConfig.DEFAULT_DATABASE, "test");
+		try {
+			factory.makeObject();
+		} catch (Exception e) {
+		}
+	}
 }
