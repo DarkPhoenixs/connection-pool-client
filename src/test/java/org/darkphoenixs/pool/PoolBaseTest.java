@@ -7,8 +7,8 @@ import org.junit.Test;
 public class PoolBaseTest {
 
 	@Test
-	public void test() throws Exception {
-
+	public void test_0() throws Exception {
+		
 		ConnPool pool = new ConnPool(new PoolConfig(), new ConnFactory());
 		
 		pool.initPool(new PoolConfig(), new ConnFactory());
@@ -21,15 +21,15 @@ public class PoolBaseTest {
 		
 		pool.invalidateResource(conn);
 		
-		pool.getMaxBorrowWaitTimeMillis();
+		System.out.println("MaxBorrowWaitTimeMillis " + pool.getMaxBorrowWaitTimeMillis());
 		
-		pool.getMeanBorrowWaitTimeMillis();
-		
-		pool.getNumActive();
-		
-		pool.getNumIdle();
-		
-		pool.getNumWaiters();
+		System.out.println("MeanBorrowWaitTimeMillis " + pool.getMeanBorrowWaitTimeMillis());
+
+		System.out.println("NumActive " + pool.getNumActive());
+
+		System.out.println("NumIdle " + pool.getNumIdle());
+
+		System.out.println("NumWaiters " + pool.getNumWaiters());
 		
 		pool.isClosed();
 		
@@ -41,6 +41,78 @@ public class PoolBaseTest {
 
 	}
 
+	@Test
+	public void test_1() throws Exception {
+		
+		ConnPool pool = new ConnPool();
+
+		try {
+			pool.addObjects(1);
+		} catch (Exception e) {
+		}
+		
+		try {
+			pool.getResource();
+		} catch (Exception e) {
+		}
+		
+		try {
+			pool.returnResource(null);
+		} catch (Exception e) {
+		}
+		
+		try {
+			pool.invalidateResource(null);
+		} catch (Exception e) {
+		}
+		
+		try {
+			System.out.println("MaxBorrowWaitTimeMillis " + pool.getMaxBorrowWaitTimeMillis());
+		} catch (Exception e) {
+		}
+		
+		try {
+			System.out.println("MeanBorrowWaitTimeMillis " + pool.getMeanBorrowWaitTimeMillis());
+		} catch (Exception e) {
+		}
+
+		try {
+			System.out.println("NumActive " + pool.getNumActive());
+		} catch (Exception e) {
+		}
+
+		try {
+			System.out.println("NumIdle " + pool.getNumIdle());
+		} catch (Exception e) {
+		}
+
+		try {
+			System.out.println("NumWaiters " + pool.getNumWaiters());
+		} catch (Exception e) {
+		}
+		
+		try {
+			pool.isClosed();
+		} catch (Exception e) {
+		}
+		
+		try {
+			pool.clear();
+		} catch (Exception e) {
+		}
+		
+		try {
+			pool.destroy();
+		} catch (Exception e) {
+		}
+		
+		try {
+			pool.close();
+		} catch (Exception e) {
+		}
+
+	}
+	
 	private static class ConnFactory implements ConnectionFactory<Conn> {
 
 		private static final long serialVersionUID = 1L;
@@ -93,6 +165,9 @@ public class PoolBaseTest {
 
 		private static final long serialVersionUID = 1L;
 
+		public ConnPool() {
+		}
+		
 		public ConnPool(final PoolConfig poolConfig, ConnFactory factory) {
 			
 			super(poolConfig, factory);
