@@ -158,7 +158,6 @@ public class PoolBaseTest {
 
 			return conn;
 		}
-
 	}
 
 	private static class ConnPool extends PoolBase<Conn> {
