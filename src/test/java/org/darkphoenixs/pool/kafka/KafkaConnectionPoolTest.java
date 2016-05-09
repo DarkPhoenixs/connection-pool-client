@@ -72,6 +72,12 @@ public class KafkaConnectionPoolTest {
 		} catch (Exception e) {
 		}
 		
+		try {
+			KafkaConnectionPool pool = new KafkaConnectionPool(new PoolConfig(), KafkaConfig.DEFAULT_BROKERS,KafkaConfig.DEFAULT_TYPE);
+			pool.close();
+		} catch (Exception e) {
+		}
+		
 		KafkaConnectionPool pool = new KafkaConnectionPool();
 		
 		try {
