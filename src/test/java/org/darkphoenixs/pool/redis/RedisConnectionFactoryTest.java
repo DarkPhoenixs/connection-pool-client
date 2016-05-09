@@ -138,6 +138,32 @@ public class RedisConnectionFactoryTest {
 			factory.destroyObject(new DefaultPooledObject<Jedis>(new Jedis()));
 		} catch (Exception e) {
 		}
+
+		RedisConnectionFactory factory2 = new RedisConnectionFactory(
+				RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
+				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT,
+				RedisConfig.DEFAULT_PASSWORD, 2, RedisConfig.DEFAULT_CLIENTNAME);
+
+		try {
+			factory2.activateObject(new DefaultPooledObject<Jedis>(
+					new JedisConn(RedisConfig.DEFAULT_HOST,
+							RedisConfig.DEFAULT_PORT)));
+		} catch (Exception e) {
+		}
+		
+		try {
+			factory2.destroyObject(new DefaultPooledObject<Jedis>(
+					new JedisConn2(RedisConfig.DEFAULT_HOST,
+							RedisConfig.DEFAULT_PORT)));
+		} catch (Exception e) {
+		}
+		
+		try {
+			factory2.destroyObject(new DefaultPooledObject<Jedis>(
+					new JedisConn(RedisConfig.DEFAULT_HOST,
+							RedisConfig.DEFAULT_PORT)));
+		} catch (Exception e) {
+		}
 	}
 
 }
