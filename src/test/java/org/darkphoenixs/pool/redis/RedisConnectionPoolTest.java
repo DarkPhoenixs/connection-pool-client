@@ -1,5 +1,7 @@
 package org.darkphoenixs.pool.redis;
 
+import java.io.IOException;
+import java.net.ServerSocket;
 import java.util.Properties;
 
 import org.darkphoenixs.pool.PoolConfig;
@@ -7,6 +9,30 @@ import org.junit.Test;
 
 public class RedisConnectionPoolTest {
 
+	static {
+
+		Thread th = new Thread(new Runnable() {
+
+			private ServerSocket serverSocket;
+
+			@Override
+			public void run() {
+
+				try {
+					serverSocket = new ServerSocket(RedisConfig.DEFAULT_PORT);
+
+					serverSocket.accept();
+
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+
+		th.setDaemon(true);
+		th.start();
+	}
+	
 	@Test
 	public void test() throws Exception {
 
@@ -49,7 +75,12 @@ public class RedisConnectionPoolTest {
 		}
 
 		try {
-			pool.returnConnection(null);
+			pool.returnConnection(new JedisConn(RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT));
+		} catch (Exception e) {
+		}
+		
+		try {
+			pool.returnConnection(new JedisConn2(RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT));
 		} catch (Exception e) {
 		}
 

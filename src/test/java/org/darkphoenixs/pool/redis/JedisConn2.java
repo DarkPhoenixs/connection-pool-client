@@ -1,5 +1,6 @@
 package org.darkphoenixs.pool.redis;
 
+import redis.clients.jedis.Client;
 import redis.clients.jedis.Jedis;
 
 public class JedisConn2 extends Jedis {
@@ -35,5 +36,17 @@ public class JedisConn2 extends Jedis {
 	@Override
 	public void disconnect() {
 
+	}
+
+	@Override
+	public Client getClient() {
+
+		return new Client() {
+
+			@Override
+			public boolean isBroken() {
+				return true;
+			}
+		};
 	}
 }
