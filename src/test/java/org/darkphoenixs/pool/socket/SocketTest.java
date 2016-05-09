@@ -1,4 +1,4 @@
-package org.darkphoenixs.pool.scoket;
+package org.darkphoenixs.pool.socket;
 
 import java.io.PrintWriter;
 import java.net.Socket;
