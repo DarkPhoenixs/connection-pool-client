@@ -74,33 +74,39 @@ public class RedisConnectionFactoryTest {
 
 		} catch (Exception e) {
 		}
-		
+
 		try {
 			factory.activateObject(new DefaultPooledObject<Jedis>(new Jedis()));
 		} catch (Exception e) {
 		}
-		
 		try {
 			factory.activateObject(new DefaultPooledObject<Jedis>(null));
 		} catch (Exception e) {
 		}
 
-		factory.validateObject(new DefaultPooledObject<Jedis>(new Jedis()));
-
+		try {
+			factory.validateObject(new DefaultPooledObject<Jedis>(new Jedis()));
+		} catch (Exception e) {
+		}
 		try {
 			factory.validateObject(new DefaultPooledObject<Jedis>(null));
 		} catch (Exception e) {
 		}
 
-		factory.passivateObject(new DefaultPooledObject<Jedis>(new Jedis()));
-
+		try {
+			factory.passivateObject(new DefaultPooledObject<Jedis>(new Jedis()));
+		} catch (Exception e) {
+		}
 		try {
 			factory.passivateObject(new DefaultPooledObject<Jedis>(null));
 		} catch (Exception e) {
 		}
 
-		factory.destroyObject(new DefaultPooledObject<Jedis>(new Jedis()));
-
+		try {
+			factory.destroyObject(new DefaultPooledObject<Jedis>(factory
+					.makeObject().getObject()));
+		} catch (Exception e) {
+		}
 		try {
 			factory.destroyObject(new DefaultPooledObject<Jedis>(null));
 		} catch (Exception e) {
