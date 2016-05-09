@@ -194,54 +194,61 @@ public class RedisConnectionFactoryTest {
 
 		} catch (Exception e) {
 		}
-
+		
 		try {
 			factory.validateObject(new DefaultPooledObject<Jedis>(
-					new JedisConn2("127.0.0.1", RedisConfig.DEFAULT_PORT)));
+					new JedisConn3("127.0.0.2",
+							RedisConfig.DEFAULT_PORT)));
 
 		} catch (Exception e) {
 		}
 		
 		try {
 			factory.validateObject(new DefaultPooledObject<Jedis>(
-					new JedisConn2(RedisConfig.DEFAULT_HOST, 1233)));
-
+					new JedisConn3(RedisConfig.DEFAULT_HOST,
+							1233)));
+		} catch (Exception e) {
+		}
+		
+		try {
+			factory.validateObject(new DefaultPooledObject<Jedis>(
+					new JedisConn3(RedisConfig.DEFAULT_HOST,
+							RedisConfig.DEFAULT_PORT)));
 		} catch (Exception e) {
 		}
 	}
 
 	@Test
 	public void test_4() throws Exception {
-
+		
 		RedisConnectionFactory factory = new RedisConnectionFactory(
 				RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
 				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT,
-				"test", RedisConfig.DEFAULT_DATABASE,
-				RedisConfig.DEFAULT_CLIENTNAME);
+				"test", RedisConfig.DEFAULT_DATABASE, RedisConfig.DEFAULT_CLIENTNAME);
 		try {
 			factory.makeObject();
 		} catch (Exception e) {
 		}
-
-		factory = new RedisConnectionFactory(RedisConfig.DEFAULT_HOST,
-				RedisConfig.DEFAULT_PORT, RedisConfig.DEFAULT_TIMEOUT,
-				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_PASSWORD, 3,
-				RedisConfig.DEFAULT_CLIENTNAME);
+		
+		factory = new RedisConnectionFactory(
+				RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
+				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT,
+				RedisConfig.DEFAULT_PASSWORD, 3, RedisConfig.DEFAULT_CLIENTNAME);
 		try {
 			factory.makeObject();
 		} catch (Exception e) {
 		}
-
-		factory = new RedisConnectionFactory(RedisConfig.DEFAULT_HOST,
-				RedisConfig.DEFAULT_PORT, RedisConfig.DEFAULT_TIMEOUT,
-				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_PASSWORD,
-				RedisConfig.DEFAULT_DATABASE, "test");
+		
+		factory = new RedisConnectionFactory(
+				RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
+				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT,
+				RedisConfig.DEFAULT_PASSWORD, RedisConfig.DEFAULT_DATABASE, "test");
 		try {
 			factory.makeObject();
 		} catch (Exception e) {
 		}
 	}
-
+	
 	private static class JedisConn extends Jedis {
 
 		public JedisConn(String arg0, int arg1) {
@@ -282,6 +289,42 @@ public class RedisConnectionFactoryTest {
 	private static class JedisConn2 extends Jedis {
 
 		public JedisConn2(String arg0, int arg1) {
+			super(arg0, arg1);
+		}
+
+		@Override
+		public String select(int index) {
+
+			return String.valueOf(index);
+		}
+
+		@Override
+		public boolean isConnected() {
+
+			return false;
+		}
+
+		@Override
+		public String ping() {
+
+			return "PONG";
+		}
+
+		@Override
+		public String quit() {
+
+			return "quit";
+		}
+
+		@Override
+		public void disconnect() {
+
+		}
+	}
+	
+	private static class JedisConn3 extends Jedis {
+
+		public JedisConn3(String arg0, int arg1) {
 			super(arg0, arg1);
 		}
 
