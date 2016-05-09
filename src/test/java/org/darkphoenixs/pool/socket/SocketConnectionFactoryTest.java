@@ -59,11 +59,6 @@ public class SocketConnectionFactoryTest {
 						"0", "1", "2" });
 
 		try {
-			factory.createConnection();
-		} catch (Exception e) {
-		}
-
-		try {
 			factory.makeObject();
 		} catch (Exception e) {
 		}
