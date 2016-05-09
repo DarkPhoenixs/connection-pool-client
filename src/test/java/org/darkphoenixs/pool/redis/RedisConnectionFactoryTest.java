@@ -5,6 +5,7 @@ import java.util.Properties;
 import org.apache.commons.pool2.impl.DefaultPooledObject;
 import org.junit.Test;
 
+import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.Jedis;
 
 public class RedisConnectionFactoryTest {
@@ -13,9 +14,9 @@ public class RedisConnectionFactoryTest {
 	public void test() throws Exception {
 
 		Properties prop = new Properties();
-		
+
 		RedisConnectionFactory factory;
-		
+
 		try {
 			factory = new RedisConnectionFactory(prop);
 
@@ -40,6 +41,9 @@ public class RedisConnectionFactoryTest {
 				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_PASSWORD,
 				RedisConfig.DEFAULT_DATABASE, RedisConfig.DEFAULT_CLIENTNAME);
 
+		factory.setHostAndPort(new HostAndPort(RedisConfig.DEFAULT_HOST,
+				RedisConfig.DEFAULT_PORT));
+		
 		try {
 			factory.makeObject();
 
