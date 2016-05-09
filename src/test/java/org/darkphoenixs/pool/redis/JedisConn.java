@@ -1,6 +1,5 @@
 package org.darkphoenixs.pool.redis;
 
-import redis.clients.jedis.Client;
 import redis.clients.jedis.Jedis;
 
 public class JedisConn extends Jedis {
