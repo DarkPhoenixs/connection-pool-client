@@ -37,7 +37,7 @@ public class RedisConnectionFactoryTest {
 	}
 
 	@Test
-	public void test() throws Exception {
+	public void test_0() throws Exception {
 
 		Properties prop = new Properties();
 
@@ -62,9 +62,9 @@ public class RedisConnectionFactoryTest {
 
 		factory = new RedisConnectionFactory(prop);
 
-		factory = new RedisConnectionFactory(RedisConfig.DEFAULT_HOST,
-				RedisConfig.DEFAULT_PORT, RedisConfig.DEFAULT_TIMEOUT,
-				RedisConfig.DEFAULT_TIMEOUT, "Test", 1, "Test");
+		factory = new RedisConnectionFactory(RedisConfig.DEFAULT_HOST, 1233,
+				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT,
+				"Test", 1, "Test");
 
 		factory.setHostAndPort(new HostAndPort(RedisConfig.DEFAULT_HOST,
 				RedisConfig.DEFAULT_PORT));
@@ -76,40 +76,35 @@ public class RedisConnectionFactoryTest {
 		}
 
 		try {
-			factory.activateObject(new DefaultPooledObject<Jedis>(new Jedis()));
-		} catch (Exception e) {
-		}
-		try {
 			factory.activateObject(new DefaultPooledObject<Jedis>(null));
 		} catch (Exception e) {
 		}
 
-		try {
-			factory.validateObject(new DefaultPooledObject<Jedis>(new Jedis()));
-		} catch (Exception e) {
-		}
 		try {
 			factory.validateObject(new DefaultPooledObject<Jedis>(null));
 		} catch (Exception e) {
 		}
 
 		try {
-			factory.passivateObject(new DefaultPooledObject<Jedis>(new Jedis()));
-		} catch (Exception e) {
-		}
-		try {
 			factory.passivateObject(new DefaultPooledObject<Jedis>(null));
 		} catch (Exception e) {
 		}
 
 		try {
-			factory.destroyObject(new DefaultPooledObject<Jedis>(factory
-					.makeObject().getObject()));
-		} catch (Exception e) {
-		}
-		try {
 			factory.destroyObject(new DefaultPooledObject<Jedis>(null));
 		} catch (Exception e) {
 		}
+	}
+
+	@Test
+	public void test_1() throws Exception {
+
+		RedisConnectionFactory factory = new RedisConnectionFactory(
+				RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
+				RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT,
+				RedisConfig.DEFAULT_PASSWORD, RedisConfig.DEFAULT_DATABASE, RedisConfig.DEFAULT_CLIENTNAME);
+		
+		
+		factory.destroyObject(new DefaultPooledObject<Jedis>(factory.makeObject().getObject()));
 	}
 }
