@@ -15,31 +15,39 @@
  */
 package org.darkphoenixs.pool.socket;
 
+import java.util.Properties;
+
 import org.junit.Test;
 
 public class SocketConnectionPoolTest {
 
 	@Test
 	public void test_0() throws Exception {
-		
+
 		SocketConnectionPool pool = new SocketConnectionPool();
-		
+
 		try {
 			pool.getConnection();
 		} catch (Exception e) {
 		}
-		
+
 		try {
 			pool.returnConnection(null);
 		} catch (Exception e) {
 		}
-		
+
 		try {
 			pool.invalidateConnection(null);
 		} catch (Exception e) {
 		}
 
 		pool.close();
+
+		try {
+			new SocketConnectionPool(new Properties());
+		} catch (Exception e) {
+		}
+
 	}
-	
+
 }
