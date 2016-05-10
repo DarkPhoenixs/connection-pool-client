@@ -105,8 +105,43 @@ public class RedisShardedConnPoolTest {
 		}
 		
 		try {
+			factory.validateObject(new DefaultPooledObject<ShardedJedis>(
+					new ShardedJedisConn3(Arrays
+							.asList(new JedisShardInfo[] { info }))));
+		} catch (Exception e) {
+		}
+		
+		try {
+			factory.validateObject(new DefaultPooledObject<ShardedJedis>(
+					new ShardedJedisConn4(Arrays
+							.asList(new JedisShardInfo[] { info }))));
+		} catch (Exception e) {
+		}
+		
+		try {
+			factory.destroyObject(new DefaultPooledObject<ShardedJedis>(
+					new ShardedJedisConn(Arrays
+							.asList(new JedisShardInfo[] { info }))));
+		} catch (Exception e) {
+		}
+		
+		try {
+			factory.destroyObject(new DefaultPooledObject<ShardedJedis>(
+					new ShardedJedisConn2(Arrays
+							.asList(new JedisShardInfo[] { info }))));
+		} catch (Exception e) {
+		}
+		
+		try {
 			factory.destroyObject(new DefaultPooledObject<ShardedJedis>(
 					new ShardedJedisConn3(Arrays
+							.asList(new JedisShardInfo[] { info }))));
+		} catch (Exception e) {
+		}
+		
+		try {
+			factory.destroyObject(new DefaultPooledObject<ShardedJedis>(
+					new ShardedJedisConn4(Arrays
 							.asList(new JedisShardInfo[] { info }))));
 		} catch (Exception e) {
 		}

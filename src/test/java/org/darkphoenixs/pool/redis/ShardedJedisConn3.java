@@ -17,7 +17,7 @@ public class ShardedJedisConn3 extends ShardedJedis {
 	@Override
 	public Collection<Jedis> getAllShards() {
 
-		Jedis jedis = new JedisConn();
+		Jedis jedis = new JedisConn3();
 		
 		return Collections.singletonList(jedis);
 	}
