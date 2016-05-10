@@ -12,6 +12,7 @@ import org.darkphoenixs.pool.PoolConfig;
 import org.junit.Before;
 import org.junit.Test;
 
+import redis.clients.jedis.Client;
 import redis.clients.jedis.Jedis;
 
 public class RedisSentinelConnPoolTest {
@@ -148,7 +149,7 @@ public class RedisSentinelConnPoolTest {
 		}
 
 		try {
-			pool.returnConnection(pool.getResource());
+			pool.returnConnection(pool.getConnection());
 		} catch (Exception e) {
 		}
 
@@ -181,14 +182,36 @@ public class RedisSentinelConnPoolTest {
 		} catch (Exception e) {
 		}
 
+		Thread.sleep(3000);
+		
 		try {
 			pool.initPool(pool.toHostAndPort(Arrays.asList(new String[] {
 					"localhost", "6379" })));
 
-			pool.returnConnection(pool.getResource());
+			pool.returnConnection(pool.getConnection());
 		} catch (Exception e) {
 		}
 
+		try {
+			pool.returnConnection(new Jedis(){
+				@Override
+				public Client getClient() {
+
+					return new Client() {
+						
+						@Override
+						public boolean isBroken() {
+
+							return true;
+						}
+					};
+				}
+				
+			});
+			
+		} catch (Exception e) {
+		}
+		
 		try {
 			pool.invalidateConnection(null);
 		} catch (Exception e) {
