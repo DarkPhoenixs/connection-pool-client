@@ -84,7 +84,12 @@ public class RedisConnectionPoolTest {
 			
 			pool.returnConnection(jedis);
 			
-			jedis.close();
+			jedis.disconnect();
+			
+			try {
+				jedis.auth("");
+			} catch (Exception e) {
+			}
 			
 			pool.returnConnection(jedis);
 

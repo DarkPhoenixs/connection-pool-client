@@ -190,13 +190,18 @@ public class RedisSentinelConnPoolTest {
 			pool.initPool(pool.toHostAndPort(Arrays.asList(new String[] {
 					"localhost", "6379" })));
 
-			Jedis Jedis = pool.getConnection();
+			Jedis jedis = pool.getConnection();
 
-			pool.returnConnection(Jedis);
+			pool.returnConnection(jedis);
 
-			Jedis.close();
+			jedis.disconnect();
 
-			pool.returnConnection(Jedis);
+			try {
+				jedis.auth("");
+			} catch (Exception e) {
+			}
+
+			pool.returnConnection(jedis);
 
 		} catch (Exception e) {
 		}
