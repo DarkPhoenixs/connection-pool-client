@@ -183,7 +183,7 @@ public class RedisSentinelConnPoolTest {
 		}
 
 		Thread.sleep(3000);
-		
+
 		try {
 			pool.initPool(pool.toHostAndPort(Arrays.asList(new String[] {
 					"localhost", "6379" })));
@@ -193,12 +193,12 @@ public class RedisSentinelConnPoolTest {
 		}
 
 		try {
-			pool.returnConnection(new Jedis(){
+			pool.returnConnection(new Jedis() {
 				@Override
 				public Client getClient() {
 
 					return new Client() {
-						
+
 						@Override
 						public boolean isBroken() {
 
@@ -206,12 +206,12 @@ public class RedisSentinelConnPoolTest {
 						}
 					};
 				}
-				
+
 			});
-			
+
 		} catch (Exception e) {
 		}
-		
+
 		try {
 			pool.invalidateConnection(null);
 		} catch (Exception e) {
@@ -235,6 +235,22 @@ public class RedisSentinelConnPoolTest {
 
 		/** serialVersionUID */
 		private static final long serialVersionUID = 1L;
+
+		public RedisSentinelConnPoolDemo() {
+
+			RedisMasterListener lis1 = new RedisMasterListener("localhost",
+					"localhost", 6379);
+			lis1.setDaemon(true);
+			lis1.start();
+			RedisMasterListener lis2 = new RedisMasterListener("localhost",
+					"localhost", 6379, 5000);
+			lis2.setDaemon(true);
+			lis2.start();
+
+			masterListeners.add(lis1);
+			masterListeners.add(lis2);
+			masterListeners.add(new RedisMasterListener());
+		}
 
 		@Override
 		protected void initPool(GenericObjectPoolConfig poolConfig,
