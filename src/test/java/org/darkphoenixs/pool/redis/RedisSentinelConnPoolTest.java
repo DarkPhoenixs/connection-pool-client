@@ -9,6 +9,7 @@ import java.util.Properties;
 import org.apache.commons.pool2.PooledObjectFactory;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.darkphoenixs.pool.PoolConfig;
+import org.darkphoenixs.pool.redis.RedisSentinelConnPool.RedisMasterListener;
 import org.darkphoenixs.pool.redis.RedisSentinelConnPool.RedisMasterPubSub;
 import org.junit.Before;
 import org.junit.Test;
@@ -245,12 +246,39 @@ public class RedisSentinelConnPoolTest {
 
 		pubSub.onMessage("channel", "message");
 
+		pubSub.onMessage("channel", "localhost1 x x localhost 6379");
+		
 		pubSub.onMessage("channel", "localhost x x localhost 6379");
 
 		try {
 			pool.close();
 		} catch (Exception e) {
 		}
+	}
+
+	@Test
+	public void test_3() throws Exception {
+		
+		RedisSentinelConnPool pool = new RedisSentinelConnPool();
+
+		pool.poolConfig = new PoolConfig();
+
+		RedisMasterListener lis1 = pool.new RedisMasterListener("localhost",
+				"localhost", 6379);
+		lis1.setDaemon(true);
+		lis1.start();
+		RedisMasterListener lis2 = pool.new RedisMasterListener("localhost",
+				"localhost", 6379, 5000);
+		lis2.setDaemon(true);
+		lis2.start();
+		
+		try {
+			Thread.sleep(2000);
+			
+			pool.close();
+		} catch (Exception e) {
+		}
+
 	}
 
 	private static class RedisSentinelConnPoolDemo extends
@@ -261,17 +289,6 @@ public class RedisSentinelConnPoolTest {
 
 		public RedisSentinelConnPoolDemo() {
 
-			RedisMasterListener lis1 = new RedisMasterListener("localhost",
-					"localhost", 6379);
-			lis1.setDaemon(true);
-			lis1.start();
-			RedisMasterListener lis2 = new RedisMasterListener("localhost",
-					"localhost", 6379, 5000);
-			lis2.setDaemon(true);
-			lis2.start();
-
-			masterListeners.add(lis1);
-			masterListeners.add(lis2);
 			masterListeners.add(new RedisMasterListener());
 		}
 
