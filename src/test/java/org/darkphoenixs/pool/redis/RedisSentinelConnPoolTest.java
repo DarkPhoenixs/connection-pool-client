@@ -268,7 +268,7 @@ public class RedisSentinelConnPoolTest {
 		lis1.setDaemon(true);
 		lis1.start();
 		RedisMasterListener lis2 = pool.new RedisMasterListener("localhost",
-				"localhost", 6379, 5000);
+				"localhost", 6379, 2000);
 		lis2.setDaemon(true);
 		lis2.start();
 		
@@ -281,7 +281,6 @@ public class RedisSentinelConnPoolTest {
 		
 		try {
 			lis1.shutdown();
-			lis2.shutdown();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
