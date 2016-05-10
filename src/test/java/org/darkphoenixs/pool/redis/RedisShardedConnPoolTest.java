@@ -3,6 +3,7 @@ package org.darkphoenixs.pool.redis;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 import org.apache.commons.pool2.impl.DefaultPooledObject;
 import org.darkphoenixs.pool.PoolConfig;
@@ -96,49 +97,49 @@ public class RedisShardedConnPoolTest {
 							.asList(new JedisShardInfo[] { info }))));
 		} catch (Exception e) {
 		}
-		
+
 		try {
 			factory.validateObject(new DefaultPooledObject<ShardedJedis>(
 					new ShardedJedisConn2(Arrays
 							.asList(new JedisShardInfo[] { info }))));
 		} catch (Exception e) {
 		}
-		
+
 		try {
 			factory.validateObject(new DefaultPooledObject<ShardedJedis>(
 					new ShardedJedisConn3(Arrays
 							.asList(new JedisShardInfo[] { info }))));
 		} catch (Exception e) {
 		}
-		
+
 		try {
 			factory.validateObject(new DefaultPooledObject<ShardedJedis>(
 					new ShardedJedisConn4(Arrays
 							.asList(new JedisShardInfo[] { info }))));
 		} catch (Exception e) {
 		}
-		
+
 		try {
 			factory.destroyObject(new DefaultPooledObject<ShardedJedis>(
 					new ShardedJedisConn(Arrays
 							.asList(new JedisShardInfo[] { info }))));
 		} catch (Exception e) {
 		}
-		
+
 		try {
 			factory.destroyObject(new DefaultPooledObject<ShardedJedis>(
 					new ShardedJedisConn2(Arrays
 							.asList(new JedisShardInfo[] { info }))));
 		} catch (Exception e) {
 		}
-		
+
 		try {
 			factory.destroyObject(new DefaultPooledObject<ShardedJedis>(
 					new ShardedJedisConn3(Arrays
 							.asList(new JedisShardInfo[] { info }))));
 		} catch (Exception e) {
 		}
-		
+
 		try {
 			factory.destroyObject(new DefaultPooledObject<ShardedJedis>(
 					new ShardedJedisConn4(Arrays
@@ -147,4 +148,30 @@ public class RedisShardedConnPoolTest {
 		}
 	}
 
+	@Test
+	public void test_1() throws Exception {
+
+		JedisShardInfo info = new JedisShardInfo(RedisConfig.DEFAULT_HOST,
+				RedisConfig.DEFAULT_PORT);
+
+		RedisShardedConnPool pool = new RedisShardedConnPool(new PoolConfig(),
+				Arrays.asList(new JedisShardInfo[] { info }), Pattern.compile(""));
+
+		try {
+			pool.getConnection();
+		} catch (Exception e) {
+		}
+
+		try {
+			pool.returnConnection(pool.getConnection());
+		} catch (Exception e) {
+		}
+
+		try {
+			pool.invalidateConnection(null);
+		} catch (Exception e) {
+		}
+
+		pool.close();
+	}
 }
