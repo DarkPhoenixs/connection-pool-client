@@ -190,7 +190,14 @@ public class RedisSentinelConnPoolTest {
 			pool.initPool(pool.toHostAndPort(Arrays.asList(new String[] {
 					"localhost", "6379" })));
 
-			pool.returnConnection(pool.getConnection());
+			Jedis Jedis = pool.getConnection();
+
+			pool.returnConnection(Jedis);
+
+			Jedis.close();
+
+			pool.returnConnection(Jedis);
+
 		} catch (Exception e) {
 		}
 
@@ -247,7 +254,7 @@ public class RedisSentinelConnPoolTest {
 		pubSub.onMessage("channel", "message");
 
 		pubSub.onMessage("channel", "localhost1 x x localhost 6379");
-		
+
 		pubSub.onMessage("channel", "localhost x x localhost 6379");
 
 		try {
@@ -258,7 +265,7 @@ public class RedisSentinelConnPoolTest {
 
 	@Test
 	public void test_3() throws Exception {
-		
+
 		RedisSentinelConnPool pool = new RedisSentinelConnPool();
 
 		pool.poolConfig = new PoolConfig();
@@ -271,14 +278,14 @@ public class RedisSentinelConnPoolTest {
 				"localhost", 6379, 2000);
 		lis2.setDaemon(true);
 		lis2.start();
-		
+
 		try {
 			Thread.sleep(2000);
-			
+
 			pool.close();
 		} catch (Exception e) {
 		}
-		
+
 		try {
 			lis1.shutdown();
 		} catch (Exception e) {

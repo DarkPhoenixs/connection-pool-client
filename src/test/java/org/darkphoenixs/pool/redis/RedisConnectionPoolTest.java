@@ -8,6 +8,8 @@ import org.darkphoenixs.pool.PoolConfig;
 import org.junit.Before;
 import org.junit.Test;
 
+import redis.clients.jedis.Jedis;
+
 public class RedisConnectionPoolTest {
 
 	@Before
@@ -77,7 +79,15 @@ public class RedisConnectionPoolTest {
 		}
 
 		try {
-			pool.returnConnection(pool.getConnection());
+			
+			Jedis jedis = pool.getConnection();
+			
+			pool.returnConnection(jedis);
+			
+			jedis.close();
+			
+			pool.returnConnection(jedis);
+
 		} catch (Exception e) {
 		}
 

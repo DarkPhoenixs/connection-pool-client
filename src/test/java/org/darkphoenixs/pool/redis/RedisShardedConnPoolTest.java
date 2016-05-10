@@ -170,6 +170,8 @@ public class RedisShardedConnPoolTest {
 		} catch (Exception e) {
 		}
 
+		shardedJedis.close();
+		
 		try {
 			pool.returnConnection(shardedJedis);
 		} catch (Exception e) {
