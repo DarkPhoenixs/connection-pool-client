@@ -77,6 +77,14 @@ public class RedisSentinelConnPoolTest {
 		}
 
 		properties.setProperty(RedisConfig.MASTERNAME_PROPERTY, "mymaster");
+
+		try {
+			RedisSentinelConnPool pool = new RedisSentinelConnPool(
+					new PoolConfig(), properties);
+			pool.close();
+		} catch (Exception e) {
+		}
+
 		properties
 				.setProperty(RedisConfig.SENTINELS_PROPERTY, "localhost:6379");
 
@@ -96,27 +104,45 @@ public class RedisSentinelConnPoolTest {
 			pool.close();
 		} catch (Exception e) {
 		}
-		//
-		// try {
-		// pool.getConnection();
-		// } catch (Exception e) {
-		// }
-		//
-		// try {
-		// pool.returnConnection(pool.getConnection());
-		// } catch (Exception e) {
-		// }
-		//
-		// try {
-		// pool.returnConnection(null);
-		// } catch (Exception e) {
-		// }
-		//
-		// try {
-		// pool.invalidateConnection(null);
-		// } catch (Exception e) {
-		// }
-		//
-		// pool.close();
+
+		RedisSentinelConnPool pool = new RedisSentinelConnPool();
+
+		try {
+			pool.initPool(pool.toHostAndPort(Arrays.asList(new String[] {
+					"localhost", "6379" })));
+
+		} catch (Exception e) {
+		}
+
+		try {
+			pool.getConnection();
+		} catch (Exception e) {
+		}
+
+		try {
+			pool.returnConnection(pool.getConnection());
+		} catch (Exception e) {
+		}
+
+		try {
+			pool.returnConnection(null);
+		} catch (Exception e) {
+		}
+
+		try {
+			pool.invalidateConnection(null);
+		} catch (Exception e) {
+		}
+
+		try {
+			pool.destroy();
+		} catch (Exception e) {
+		}
+
+		try {
+			pool.close();
+		} catch (Exception e) {
+
+		}
 	}
 }

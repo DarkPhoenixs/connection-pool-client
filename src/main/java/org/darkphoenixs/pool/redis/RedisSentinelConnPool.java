@@ -81,6 +81,14 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 	private volatile HostAndPort currentHostMaster;
 
 	/**
+	 * <p>RedisSentinelConnPool</p>
+	 * <p>默认构造方法</p>
+	 */
+	protected RedisSentinelConnPool() {
+		
+	}
+	
+	/**
 	 * <p>Title: RedisSentinelConnPool</p>
 	 * <p>Description: 构造方法</p>
 	 *
@@ -290,7 +298,7 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 	 *
 	 * @param master 主机
 	 */
-	private void initPool(HostAndPort master) {
+	protected void initPool(HostAndPort master) {
 		if (!master.equals(currentHostMaster)) {
 			currentHostMaster = master;
 			if (factory == null) {
@@ -319,7 +327,7 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 	 * @param masterName 主机名称
 	 * @return 主机
 	 */
-	private HostAndPort initSentinels(Set<String> sentinels,
+	protected HostAndPort initSentinels(Set<String> sentinels,
 			final String masterName) {
 
 		HostAndPort master = null;
@@ -400,7 +408,7 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 	 * @param getMasterAddrByNameResult 主机地址
 	 * @return 主机
 	 */
-	private HostAndPort toHostAndPort(List<String> getMasterAddrByNameResult) {
+	protected HostAndPort toHostAndPort(List<String> getMasterAddrByNameResult) {
 		String host = getMasterAddrByNameResult.get(0);
 		int port = Integer.parseInt(getMasterAddrByNameResult.get(1));
 
