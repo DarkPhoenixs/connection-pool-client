@@ -6,9 +6,13 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Properties;
 
+import org.apache.commons.pool2.PooledObjectFactory;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.darkphoenixs.pool.PoolConfig;
 import org.junit.Before;
 import org.junit.Test;
+
+import redis.clients.jedis.Jedis;
 
 public class RedisSentinelConnPoolTest {
 
@@ -35,7 +39,7 @@ public class RedisSentinelConnPoolTest {
 
 		th.setDaemon(true);
 		th.start();
-		
+
 		Thread th2 = new Thread(new Runnable() {
 
 			private ServerSocket serverSocket;
@@ -130,7 +134,7 @@ public class RedisSentinelConnPoolTest {
 	@Test
 	public void test_1() throws Exception {
 
-		RedisSentinelConnPool pool = new RedisSentinelConnPool();
+		final RedisSentinelConnPoolDemo pool = new RedisSentinelConnPoolDemo();
 
 		try {
 			pool.poolConfig = new PoolConfig();
@@ -144,22 +148,47 @@ public class RedisSentinelConnPoolTest {
 		}
 
 		try {
-			pool.returnConnection(pool.getConnection());
+			pool.returnConnection(pool.getResource());
 		} catch (Exception e) {
 		}
 
 		try {
 			pool.initPool(pool.toHostAndPort(Arrays.asList(new String[] {
 					"localhost", "26379" })));
-			
+
+			pool.initPool(new PoolConfig(), new RedisConnectionFactory(
+					"localhost", 6379, RedisConfig.DEFAULT_TIMEOUT,
+					RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_PASSWORD,
+					RedisConfig.DEFAULT_DATABASE,
+					RedisConfig.DEFAULT_CLIENTNAME));
+
 		} catch (Exception e) {
 		}
 
 		try {
+			Thread thr = new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+
+					pool.returnConnection(pool.getResource());
+				}
+			});
+
+			thr.setDaemon(true);
+			thr.start();
+
+		} catch (Exception e) {
+		}
+
+		try {
+			pool.initPool(pool.toHostAndPort(Arrays.asList(new String[] {
+					"localhost", "6379" })));
+
 			pool.returnConnection(pool.getResource());
 		} catch (Exception e) {
 		}
-		
+
 		try {
 			pool.invalidateConnection(null);
 		} catch (Exception e) {
@@ -176,5 +205,19 @@ public class RedisSentinelConnPoolTest {
 
 		}
 
+	}
+
+	private static class RedisSentinelConnPoolDemo extends
+			RedisSentinelConnPool {
+
+		/** serialVersionUID */
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		protected void initPool(GenericObjectPoolConfig poolConfig,
+				PooledObjectFactory<Jedis> factory) {
+			// TODO Auto-generated method stub
+			super.initPool(poolConfig, factory);
+		}
 	}
 }
