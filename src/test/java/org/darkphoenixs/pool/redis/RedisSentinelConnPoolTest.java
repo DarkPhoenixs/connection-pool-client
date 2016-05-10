@@ -10,6 +10,9 @@ import org.darkphoenixs.pool.PoolConfig;
 import org.junit.Before;
 import org.junit.Test;
 
+import redis.clients.jedis.Client;
+import redis.clients.jedis.Jedis;
+
 public class RedisSentinelConnPoolTest {
 
 	@Before
@@ -38,7 +41,7 @@ public class RedisSentinelConnPoolTest {
 	}
 
 	@Test
-	public void test() throws Exception {
+	public void test_0() throws Exception {
 
 		try {
 			RedisSentinelConnPool pool = new RedisSentinelConnPool("localhost",
@@ -104,12 +107,20 @@ public class RedisSentinelConnPoolTest {
 			pool.close();
 		} catch (Exception e) {
 		}
+	}
+
+	@Test
+	public void test_1() throws Exception {
 
 		RedisSentinelConnPool pool = new RedisSentinelConnPool();
 
 		try {
+			pool.poolConfig = new PoolConfig();
+
 			pool.initPool(pool.toHostAndPort(Arrays.asList(new String[] {
 					"localhost", "6379" })));
+
+			pool.getCurrentHostMaster();
 
 		} catch (Exception e) {
 		}
@@ -125,12 +136,47 @@ public class RedisSentinelConnPoolTest {
 		}
 
 		try {
-			pool.returnConnection(null);
+			pool.returnConnection(new Jedis() {
+				@Override
+				public Client getClient() {
+
+					return new Client() {
+						@Override
+						public boolean isBroken() {
+
+							return true;
+						}
+					};
+				}
+			});
+		} catch (Exception e) {
+		}
+
+		try {
+			pool.returnConnection(new Jedis() {
+				@Override
+				public Client getClient() {
+
+					return new Client() {
+						@Override
+						public boolean isBroken() {
+
+							return false;
+						}
+					};
+				}
+			});
 		} catch (Exception e) {
 		}
 
 		try {
 			pool.invalidateConnection(null);
+		} catch (Exception e) {
+		}
+
+		try {
+			pool.initPool(pool.toHostAndPort(Arrays.asList(new String[] {
+					"localhost", "26379" })));
 		} catch (Exception e) {
 		}
 
@@ -144,5 +190,6 @@ public class RedisSentinelConnPoolTest {
 		} catch (Exception e) {
 
 		}
+
 	}
 }
