@@ -278,6 +278,13 @@ public class RedisSentinelConnPoolTest {
 			pool.close();
 		} catch (Exception e) {
 		}
+		
+		try {
+			lis1.shutdown();
+			lis2.shutdown();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 
 	}
 
