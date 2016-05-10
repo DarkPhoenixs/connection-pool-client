@@ -505,6 +505,7 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 			this.subscribeRetryWaitTimeMillis = subscribeRetryWaitTimeMillis;
 		}
 
+		
 		@Override
 		public void run() {
 
@@ -520,38 +521,7 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 						break;
 					}
 
-					j.subscribe(new JedisPubSub() {
-						
-						@Override
-						public void onMessage(String channel, String message) {
-							log.fine("Sentinel " + host + ":" + port
-									+ " published: " + message + ".");
-
-							String[] switchMasterMsg = message.split(" ");
-
-							if (switchMasterMsg.length > 3) {
-
-								if (masterName.equals(switchMasterMsg[0])) {
-									initPool(toHostAndPort(Arrays.asList(
-											switchMasterMsg[3],
-											switchMasterMsg[4])));
-								} else {
-									log.fine("Ignoring message on +switch-master for master name "
-											+ switchMasterMsg[0]
-											+ ", our master name is "
-											+ masterName);
-								}
-
-							} else {
-								log.severe("Invalid message received on Sentinel "
-										+ host
-										+ ":"
-										+ port
-										+ " on channel +switch-master: "
-										+ message);
-							}
-						}
-					}, "+switch-master");
+					j.subscribe(new RedisMasterPubSub(masterName, host, port), "+switch-master");
 
 				} catch (Exception e) {
 
@@ -593,6 +563,77 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 		}
 	}
 
+	/**
+	 * <p>Title: RedisMasterPubSub</p>
+	 * <p>Description: Redis主机状态订阅</p>
+	 *
+	 * @since 2015年9月19日
+	 * @author Victor
+	 * @see JedisPubSub
+	 * @version 1.0
+	 */
+	protected class RedisMasterPubSub extends JedisPubSub {
+		
+		/** masterName */
+		protected String masterName;
+		/** host */
+		protected String host;
+		/** port */
+		protected int port;
+
+		/**
+		 * <p>Title: RedisMasterListener</p>
+		 * <p>Description: 默认构造方法</p>
+		 *
+		 */
+		protected RedisMasterPubSub() {}
+		
+		/**
+		 * <p>Title: RedisMasterListener</p>
+		 * <p>Description: 构造方法</p>
+		 *
+		 * @param masterName 主机名称
+		 * @param host 地址
+		 * @param port 端口
+		 */
+		public RedisMasterPubSub(String masterName, String host, int port) {
+			
+			this.masterName = masterName;
+			this.host = host;
+			this.port = port;
+		}
+		
+		@Override
+		public void onMessage(String channel, String message) {
+			log.fine("Sentinel " + host + ":" + port
+					+ " published: " + message + ".");
+
+			String[] switchMasterMsg = message.split(" ");
+
+			if (switchMasterMsg.length > 3) {
+
+				if (masterName.equals(switchMasterMsg[0])) {
+					initPool(toHostAndPort(Arrays.asList(
+							switchMasterMsg[3],
+							switchMasterMsg[4])));
+				} else {
+					log.fine("Ignoring message on +switch-master for master name "
+							+ switchMasterMsg[0]
+							+ ", our master name is "
+							+ masterName);
+				}
+
+			} else {
+				log.severe("Invalid message received on Sentinel "
+						+ host
+						+ ":"
+						+ port
+						+ " on channel +switch-master: "
+						+ message);
+			}
+		}
+	}
+	
 	@Override
 	public Jedis getConnection() {
 

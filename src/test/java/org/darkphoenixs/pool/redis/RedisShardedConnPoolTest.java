@@ -106,7 +106,7 @@ public class RedisShardedConnPoolTest {
 		
 		try {
 			factory.destroyObject(new DefaultPooledObject<ShardedJedis>(
-					new ShardedJedisConn2(Arrays
+					new ShardedJedisConn3(Arrays
 							.asList(new JedisShardInfo[] { info }))));
 		} catch (Exception e) {
 		}
