@@ -155,15 +155,29 @@ public class RedisShardedConnPoolTest {
 				RedisConfig.DEFAULT_PORT);
 
 		RedisShardedConnPool pool = new RedisShardedConnPool(new PoolConfig(),
-				Arrays.asList(new JedisShardInfo[] { info }), Pattern.compile(""));
+				Arrays.asList(new JedisShardInfo[] { info }),
+				Pattern.compile(""));
 
 		try {
 			pool.getConnection();
 		} catch (Exception e) {
 		}
 
+		ShardedJedis shardedJedis = pool.getConnection();
+
 		try {
-			pool.returnConnection(pool.getConnection());
+			pool.returnConnection(shardedJedis);
+		} catch (Exception e) {
+		}
+
+		try {
+			pool.returnConnection(shardedJedis);
+		} catch (Exception e) {
+		}
+
+		try {
+			pool.returnConnection(new ShardedJedisConn5(Arrays
+					.asList(new JedisShardInfo[] { info })));
 		} catch (Exception e) {
 		}
 
