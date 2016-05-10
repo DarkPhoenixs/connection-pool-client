@@ -10,9 +10,6 @@ import org.darkphoenixs.pool.PoolConfig;
 import org.junit.Before;
 import org.junit.Test;
 
-import redis.clients.jedis.Client;
-import redis.clients.jedis.Jedis;
-
 public class RedisSentinelConnPoolTest {
 
 	@Before
@@ -26,7 +23,7 @@ public class RedisSentinelConnPoolTest {
 			public void run() {
 
 				try {
-					serverSocket = new ServerSocket(RedisConfig.DEFAULT_PORT);
+					serverSocket = new ServerSocket(6379);
 
 					serverSocket.accept();
 
@@ -38,6 +35,27 @@ public class RedisSentinelConnPoolTest {
 
 		th.setDaemon(true);
 		th.start();
+		
+		Thread th2 = new Thread(new Runnable() {
+
+			private ServerSocket serverSocket;
+
+			@Override
+			public void run() {
+
+				try {
+					serverSocket = new ServerSocket(26379);
+
+					serverSocket.accept();
+
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+
+		th2.setDaemon(true);
+		th2.start();
 	}
 
 	@Test
@@ -126,57 +144,24 @@ public class RedisSentinelConnPoolTest {
 		}
 
 		try {
-			pool.getConnection();
-		} catch (Exception e) {
-		}
-
-		try {
 			pool.returnConnection(pool.getConnection());
-		} catch (Exception e) {
-		}
-
-		try {
-			pool.returnConnection(new Jedis() {
-				@Override
-				public Client getClient() {
-
-					return new Client() {
-						@Override
-						public boolean isBroken() {
-
-							return true;
-						}
-					};
-				}
-			});
-		} catch (Exception e) {
-		}
-
-		try {
-			pool.returnConnection(new Jedis() {
-				@Override
-				public Client getClient() {
-
-					return new Client() {
-						@Override
-						public boolean isBroken() {
-
-							return false;
-						}
-					};
-				}
-			});
-		} catch (Exception e) {
-		}
-
-		try {
-			pool.invalidateConnection(null);
 		} catch (Exception e) {
 		}
 
 		try {
 			pool.initPool(pool.toHostAndPort(Arrays.asList(new String[] {
 					"localhost", "26379" })));
+			
+		} catch (Exception e) {
+		}
+
+		try {
+			pool.returnConnection(pool.getResource());
+		} catch (Exception e) {
+		}
+		
+		try {
+			pool.invalidateConnection(null);
 		} catch (Exception e) {
 		}
 
