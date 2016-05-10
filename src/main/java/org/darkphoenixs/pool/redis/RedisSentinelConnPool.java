@@ -86,11 +86,22 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 	 *
 	 * @param masterName 主机名称
 	 * @param sentinels 哨兵列表
+	 */
+	public RedisSentinelConnPool(String masterName, Set<String> sentinels) {
+		this(masterName, sentinels, new PoolConfig());
+	}
+	
+	/**
+	 * <p>Title: RedisSentinelConnPool</p>
+	 * <p>Description: 构造方法</p>
+	 *
+	 * @param masterName 主机名称
+	 * @param sentinels 哨兵列表
 	 * @param poolConfig 池配置
 	 */
 	public RedisSentinelConnPool(String masterName, Set<String> sentinels,
 			final PoolConfig poolConfig) {
-		this(masterName, sentinels, poolConfig, RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_PASSWORD, RedisConfig.DEFAULT_DATABASE);
+		this(masterName, sentinels, poolConfig, RedisConfig.DEFAULT_TIMEOUT);
 	}
 
 	/**
@@ -99,11 +110,14 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 	 *
 	 * @param masterName 主机名称
 	 * @param sentinels 哨兵列表
+	 * @param poolConfig 池配置
+	 * @param timeout 超时
 	 */
-	public RedisSentinelConnPool(String masterName, Set<String> sentinels) {
-		this(masterName, sentinels, new PoolConfig(), RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_PASSWORD, RedisConfig.DEFAULT_DATABASE);
+	public RedisSentinelConnPool(String masterName, Set<String> sentinels,
+			final PoolConfig poolConfig, final int timeout) {
+		this(masterName, sentinels, poolConfig, timeout, RedisConfig.DEFAULT_PASSWORD);
 	}
-
+	
 	/**
 	 * <p>Title: RedisSentinelConnPool</p>
 	 * <p>Description: 构造方法</p>
@@ -114,9 +128,23 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 	 */
 	public RedisSentinelConnPool(String masterName, Set<String> sentinels,
 			String password) {
-		this(masterName, sentinels, new PoolConfig(), RedisConfig.DEFAULT_TIMEOUT, password);
+		this(masterName, sentinels, new PoolConfig(), password);
 	}
 
+	/**
+	 * <p>Title: RedisSentinelConnPool</p>
+	 * <p>Description: 构造方法</p>
+	 *
+	 * @param masterName 主机名称
+	 * @param sentinels 哨兵列表
+	 * @param poolConfig 池配置
+	 * @param password 密码
+	 */
+	public RedisSentinelConnPool(String masterName, Set<String> sentinels,
+			final PoolConfig poolConfig, final String password) {
+		this(masterName, sentinels, poolConfig, RedisConfig.DEFAULT_TIMEOUT, password);
+	}
+	
 	/**
 	 * <p>Title: RedisSentinelConnPool</p>
 	 * <p>Description: 构造方法</p>
@@ -140,42 +168,13 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 	 * @param sentinels 哨兵列表
 	 * @param poolConfig 池配置
 	 * @param timeout 超时
-	 */
-	public RedisSentinelConnPool(String masterName, Set<String> sentinels,
-			final PoolConfig poolConfig, final int timeout) {
-		this(masterName, sentinels, poolConfig, timeout, RedisConfig.DEFAULT_PASSWORD, RedisConfig.DEFAULT_DATABASE);
-	}
-
-	/**
-	 * <p>Title: RedisSentinelConnPool</p>
-	 * <p>Description: 构造方法</p>
-	 *
-	 * @param masterName 主机名称
-	 * @param sentinels 哨兵列表
-	 * @param poolConfig 池配置
-	 * @param password 密码
-	 */
-	public RedisSentinelConnPool(String masterName, Set<String> sentinels,
-			final PoolConfig poolConfig, final String password) {
-		this(masterName, sentinels, poolConfig, RedisConfig.DEFAULT_TIMEOUT, password);
-	}
-
-	/**
-	 * <p>Title: RedisSentinelConnPool</p>
-	 * <p>Description: 构造方法</p>
-	 *
-	 * @param masterName 主机名称
-	 * @param sentinels 哨兵列表
-	 * @param poolConfig 池配置
-	 * @param timeout 超时
 	 * @param password 密码
 	 * @param database 数据库
 	 */
 	public RedisSentinelConnPool(String masterName, Set<String> sentinels,
 			final PoolConfig poolConfig, int timeout, final String password,
 			final int database) {
-		this(masterName, sentinels, poolConfig, timeout, timeout, password,
-				database);
+		this(masterName, sentinels, poolConfig, timeout, password, database, RedisConfig.DEFAULT_CLIENTNAME);
 	}
 
 	/**
@@ -193,8 +192,7 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 	public RedisSentinelConnPool(String masterName, Set<String> sentinels,
 			final PoolConfig poolConfig, int timeout, final String password,
 			final int database, final String clientName) {
-		this(masterName, sentinels, poolConfig, timeout, timeout, password,
-				database, clientName);
+		this(masterName, sentinels, poolConfig, timeout, timeout, password, database, clientName);
 	}
 
 	/**
