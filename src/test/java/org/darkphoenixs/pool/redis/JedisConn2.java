@@ -4,6 +4,9 @@ import redis.clients.jedis.Jedis;
 
 public class JedisConn2 extends Jedis {
 
+	public JedisConn2() {
+	}
+	
 	public JedisConn2(String arg0, int arg1) {
 		super(arg0, arg1);
 	}

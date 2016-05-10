@@ -103,6 +103,13 @@ public class RedisShardedConnPoolTest {
 							.asList(new JedisShardInfo[] { info }))));
 		} catch (Exception e) {
 		}
+		
+		try {
+			factory.destroyObject(new DefaultPooledObject<ShardedJedis>(
+					new ShardedJedisConn2(Arrays
+							.asList(new JedisShardInfo[] { info }))));
+		} catch (Exception e) {
+		}
 	}
 
 }
