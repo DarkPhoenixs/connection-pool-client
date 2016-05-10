@@ -15,12 +15,40 @@
  */
 package org.darkphoenixs.pool.socket;
 
+import java.io.IOException;
+import java.net.ServerSocket;
 import java.util.Properties;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class SocketConnectionPoolTest {
 
+	@Before
+	public void before() throws Exception {
+		
+		Thread th = new Thread(new Runnable() {
+			
+			private ServerSocket serverSocket;
+
+			@Override
+			public void run() {
+				
+				try {
+					serverSocket = new ServerSocket(1234);
+					
+					serverSocket.accept();
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		th.setDaemon(true);
+		th.start();
+	}
+	
 	@Test
 	public void test_0() throws Exception {
 

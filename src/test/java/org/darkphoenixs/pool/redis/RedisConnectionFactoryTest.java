@@ -182,6 +182,16 @@ public class RedisConnectionFactoryTest {
 		try {
 			boolean rev = factory3
 					.validateObject(new DefaultPooledObject<Jedis>(
+							new JedisConn4("localhost", 1234)));
+
+			Assert.assertFalse(rev);
+
+		} catch (Exception e) {
+		}
+		
+		try {
+			boolean rev = factory3
+					.validateObject(new DefaultPooledObject<Jedis>(
 							new JedisConn(RedisConfig.DEFAULT_HOST, 1234)));
 			Assert.assertTrue(rev);
 
@@ -206,16 +216,7 @@ public class RedisConnectionFactoryTest {
 
 		} catch (Exception e) {
 		}
-
-		try {
-			boolean rev = factory3
-					.validateObject(new DefaultPooledObject<Jedis>(
-							new JedisConn4("localhost", 1234)));
-
-			Assert.assertFalse(rev);
-
-		} catch (Exception e) {
-		}
+		
 
 	}
 
