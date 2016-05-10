@@ -2,6 +2,7 @@ package org.darkphoenixs.pool.redis;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Properties;
 
@@ -41,7 +42,27 @@ public class RedisSentinelConnPoolTest {
 
 		try {
 			RedisSentinelConnPool pool = new RedisSentinelConnPool("localhost",
-					new HashSet<String>());
+					new HashSet<String>(
+							Arrays.asList(new String[] { "localhost:6379" })));
+			pool.close();
+		} catch (Exception e) {
+
+		}
+
+		try {
+			RedisSentinelConnPool pool = new RedisSentinelConnPool("localhost",
+					new HashSet<String>(Arrays
+							.asList(new String[] { "localhost:6379" })),
+					"test");
+			pool.close();
+		} catch (Exception e) {
+		}
+
+		try {
+			RedisSentinelConnPool pool = new RedisSentinelConnPool("localhost",
+					new HashSet<String>(Arrays
+							.asList(new String[] { "localhost:6379" })),
+					new PoolConfig(), 2000, 2000, "test", 0);
 			pool.close();
 		} catch (Exception e) {
 		}
@@ -71,31 +92,31 @@ public class RedisSentinelConnPoolTest {
 		try {
 			RedisSentinelConnPool pool = new RedisSentinelConnPool(
 					new PoolConfig(), properties);
-			
+
 			pool.close();
 		} catch (Exception e) {
 		}
-//		
-//		try {
-//			pool.getConnection();
-//		} catch (Exception e) {
-//		}
-//
-//		try {
-//			pool.returnConnection(pool.getConnection());
-//		} catch (Exception e) {
-//		}
-//		
-//		try {
-//			pool.returnConnection(null);
-//		} catch (Exception e) {
-//		}
-//
-//		try {
-//			pool.invalidateConnection(null);
-//		} catch (Exception e) {
-//		}
-//
-//		pool.close();
+		//
+		// try {
+		// pool.getConnection();
+		// } catch (Exception e) {
+		// }
+		//
+		// try {
+		// pool.returnConnection(pool.getConnection());
+		// } catch (Exception e) {
+		// }
+		//
+		// try {
+		// pool.returnConnection(null);
+		// } catch (Exception e) {
+		// }
+		//
+		// try {
+		// pool.invalidateConnection(null);
+		// } catch (Exception e) {
+		// }
+		//
+		// pool.close();
 	}
 }
