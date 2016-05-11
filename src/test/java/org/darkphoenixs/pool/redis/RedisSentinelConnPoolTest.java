@@ -140,6 +140,11 @@ public class RedisSentinelConnPoolTest {
 		final RedisSentinelConnPoolDemo pool = new RedisSentinelConnPoolDemo();
 
 		try {
+			pool.init();
+		} catch (Exception e) {
+		}
+		
+		try {
 			pool.poolConfig = new PoolConfig();
 
 			pool.initPool(pool.toHostAndPort(Arrays.asList(new String[] {
@@ -241,7 +246,6 @@ public class RedisSentinelConnPoolTest {
 		} catch (Exception e) {
 
 		}
-
 	}
 
 	@Test
@@ -296,7 +300,23 @@ public class RedisSentinelConnPoolTest {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+	}
+	
+	@Test
+	public void test_4() throws Exception {
+		
+		RedisSentinelConnPool pool = new RedisSentinelConnPool();
 
+		pool.poolConfig = new PoolConfig();
+		
+		pool.initListeners(pool.toHostAndPort(Arrays.asList(new String[] {
+					"localhost", "6379" })), new HashSet<String>(Arrays
+							.asList(new String[] { "localhost:6379" })), "localhost");
+		try {
+			pool.destroy();
+			pool.close();
+		} catch (Exception e) {
+		}
 	}
 
 	private static class RedisSentinelConnPoolDemo extends

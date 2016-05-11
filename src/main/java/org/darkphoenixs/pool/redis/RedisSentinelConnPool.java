@@ -50,6 +50,12 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 	/** serialVersionUID */
 	private static final long serialVersionUID = -2917559115197092907L;
 
+	/** masterName */
+	protected String masterName;
+	
+	/** sentinels */
+	protected Set<String> sentinels;
+	
 	/** poolConfig */
 	protected PoolConfig poolConfig;
 
@@ -84,9 +90,7 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 	 * <p>RedisSentinelConnPool</p>
 	 * <p>默认构造方法</p>
 	 */
-	protected RedisSentinelConnPool() {
-		
-	}
+	protected RedisSentinelConnPool() {}
 	
 	/**
 	 * <p>Title: RedisSentinelConnPool</p>
@@ -239,21 +243,24 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 			final PoolConfig poolConfig, final int connectionTimeout,
 			final int soTimeout, final String password, final int database,
 			final String clientName) {
+		this.masterName = masterName;
+		this.sentinels = sentinels;
+
 		this.poolConfig = poolConfig;
 		this.connectionTimeout = connectionTimeout;
 		this.soTimeout = soTimeout;
 		this.password = password;
 		this.database = database;
 		this.clientName = clientName;
-
-		HostAndPort master = initSentinels(sentinels, masterName);
-		initPool(master);
 	}
 	
 	/**
-	 * @since 1.2.1
+	 * <p>RedisSentinelConnPool</p>
+	 * <p>构造方法</p>
+	 * 
 	 * @param poolConfig 池配置
 	 * @param properties 参数配置
+	 * @since 1.2.1
 	 */
 	public RedisSentinelConnPool(final PoolConfig poolConfig, final Properties properties) {
 		
@@ -272,14 +279,12 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 		String masterName = properties.getProperty(RedisConfig.MASTERNAME_PROPERTY);
 		if (masterName == null)
 			throw new ConnectionException("[" + RedisConfig.MASTERNAME_PROPERTY + "] is required !");
+		this.masterName = masterName;
 		
 		String sentinels = properties.getProperty(RedisConfig.SENTINELS_PROPERTY);
 		if (sentinels == null)
 			throw new ConnectionException("[" + RedisConfig.SENTINELS_PROPERTY + "] is required !");
-		
-		HostAndPort master = initSentinels(new HashSet<String>(Arrays.asList(sentinels.split(","))), masterName);
-		
-		initPool(master);
+		this.sentinels = new HashSet<String>(Arrays.asList(sentinels.split(",")));
 	}
 
 	/**
@@ -292,6 +297,19 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 		return currentHostMaster;
 	}
 
+	/**
+	 * <p>init</p>
+	 * <p>初始化方法</p>
+	 *
+	 * @since 1.2.1
+	 */
+	public void init(){
+		
+		HostAndPort master = initSentinels(sentinels, masterName);
+		initListeners(master, sentinels, masterName);
+		initPool(master);
+	}
+	
 	/**
 	 * <p>Title: initPool</p>
 	 * <p>Description: 初始化连接池</p>
@@ -383,6 +401,21 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 			}
 		}
 
+		return master;
+	}
+
+	/**
+	 * <p>initListeners</p>
+	 * <p>初始化监听器</p>
+	 *
+	 * @param master 主机
+	 * @param sentinels 哨兵列表
+	 * @param masterName 主机名称
+	 * @since 1.2.1
+	 */
+	protected void initListeners(HostAndPort master, Set<String> sentinels,
+			final String masterName) {
+		
 		log.info("Redis master running at " + master
 				+ ", starting Sentinel listeners...");
 
@@ -397,10 +430,7 @@ public class RedisSentinelConnPool extends PoolBase<Jedis> implements
 			masterListeners.add(masterListener);
 			masterListener.start();
 		}
-
-		return master;
 	}
-
 	/**
 	 * <p>Title: toHostAndPort</p>
 	 * <p>Description: 主机地址转换</p>
