@@ -314,6 +314,7 @@ public class RedisSentinelConnPoolTest {
 							.asList(new String[] { "localhost:6379" })), "localhost");
 		try {
 			pool.destroy();
+			
 			pool.close();
 		} catch (Exception e) {
 		}
