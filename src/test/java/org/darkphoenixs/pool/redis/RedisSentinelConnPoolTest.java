@@ -306,12 +306,15 @@ public class RedisSentinelConnPoolTest {
 
 		pool.poolConfig = new PoolConfig();
 
-		pool.initListeners(
-				pool.toHostAndPort(Arrays.asList(new String[] { "localhost",
-						"6379" })),
-				new HashSet<String>(Arrays
-						.asList(new String[] { "localhost:6379" })),
-				"localhost");
+		try {
+			pool.initListeners(
+					pool.toHostAndPort(Arrays.asList(new String[] {
+							"localhost", "6379" })),
+					new HashSet<String>(Arrays
+							.asList(new String[] { "localhost:6379" })),
+					"localhost");
+		} catch (Exception e) {
+		}
 
 		try {
 			pool.initSentinels(
