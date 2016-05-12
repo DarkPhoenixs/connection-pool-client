@@ -1,0 +1,6 @@
+org.darkphoenixs.pool
+org.darkphoenixs.pool.hbase
+org.darkphoenixs.pool.jdbc
+org.darkphoenixs.pool.kafka
+org.darkphoenixs.pool.redis
+org.darkphoenixs.pool.socket
