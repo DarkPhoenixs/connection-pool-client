@@ -209,6 +209,9 @@
 							<docencoding>UTF-8</docencoding>
 							<argLine>-Dfile.encoding=UTF-8</argLine>
 							<destDir>${project.build.directory}/apidocs/v${project.version}</destDir>
+							<links>
+								<link>http://commons.apache.org/proper/commons-pool/apidocs</link>
+							</links>
 						</configuration>
 					</plugin>
 				</plugins>
