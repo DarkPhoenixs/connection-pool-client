@@ -129,5 +129,13 @@ public class SocketConnectionFactoryTest {
 		} catch (Exception e) {
 		}
 
+		Properties pro3 = new Properties();
+		pro3.setProperty(SocketConfig.ADDRESS_PROPERTY,
+				SocketConfig.DEFAULT_HOST + ":" + 1233);
+
+		try {
+			new SocketConnectionFactory(pro3).createConnection();
+		} catch (Exception e) {
+		}
 	}
 }
