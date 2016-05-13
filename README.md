@@ -8,14 +8,14 @@
 [![License](https://img.shields.io/badge/license-%20Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 
-  基于 [Apache Commons Pool ™](http://commons.apache.org/proper/commons-pool/) 框架
+  This is a simple multi-purpose connection pool client base on [Apache Commons Pool ™](http://commons.apache.org/proper/commons-pool/) 
 
-  连接池客户端 ( [Apache Kafka](http://kafka.apache.org/) &amp; [Apache Hbase](http://hbase.apache.org/) &amp; [Redis](http://redis.io/) )
-  
-  * [Documentation](#documentation)
-  * [KafkaConnectionPool](#kafkaconnectionpool)
-  * [HbaseConnectionPool](#hbaseconnectionpool)
-  * [RedisConnectionPool](#redisconnectionpool)
+  _With_
+  * [Apache Kafka](http://kafka.apache.org/)
+  * [Apache Hbase](http://hbase.apache.org/)
+  * [Redis](http://redis.io/)
+  * RMDB (MySQL/SQL Server/Oracle)
+  * Socket (TCP)
 
 
 ## Documentation
