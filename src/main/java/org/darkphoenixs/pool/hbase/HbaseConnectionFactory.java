@@ -15,6 +15,7 @@
  */
 package org.darkphoenixs.pool.hbase;
 
+import java.util.Map.Entry;
 import java.util.Properties;
 
 import org.apache.commons.pool2.PooledObject;
@@ -88,23 +89,10 @@ class HbaseConnectionFactory implements ConnectionFactory<Connection> {
 		
 		this.hadoopConfiguration = new Configuration();
 		
-		String host = properties.getProperty(HbaseConfig.ZOOKEEPER_QUORUM_PROPERTY);
-		if (host == null)
-			throw new ConnectionException("[" + HbaseConfig.ZOOKEEPER_QUORUM_PROPERTY + "] is required !");
-		this.hadoopConfiguration.set(HbaseConfig.ZOOKEEPER_QUORUM_PROPERTY, host);
-
-		String port = properties.getProperty(HbaseConfig.ZOOKEEPER_CLIENTPORT_PROPERTY);
-		if (port == null)
-			throw new ConnectionException("[" + HbaseConfig.ZOOKEEPER_CLIENTPORT_PROPERTY + "] is required !");
-		this.hadoopConfiguration.set(HbaseConfig.ZOOKEEPER_CLIENTPORT_PROPERTY, port);
-
-		String master = properties.getProperty(HbaseConfig.MASTER_PROPERTY);
-		if (master != null)
-			this.hadoopConfiguration.set(HbaseConfig.MASTER_PROPERTY, master);
-
-		String rootdir = properties.getProperty(HbaseConfig.ROOTDIR_PROPERTY);
-		if (rootdir != null)
-			this.hadoopConfiguration.set(HbaseConfig.ROOTDIR_PROPERTY, rootdir);
+		for (Entry<Object, Object> entry : properties.entrySet()) {
+			
+			this.hadoopConfiguration.set((String) entry.getKey(), (String) entry.getValue());
+		}
 	}
 	
 	@Override
