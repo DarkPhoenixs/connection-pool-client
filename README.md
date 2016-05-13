@@ -13,12 +13,12 @@
   * [Apache Kafka](http://kafka.apache.org/)
   * [Apache Hbase](http://hbase.apache.org/)
   * [Redis](http://redis.io/)
-  * RMDB (MySQL/SQL Server/Oracle)
+  * RMDB (MySQL/Oracle/SQL Server)
   * Socket (TCP)
 
 ## Documentation
 
-The documentation is available at [Wiki](https://github.com/DarkPhoenixs/message-queue-client-framework/wiki).
+The documentation is available at [Wiki](https://github.com/DarkPhoenixs/connection-pool-client/wiki).
 
 ## Download
 
