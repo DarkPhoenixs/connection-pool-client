@@ -8,111 +8,56 @@
 [![License](https://img.shields.io/badge/license-%20Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 
-  This is a simple multi-purpose connection pool client base on [Apache Commons Pool ™](http://commons.apache.org/proper/commons-pool/) 
-
-  _With_
+  This is a simple multi-purpose connection pool client base on [Apache Commons Pool ™](http://commons.apache.org/proper/commons-pool/)
+  
   * [Apache Kafka](http://kafka.apache.org/)
   * [Apache Hbase](http://hbase.apache.org/)
   * [Redis](http://redis.io/)
   * RMDB (MySQL/SQL Server/Oracle)
   * Socket (TCP)
 
-
 ## Documentation
 
-API documentation is available at [this](http://htmlpreview.github.io/?https://raw.githubusercontent.com/darkphoenixs/connection-pool-client/v1.0/doc/index.html)
+The documentation is available at [Wiki](https://github.com/DarkPhoenixs/message-queue-client-framework/wiki).
 
-## KafkaConnectionPool
+## Download
 
-Use the [KafkaConnectionPool](https://github.com/darkphoenixs/connection-pool-client/blob/master/src/main/java/org/darkphoenixs/pool/kafka/KafkaConnectionPool.java) need instantiate `PoolConfig` and `Properties`
+#### Maven
 
-For example, the following 
-```java
-		/* poolConfig */
-		PoolConfig config = new PoolConfig();
-		config.setMaxTotal(20);
-		config.setMaxIdle(5);
-		config.setMaxWaitMillis(1000);
-		config.setTestOnBorrow(true);
-
-		/* properties */
-		Properties props = new Properties();
-		props.setProperty("metadata.broker.list", "localhost:9092");
-		props.setProperty("producer.type", "async");
-		props.setProperty("request.required.acks", "0");
-		props.setProperty("compression.codec", "snappy");
-		props.setProperty("batch.num.messages", "200");
-
-		/* connection pool */
-		KafkaConnectionPool pool = new KafkaConnectionPool(config, props);
-
-		/* pool getConnection */
-		Producer<byte[], byte[]> producer = pool.getConnection();
-
-		...
-
-		/* producer send */
-		producer.send(...);
-
-		/* pool returnConnection */
-		pool.returnConnection(producer);
+```xml
+<dependency>
+	<groupId>org.darkphoenixs</groupId>
+	<artifactId>connectionpool-client</artifactId>
+	<version>x.x.x</version>
+</dependency>
 ```
-## HbaseConnectionPool
-Use the [HbaseConnectionPool](https://github.com/darkphoenixs/connection-pool-client/blob/master/src/main/java/org/darkphoenixs/pool/hbase/HbaseConnectionPool.java) need instantiate `PoolConfig` and `Configuration`
 
-For example, the following 
-```java
-		/* poolConfig */
-		PoolConfig config = new PoolConfig();
-		config.setMaxTotal(20);
-		config.setMaxIdle(5);
-		config.setMaxWaitMillis(1000);
-		config.setTestOnBorrow(true);
-		
-		/* configuration */
-		Configuration hbaseConfig = new Configuration();
-		hbaseConfig.set("hbase.zookeeper.quorum", "localhost");
-		hbaseConfig.set("hbase.zookeeper.property.clientPort", "2181");
-		hbaseConfig.set("hbase.master", "localhost:60000");
-		hbaseConfig.set("hbase.rootdir", "hdfs://localhost:9000/hbase");
-		
-		/* connection pool */
-		HbaseConnectionPool pool = new HbaseConnectionPool(config, hbaseConfig);
+#### Gradle
 
-		/* pool getConnection */
-		Connection conn = pool.getConnection();
-
-		/* conn getTable */
-		Table table = conn.getTable(TableName.valueOf("TableTest"));
-
-		...
-
-		/* table close */
-		table.close();
-		
-		/* pool returnConnection */
-		pool.returnConnection(conn);
+```groovy
+compile 'org.darkphoenixs:connectionpool-client:x.x.x'
 ```
-## RedisConnectionPool
-Use the [RedisConnectionPool](https://github.com/darkphoenixs/connection-pool-client/blob/master/src/main/java/org/darkphoenixs/pool/redis/RedisConnectionPool.java) need instantiate `PoolConfig` 
 
-For example, the following 
-```java
-		/* poolConfig */
-		PoolConfig config = new PoolConfig();
-		config.setMaxTotal(20);
-		config.setMaxIdle(5);
-		config.setMaxWaitMillis(1000);
-		config.setTestOnBorrow(true);
-		
-		/* connection pool */
-		RedisConnectionPool pool = new RedisConnectionPool(config, "localhost", 6379);
-		
-		/* pool getConnection */
-		Jedis jedis = pool.getConnection();
-			
-		...
-		
-		/* pool getConnection */
-		pool.returnConnection(jedis);
+#### SBT
+
+```scala
+libraryDependencies += "org.darkphoenixs" % "connectionpool-client" % "x.x.x"
+```
+
+## License
+
+```
+Copyright 2015-2016 Dark Phoenixs (Open-Source Organization).
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 ```
