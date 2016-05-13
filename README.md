@@ -10,10 +10,11 @@
 
   This is a simple multi-purpose connection pool client base on [Apache Commons Pool ™](http://commons.apache.org/proper/commons-pool/)
   
+  _Support_
   * [Apache Kafka](http://kafka.apache.org/)
   * [Apache Hbase](http://hbase.apache.org/)
   * [Redis](http://redis.io/)
-  * RMDB (MySQL/Oracle/SQL Server)
+  * RMDB (Oracle/MySQL/SQL Server)
   * Socket (TCP)
 
 ## Documentation
