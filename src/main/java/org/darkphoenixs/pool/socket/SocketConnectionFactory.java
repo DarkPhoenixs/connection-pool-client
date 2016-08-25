@@ -94,7 +94,6 @@ class SocketConnectionFactory implements ConnectionFactory<Socket> {
         this.linger = Integer.parseInt(properties.getProperty(SocketConfig.LINGER_PROPERTY, "0"));
         this.keepAlive = Boolean.valueOf(properties.getProperty(SocketConfig.KEEPALIVE_PROPERTY, "false"));
         this.tcpNoDelay = Boolean.valueOf(properties.getProperty(SocketConfig.TCPNODELAY_PROPERTY, "false"));
-        ;
         this.performance = (properties.getProperty(SocketConfig.PERFORMANCE_PROPERTY) != null) ? properties.getProperty(SocketConfig.PERFORMANCE_PROPERTY).split(",") : null;
     }
 

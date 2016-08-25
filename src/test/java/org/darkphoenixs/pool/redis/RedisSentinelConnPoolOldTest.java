@@ -5,6 +5,7 @@ import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.darkphoenixs.pool.PoolConfig;
 import org.darkphoenixs.pool.redis.RedisSentinelConnPoolOld.RedisMasterListener;
 import org.darkphoenixs.pool.redis.RedisSentinelConnPoolOld.RedisMasterPubSub;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import redis.clients.jedis.Client;
@@ -18,20 +19,22 @@ import java.util.Properties;
 
 public class RedisSentinelConnPoolOldTest {
 
+    private ServerSocket serverSocket1;
+
+    private ServerSocket serverSocket2;
+
     @Before
     public void before() throws Exception {
 
         Thread th = new Thread(new Runnable() {
 
-            private ServerSocket serverSocket;
-
             @Override
             public void run() {
 
                 try {
-                    serverSocket = new ServerSocket(6379);
+                    serverSocket1 = new ServerSocket(6379);
 
-                    serverSocket.accept();
+                    serverSocket1.accept();
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -44,15 +47,13 @@ public class RedisSentinelConnPoolOldTest {
 
         Thread th2 = new Thread(new Runnable() {
 
-            private ServerSocket serverSocket;
-
             @Override
             public void run() {
 
                 try {
-                    serverSocket = new ServerSocket(26379);
+                    serverSocket2 = new ServerSocket(26379);
 
-                    serverSocket.accept();
+                    serverSocket2.accept();
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -62,6 +63,13 @@ public class RedisSentinelConnPoolOldTest {
 
         th2.setDaemon(true);
         th2.start();
+    }
+
+    @After
+    public void after() throws Exception {
+
+        serverSocket1.close();
+        serverSocket2.close();
     }
 
     @Test

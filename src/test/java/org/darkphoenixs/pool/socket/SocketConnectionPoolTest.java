@@ -15,6 +15,7 @@
  */
 package org.darkphoenixs.pool.socket;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,12 +25,13 @@ import java.util.Properties;
 
 public class SocketConnectionPoolTest {
 
+    private ServerSocket serverSocket;
+
     @Before
     public void before() throws Exception {
 
         Thread th = new Thread(new Runnable() {
 
-            private ServerSocket serverSocket;
 
             @Override
             public void run() {
@@ -47,6 +49,12 @@ public class SocketConnectionPoolTest {
 
         th.setDaemon(true);
         th.start();
+    }
+
+    @After
+    public void after() throws Exception {
+
+        serverSocket.close();
     }
 
     @Test

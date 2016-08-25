@@ -15,7 +15,9 @@
  */
 package org.darkphoenixs.pool.socket;
 
+import org.apache.commons.pool2.PooledObject;
 import org.apache.commons.pool2.impl.DefaultPooledObject;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,12 +28,12 @@ import java.util.Properties;
 
 public class SocketConnectionFactoryTest {
 
+    private ServerSocket serverSocket;
+
     @Before
     public void before() throws Exception {
 
         Thread th = new Thread(new Runnable() {
-
-            private ServerSocket serverSocket;
 
             @Override
             public void run() {
@@ -51,6 +53,12 @@ public class SocketConnectionFactoryTest {
         th.start();
     }
 
+    @After
+    public void after() throws Exception {
+
+        serverSocket.close();
+    }
+
     @Test
     public void test_0() throws Exception {
 
@@ -61,8 +69,9 @@ public class SocketConnectionFactoryTest {
                 SocketConfig.DEFAULT_TIMEOUT, 1, true, true, new String[]{
                 "0", "1", "2"});
 
+        PooledObject<Socket> pooledObject = null;
         try {
-            factory.makeObject();
+            pooledObject = factory.makeObject();
         } catch (Exception e) {
         }
 
@@ -75,6 +84,17 @@ public class SocketConnectionFactoryTest {
         factory.validateObject(new DefaultPooledObject<Socket>(new Socket()));
         try {
             factory.validateObject(new DefaultPooledObject<Socket>(null));
+        } catch (Exception e) {
+        }
+
+        try {
+            factory.validateObject(pooledObject);
+        } catch (Exception e) {
+        }
+
+        try {
+            pooledObject.getObject().close();
+            factory.validateObject(pooledObject);
         } catch (Exception e) {
         }
 
@@ -135,6 +155,16 @@ public class SocketConnectionFactoryTest {
 
         try {
             new SocketConnectionFactory(pro3).createConnection();
+        } catch (Exception e) {
+        }
+
+        Properties pro4 = new Properties();
+        pro4.setProperty(SocketConfig.ADDRESS_PROPERTY,
+                SocketConfig.DEFAULT_HOST + ":" + 1234);
+        pro4.setProperty(SocketConfig.PERFORMANCE_PROPERTY,
+                "0,1,2");
+        try {
+            new SocketConnectionFactory(pro4).createConnection();
         } catch (Exception e) {
         }
     }

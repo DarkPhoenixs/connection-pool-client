@@ -1,6 +1,7 @@
 package org.darkphoenixs.pool.redis;
 
 import org.darkphoenixs.pool.PoolConfig;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import redis.clients.jedis.Jedis;
@@ -11,12 +12,13 @@ import java.util.Properties;
 
 public class RedisConnectionPoolOldTest {
 
+    private ServerSocket serverSocket;
+
     @Before
     public void before() throws Exception {
 
         Thread th = new Thread(new Runnable() {
 
-            private ServerSocket serverSocket;
 
             @Override
             public void run() {
@@ -34,6 +36,12 @@ public class RedisConnectionPoolOldTest {
 
         th.setDaemon(true);
         th.start();
+    }
+
+    @After
+    public void after() throws Exception {
+
+        serverSocket.close();
     }
 
     @Test
