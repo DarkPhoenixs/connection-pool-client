@@ -84,4 +84,16 @@ public class KafkaSharedConnPool implements ConnectionPool<Producer<byte[], byte
 
             conn.close();
     }
+
+    /**
+     * Close.
+     */
+    public void close() {
+
+        producer.flush();
+        
+        producer.close();
+
+        pool.set(null);
+    }
 }

@@ -43,5 +43,8 @@ public class HbaseSharedConnPoolTest {
 
         pool.invalidateConnection(null);
 
+        pool.close();
+
+        pool.close();
     }
 }

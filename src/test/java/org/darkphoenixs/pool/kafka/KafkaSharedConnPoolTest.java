@@ -23,5 +23,7 @@ public class KafkaSharedConnPoolTest {
         pool.invalidateConnection(producer);
 
         pool.invalidateConnection(null);
+
+        pool.close();
     }
 }

@@ -125,4 +125,20 @@ public class HbaseSharedConnPool implements ConnectionPool<Connection> {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Close.
+     */
+    public void close() {
+
+        try {
+            connection.close();
+
+            pool.set(null);
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+    }
 }
