@@ -1,7 +1,12 @@
 package org.darkphoenixs.pool.hbase;
 
-import org.apache.hadoop.hbase.client.Connection;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.TableName;
+import org.apache.hadoop.hbase.client.*;
 import org.junit.Test;
+
+import java.io.IOException;
+import java.util.concurrent.ExecutorService;
 
 public class HbaseSharedConnPoolTest {
 
@@ -33,18 +38,133 @@ public class HbaseSharedConnPoolTest {
 
         Connection conn = pool.getConnection();
 
+        if (conn == null)
+            conn = new Connection() {
+                @Override
+                public Configuration getConfiguration() {
+                    return null;
+                }
+
+                @Override
+                public Table getTable(TableName tableName) throws IOException {
+                    return null;
+                }
+
+                @Override
+                public Table getTable(TableName tableName, ExecutorService pool) throws IOException {
+                    return null;
+                }
+
+                @Override
+                public BufferedMutator getBufferedMutator(TableName tableName) throws IOException {
+                    return null;
+                }
+
+                @Override
+                public BufferedMutator getBufferedMutator(BufferedMutatorParams params) throws IOException {
+                    return null;
+                }
+
+                @Override
+                public RegionLocator getRegionLocator(TableName tableName) throws IOException {
+                    return null;
+                }
+
+                @Override
+                public Admin getAdmin() throws IOException {
+                    return null;
+                }
+
+                @Override
+                public void close() throws IOException {
+
+                    throw new IOException();
+                }
+
+                @Override
+                public boolean isClosed() {
+                    return false;
+                }
+
+                @Override
+                public void abort(String why, Throwable e) {
+
+                }
+
+                @Override
+                public boolean isAborted() {
+                    return false;
+                }
+            };
+
         pool.returnConnection(conn);
 
         pool.returnConnection(null);
 
         pool.invalidateConnection(conn);
 
-        pool.invalidateConnection(conn);
+        pool.invalidateConnection(new Connection() {
+            @Override
+            public Configuration getConfiguration() {
+                return null;
+            }
+
+            @Override
+            public Table getTable(TableName tableName) throws IOException {
+                return null;
+            }
+
+            @Override
+            public Table getTable(TableName tableName, ExecutorService pool) throws IOException {
+                return null;
+            }
+
+            @Override
+            public BufferedMutator getBufferedMutator(TableName tableName) throws IOException {
+                return null;
+            }
+
+            @Override
+            public BufferedMutator getBufferedMutator(BufferedMutatorParams params) throws IOException {
+                return null;
+            }
+
+            @Override
+            public RegionLocator getRegionLocator(TableName tableName) throws IOException {
+                return null;
+            }
+
+            @Override
+            public Admin getAdmin() throws IOException {
+                return null;
+            }
+
+            @Override
+            public void close() throws IOException {
+
+                throw new IOException();
+            }
+
+            @Override
+            public boolean isClosed() {
+                return false;
+            }
+
+            @Override
+            public void abort(String why, Throwable e) {
+
+            }
+
+            @Override
+            public boolean isAborted() {
+                return false;
+            }
+        });
 
         pool.invalidateConnection(null);
 
         pool.close();
 
-        pool.close();
     }
+
 }
