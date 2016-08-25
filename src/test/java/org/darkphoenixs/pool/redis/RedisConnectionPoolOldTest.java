@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.Properties;
 
-public class RedisConnectionPoolTest {
+public class RedisConnectionPoolOldTest {
 
     @Before
     public void before() throws Exception {
@@ -40,7 +40,7 @@ public class RedisConnectionPoolTest {
     public void test() throws Exception {
 
         try {
-            RedisConnectionPool pool = new RedisConnectionPool(
+            RedisConnectionPoolOld pool = new RedisConnectionPoolOld(
                     RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT);
             pool.close();
         } catch (Exception e) {
@@ -57,15 +57,20 @@ public class RedisConnectionPoolTest {
             prop.setProperty(RedisConfig.DATABASE_PROPERTY,
                     RedisConfig.DEFAULT_DATABASE + "");
 
-            RedisConnectionPool pool = new RedisConnectionPool(
+            RedisConnectionPoolOld pool = new RedisConnectionPoolOld(
                     new PoolConfig(), prop);
             pool.close();
         } catch (Exception e) {
         }
 
+        try {
+            RedisConnectionPoolOld pool = new RedisConnectionPoolOld(
+                    new PoolConfig(), RedisConfig.DEFAULT_HOST);
+            pool.close();
+        } catch (Exception e) {
+        }
 
-        RedisConnectionPool pool = new RedisConnectionPool(
-                RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT);
+        RedisConnectionPoolOld pool = new RedisConnectionPoolOld();
 
         try {
             pool.getConnection();
@@ -91,17 +96,9 @@ public class RedisConnectionPoolTest {
         }
 
         try {
-            Jedis jedis = pool.getConnection();
-
-            pool.invalidateConnection(jedis);
-
+            pool.invalidateConnection(null);
         } catch (Exception e) {
-
         }
-
-        pool.returnConnection(null);
-
-        pool.invalidateConnection(null);
 
         pool.close();
     }

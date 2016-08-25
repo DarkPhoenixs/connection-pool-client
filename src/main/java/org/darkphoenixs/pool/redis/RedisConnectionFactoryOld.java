@@ -27,7 +27,7 @@ import java.util.Properties;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * <p>Title: RedisConnectionFactory</p>
+ * <p>Title: RedisConnectionFactoryOld</p>
  * <p>Description: Redis连接工厂</p>
  *
  * @author Victor
@@ -35,7 +35,8 @@ import java.util.concurrent.atomic.AtomicReference;
  * @see ConnectionFactory
  * @since 2015年9月19日
  */
-class RedisConnectionFactory implements ConnectionFactory<Jedis> {
+@Deprecated
+class RedisConnectionFactoryOld implements ConnectionFactory<Jedis> {
 
     /**
      * serialVersionUID
@@ -68,7 +69,7 @@ class RedisConnectionFactory implements ConnectionFactory<Jedis> {
     private final String clientName;
 
     /**
-     * <p>Title: RedisConnectionFactory</p>
+     * <p>Title: RedisConnectionFactoryOld</p>
      * <p>Description: 构造方法</p>
      *
      * @param host              地址
@@ -79,8 +80,8 @@ class RedisConnectionFactory implements ConnectionFactory<Jedis> {
      * @param database          数据库
      * @param clientName        客户端名称
      */
-    public RedisConnectionFactory(final String host, final int port, final int connectionTimeout,
-                                  final int soTimeout, final String password, final int database, final String clientName) {
+    public RedisConnectionFactoryOld(final String host, final int port, final int connectionTimeout,
+                                     final int soTimeout, final String password, final int database, final String clientName) {
         this.hostAndPort.set(new HostAndPort(host, port));
         this.connectionTimeout = connectionTimeout;
         this.soTimeout = soTimeout;
@@ -93,7 +94,7 @@ class RedisConnectionFactory implements ConnectionFactory<Jedis> {
      * @param properties 参数配置
      * @since 1.2.1
      */
-    public RedisConnectionFactory(final Properties properties) {
+    public RedisConnectionFactoryOld(final Properties properties) {
 
         String address = properties.getProperty(RedisConfig.ADDRESS_PROPERTY);
         if (address == null)

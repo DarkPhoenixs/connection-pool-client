@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.Properties;
 
-public class RedisConnectionFactoryTest {
+public class RedisConnectionFactoryOldTest {
 
     @Before
     public void before() throws Exception {
@@ -44,10 +44,10 @@ public class RedisConnectionFactoryTest {
 
         Properties prop = new Properties();
 
-        RedisConnectionFactory factory;
+        RedisConnectionFactoryOld factory;
 
         try {
-            factory = new RedisConnectionFactory(prop);
+            factory = new RedisConnectionFactoryOld(prop);
 
         } catch (Exception e) {
         }
@@ -63,9 +63,9 @@ public class RedisConnectionFactoryTest {
         prop.setProperty(RedisConfig.CLIENTNAME_PROPERTY, "Test");
         prop.setProperty(RedisConfig.PASSWORD_PROPERTY, "Test");
 
-        factory = new RedisConnectionFactory(prop);
+        factory = new RedisConnectionFactoryOld(prop);
 
-        factory = new RedisConnectionFactory(RedisConfig.DEFAULT_HOST, 1233,
+        factory = new RedisConnectionFactoryOld(RedisConfig.DEFAULT_HOST, 1233,
                 RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT,
                 "Test", 1, "Test");
 
@@ -102,7 +102,7 @@ public class RedisConnectionFactoryTest {
     @Test
     public void test_1() throws Exception {
 
-        RedisConnectionFactory factory = new RedisConnectionFactory(
+        RedisConnectionFactoryOld factory = new RedisConnectionFactoryOld(
                 RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
                 RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT,
                 RedisConfig.DEFAULT_PASSWORD, RedisConfig.DEFAULT_DATABASE,
@@ -118,7 +118,7 @@ public class RedisConnectionFactoryTest {
     @Test
     public void test_2() throws Exception {
 
-        RedisConnectionFactory factory = new RedisConnectionFactory(
+        RedisConnectionFactoryOld factory = new RedisConnectionFactoryOld(
                 RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
                 RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT,
                 RedisConfig.DEFAULT_PASSWORD, RedisConfig.DEFAULT_DATABASE,
@@ -142,7 +142,7 @@ public class RedisConnectionFactoryTest {
         } catch (Exception e) {
         }
 
-        RedisConnectionFactory factory2 = new RedisConnectionFactory(
+        RedisConnectionFactoryOld factory2 = new RedisConnectionFactoryOld(
                 RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
                 RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT,
                 RedisConfig.DEFAULT_PASSWORD, 2, RedisConfig.DEFAULT_CLIENTNAME);
@@ -173,7 +173,7 @@ public class RedisConnectionFactoryTest {
     @Test
     public void test_3() throws Exception {
 
-        RedisConnectionFactory factory3 = new RedisConnectionFactory(
+        RedisConnectionFactoryOld factory3 = new RedisConnectionFactoryOld(
                 "localhost", 1234, RedisConfig.DEFAULT_TIMEOUT,
                 RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_PASSWORD,
                 RedisConfig.DEFAULT_DATABASE, RedisConfig.DEFAULT_CLIENTNAME);
@@ -222,7 +222,7 @@ public class RedisConnectionFactoryTest {
     @Test
     public void test_4() throws Exception {
 
-        RedisConnectionFactory factory = new RedisConnectionFactory(
+        RedisConnectionFactoryOld factory = new RedisConnectionFactoryOld(
                 RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT,
                 RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT,
                 "test", RedisConfig.DEFAULT_DATABASE,
@@ -232,7 +232,7 @@ public class RedisConnectionFactoryTest {
         } catch (Exception e) {
         }
 
-        factory = new RedisConnectionFactory(RedisConfig.DEFAULT_HOST,
+        factory = new RedisConnectionFactoryOld(RedisConfig.DEFAULT_HOST,
                 RedisConfig.DEFAULT_PORT, RedisConfig.DEFAULT_TIMEOUT,
                 RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_PASSWORD, 3,
                 RedisConfig.DEFAULT_CLIENTNAME);
@@ -241,7 +241,7 @@ public class RedisConnectionFactoryTest {
         } catch (Exception e) {
         }
 
-        factory = new RedisConnectionFactory(RedisConfig.DEFAULT_HOST,
+        factory = new RedisConnectionFactoryOld(RedisConfig.DEFAULT_HOST,
                 RedisConfig.DEFAULT_PORT, RedisConfig.DEFAULT_TIMEOUT,
                 RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_PASSWORD,
                 RedisConfig.DEFAULT_DATABASE, "test");
