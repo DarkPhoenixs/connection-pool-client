@@ -15,70 +15,70 @@
  */
 package org.darkphoenixs.pool.socket;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.Properties;
 
-import org.junit.Before;
-import org.junit.Test;
-
 public class SocketConnectionPoolTest {
 
-	@Before
-	public void before() throws Exception {
-		
-		Thread th = new Thread(new Runnable() {
-			
-			private ServerSocket serverSocket;
+    @Before
+    public void before() throws Exception {
 
-			@Override
-			public void run() {
-				
-				try {
-					serverSocket = new ServerSocket(1234);
-					
-					serverSocket.accept();
-					
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		
-		th.setDaemon(true);
-		th.start();
-	}
-	
-	@Test
-	public void test_0() throws Exception {
+        Thread th = new Thread(new Runnable() {
 
-		Properties prop = new Properties();
-		
-		prop.setProperty("address", "localhost:1234");
-		
-		SocketConnectionPool pool0 = new SocketConnectionPool(prop);
-		
-		pool0.close();
-		
-		SocketConnectionPool pool = new SocketConnectionPool();
+            private ServerSocket serverSocket;
 
-		try {
-			pool.getConnection();
-		} catch (Exception e) {
-		}
+            @Override
+            public void run() {
 
-		try {
-			pool.returnConnection(null);
-		} catch (Exception e) {
-		}
+                try {
+                    serverSocket = new ServerSocket(1234);
 
-		try {
-			pool.invalidateConnection(null);
-		} catch (Exception e) {
-		}
+                    serverSocket.accept();
 
-		pool.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
-	}
+        th.setDaemon(true);
+        th.start();
+    }
+
+    @Test
+    public void test_0() throws Exception {
+
+        Properties prop = new Properties();
+
+        prop.setProperty("address", "localhost:1234");
+
+        SocketConnectionPool pool0 = new SocketConnectionPool(prop);
+
+        pool0.close();
+
+        SocketConnectionPool pool = new SocketConnectionPool();
+
+        try {
+            pool.getConnection();
+        } catch (Exception e) {
+        }
+
+        try {
+            pool.returnConnection(null);
+        } catch (Exception e) {
+        }
+
+        try {
+            pool.invalidateConnection(null);
+        } catch (Exception e) {
+        }
+
+        pool.close();
+
+    }
 
 }

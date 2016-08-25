@@ -4,56 +4,59 @@ import org.junit.Test;
 
 public class ConnectionPoolTest {
 
-	@Test
-	public void test() throws Exception {
-		
-		ConnPool pool = new ConnPool();
-		
-		Conn conn = pool.getConnection();
-		
-		pool.returnConnection(conn);
-		
-		pool.invalidateConnection(conn);
-	}
-	
-	private static class ConnPool implements ConnectionPool<Conn> {
+    @Test
+    public void test() throws Exception {
 
-		/** serialVersionUID */
-		private static final long serialVersionUID = 1L;
+        ConnPool pool = new ConnPool();
 
-		@Override
-		public Conn getConnection() {
-			
-			Conn conn = new Conn();
-			
-			conn.setId(123);
-			
-			return conn;
-		}
-		@Override
-		public void returnConnection(Conn conn) {
-			
-			System.out.println("returnConnection " + conn.getId());
-		}
+        Conn conn = pool.getConnection();
 
-		@Override
-		public void invalidateConnection(Conn conn) {
-			
-			System.out.println("invalidateConnection " + conn.getId());
-		}
-		
-	}
-	
-	private static class Conn {
+        pool.returnConnection(conn);
 
-		private int id;
+        pool.invalidateConnection(conn);
+    }
 
-		public int getId() {
-			return id;
-		}
+    private static class ConnPool implements ConnectionPool<Conn> {
 
-		public void setId(int id) {
-			this.id = id;
-		}
-	}
+        /**
+         * serialVersionUID
+         */
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        public Conn getConnection() {
+
+            Conn conn = new Conn();
+
+            conn.setId(123);
+
+            return conn;
+        }
+
+        @Override
+        public void returnConnection(Conn conn) {
+
+            System.out.println("returnConnection " + conn.getId());
+        }
+
+        @Override
+        public void invalidateConnection(Conn conn) {
+
+            System.out.println("invalidateConnection " + conn.getId());
+        }
+
+    }
+
+    private static class Conn {
+
+        private int id;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+    }
 }

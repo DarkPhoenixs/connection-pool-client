@@ -4,8 +4,8 @@ import org.junit.Test;
 
 public class SocketTest {
 
-	@Test
-	public void test() throws Exception {
+    @Test
+    public void test() throws Exception {
 
 //		PoolConfig config = new PoolConfig();
 //		config.setMaxTotal(20);
@@ -29,5 +29,5 @@ public class SocketTest {
 //		pool.returnConnection(conn);
 //
 //		pool.close();
-	}
+    }
 }

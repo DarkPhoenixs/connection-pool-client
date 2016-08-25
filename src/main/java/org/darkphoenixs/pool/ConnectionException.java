@@ -19,28 +19,28 @@ package org.darkphoenixs.pool;
  * <p>Title: ConnectionException</p>
  * <p>Description: 连接异常</p>
  *
- * @since 2015年9月19日
  * @author Victor
- * @see RuntimeException
  * @version 1.0
+ * @see RuntimeException
+ * @since 2015年9月19日
  */
 public class ConnectionException extends RuntimeException {
 
-	private static final long serialVersionUID = -6503525110247209484L;
+    private static final long serialVersionUID = -6503525110247209484L;
 
-	public ConnectionException() {
-		super();
-	}
-	
-	public ConnectionException(String message) {
-		super(message);
-	}
+    public ConnectionException() {
+        super();
+    }
 
-	public ConnectionException(Throwable e) {
-		super(e);
-	}
+    public ConnectionException(String message) {
+        super(message);
+    }
 
-	public ConnectionException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public ConnectionException(Throwable e) {
+        super(e);
+    }
+
+    public ConnectionException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

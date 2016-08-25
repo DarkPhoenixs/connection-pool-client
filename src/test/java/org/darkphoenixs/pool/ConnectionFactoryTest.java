@@ -6,80 +6,80 @@ import org.junit.Test;
 
 public class ConnectionFactoryTest {
 
-	@Test
-	public void test() throws Exception {
-		
-		ConnFactory factory = new ConnFactory();
-		
-		PooledObject<Conn> p = factory.makeObject();
-	
-		factory.activateObject(p);
-		
-		factory.validateObject(p);
-		
-		factory.passivateObject(p);
-		
-		factory.destroyObject(p);
-	}
-	
-	private static class ConnFactory implements ConnectionFactory<Conn> {
+    @Test
+    public void test() throws Exception {
 
-		private static final long serialVersionUID = 1L;
+        ConnFactory factory = new ConnFactory();
 
-		@Override
-		public PooledObject<Conn> makeObject() throws Exception {
+        PooledObject<Conn> p = factory.makeObject();
 
-			return new DefaultPooledObject<Conn>(createConnection());
-		}
+        factory.activateObject(p);
 
-		@Override
-		public void destroyObject(PooledObject<Conn> p) throws Exception {
+        factory.validateObject(p);
 
-			System.out.println("destroyObject " + p.getObject().getId());
-		}
+        factory.passivateObject(p);
 
-		@Override
-		public boolean validateObject(PooledObject<Conn> p) {
+        factory.destroyObject(p);
+    }
 
-			System.out.println("validateObject " + p.getObject().getId());
+    private static class ConnFactory implements ConnectionFactory<Conn> {
 
-			return true;
-		}
+        private static final long serialVersionUID = 1L;
 
-		@Override
-		public void activateObject(PooledObject<Conn> p) throws Exception {
+        @Override
+        public PooledObject<Conn> makeObject() throws Exception {
 
-			System.out.println("activateObject " + p.getObject().getId());
-		}
+            return new DefaultPooledObject<Conn>(createConnection());
+        }
 
-		@Override
-		public void passivateObject(PooledObject<Conn> p) throws Exception {
+        @Override
+        public void destroyObject(PooledObject<Conn> p) throws Exception {
 
-			System.out.println("passivateObject " + p.getObject().getId());
-		}
+            System.out.println("destroyObject " + p.getObject().getId());
+        }
 
-		@Override
-		public Conn createConnection() throws Exception {
+        @Override
+        public boolean validateObject(PooledObject<Conn> p) {
 
-			Conn conn = new Conn();
+            System.out.println("validateObject " + p.getObject().getId());
 
-			conn.setId(123);
+            return true;
+        }
 
-			return conn;
-		}
+        @Override
+        public void activateObject(PooledObject<Conn> p) throws Exception {
 
-	}
-	
-	private static class Conn {
+            System.out.println("activateObject " + p.getObject().getId());
+        }
 
-		private int id;
+        @Override
+        public void passivateObject(PooledObject<Conn> p) throws Exception {
 
-		public int getId() {
-			return id;
-		}
+            System.out.println("passivateObject " + p.getObject().getId());
+        }
 
-		public void setId(int id) {
-			this.id = id;
-		}
-	}
+        @Override
+        public Conn createConnection() throws Exception {
+
+            Conn conn = new Conn();
+
+            conn.setId(123);
+
+            return conn;
+        }
+
+    }
+
+    private static class Conn {
+
+        private int id;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+    }
 }

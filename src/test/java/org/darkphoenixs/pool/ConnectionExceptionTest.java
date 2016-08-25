@@ -5,29 +5,29 @@ import org.junit.Test;
 
 public class ConnectionExceptionTest {
 
-	@Test
-	public void test() throws Exception {
+    @Test
+    public void test() throws Exception {
 
-		ConnectionException exp0 = new ConnectionException();
-		
-		Assert.assertNull(exp0.getMessage());
+        ConnectionException exp0 = new ConnectionException();
 
-		ConnectionException exp1 = new ConnectionException("ConnectionException1");
+        Assert.assertNull(exp0.getMessage());
 
-		Assert.assertEquals("ConnectionException1", exp1.getMessage());
+        ConnectionException exp1 = new ConnectionException("ConnectionException1");
 
-		Throwable thr2 = new Throwable("ConnectionException2");
+        Assert.assertEquals("ConnectionException1", exp1.getMessage());
 
-		ConnectionException exp2 = new ConnectionException(thr2);
+        Throwable thr2 = new Throwable("ConnectionException2");
 
-		Assert.assertEquals(thr2, exp2.getCause());
+        ConnectionException exp2 = new ConnectionException(thr2);
 
-		Throwable thr3 = new Throwable("ConnectionException3");
+        Assert.assertEquals(thr2, exp2.getCause());
 
-		ConnectionException exp3 = new ConnectionException("ConnectionException3", thr3);
+        Throwable thr3 = new Throwable("ConnectionException3");
 
-		Assert.assertEquals("ConnectionException3", exp3.getMessage());
-		
-		Assert.assertEquals(thr3, exp3.getCause());
-	}
+        ConnectionException exp3 = new ConnectionException("ConnectionException3", thr3);
+
+        Assert.assertEquals("ConnectionException3", exp3.getMessage());
+
+        Assert.assertEquals(thr3, exp3.getCause());
+    }
 }

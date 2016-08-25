@@ -15,95 +15,94 @@
  */
 package org.darkphoenixs.pool.kafka;
 
-import java.util.Properties;
-
 import kafka.javaapi.producer.Producer;
 import kafka.producer.ProducerConfig;
-
 import org.apache.commons.pool2.impl.DefaultPooledObject;
 import org.junit.Test;
 
+import java.util.Properties;
+
 public class KafkaConnectionFactoryTest {
 
-	@Test
-	public void test() throws Exception {
+    @Test
+    public void test() throws Exception {
 
-		try {
-			Properties prop = new Properties();
-			KafkaConnectionFactory factory = new KafkaConnectionFactory(prop);
-			factory.toString();
-		} catch (Exception e) {
-		}
+        try {
+            Properties prop = new Properties();
+            KafkaConnectionFactory factory = new KafkaConnectionFactory(prop);
+            factory.toString();
+        } catch (Exception e) {
+        }
 
-		Properties prop = new Properties();
+        Properties prop = new Properties();
 
-		prop.setProperty(KafkaConfig.BROKERS_LIST_PROPERTY,
-				KafkaConfig.DEFAULT_BROKERS);
-		prop.setProperty(KafkaConfig.PRODUCER_TYPE_PROPERTY,
-				KafkaConfig.DEFAULT_TYPE);
-		prop.setProperty(KafkaConfig.REQUEST_ACKS_PROPERTY,
-				KafkaConfig.DEFAULT_ACKS);
-		prop.setProperty(KafkaConfig.COMPRESSION_CODEC_PROPERTY,
-				KafkaConfig.DEFAULT_CODEC);
-		prop.setProperty(KafkaConfig.BATCH_NUMBER_PROPERTY,
-				KafkaConfig.DEFAULT_BATCH);
+        prop.setProperty(KafkaConfig.BROKERS_LIST_PROPERTY,
+                KafkaConfig.DEFAULT_BROKERS);
+        prop.setProperty(KafkaConfig.PRODUCER_TYPE_PROPERTY,
+                KafkaConfig.DEFAULT_TYPE);
+        prop.setProperty(KafkaConfig.REQUEST_ACKS_PROPERTY,
+                KafkaConfig.DEFAULT_ACKS);
+        prop.setProperty(KafkaConfig.COMPRESSION_CODEC_PROPERTY,
+                KafkaConfig.DEFAULT_CODEC);
+        prop.setProperty(KafkaConfig.BATCH_NUMBER_PROPERTY,
+                KafkaConfig.DEFAULT_BATCH);
 
-		ProducerConfig config = new ProducerConfig(prop);
+        ProducerConfig config = new ProducerConfig(prop);
 
-		try {
-			KafkaConnectionFactory factory = new KafkaConnectionFactory(prop);
-			factory.toString();
-		} catch (Exception e) {
-		}
+        try {
+            KafkaConnectionFactory factory = new KafkaConnectionFactory(prop);
+            factory.toString();
+        } catch (Exception e) {
+        }
 
-		try {
-			KafkaConnectionFactory factory = new KafkaConnectionFactory(config);
-			factory.toString();
-		} catch (Exception e) {
-		}
+        try {
+            KafkaConnectionFactory factory = new KafkaConnectionFactory(config);
+            factory.toString();
+        } catch (Exception e) {
+        }
 
-		KafkaConnectionFactory factory = new KafkaConnectionFactory(
-				KafkaConfig.DEFAULT_BROKERS, KafkaConfig.DEFAULT_TYPE,
-				KafkaConfig.DEFAULT_ACKS, KafkaConfig.DEFAULT_CODEC,
-				KafkaConfig.DEFAULT_BATCH);
+        KafkaConnectionFactory factory = new KafkaConnectionFactory(
+                KafkaConfig.DEFAULT_BROKERS, KafkaConfig.DEFAULT_TYPE,
+                KafkaConfig.DEFAULT_ACKS, KafkaConfig.DEFAULT_CODEC,
+                KafkaConfig.DEFAULT_BATCH);
 
-		try {
-			factory.makeObject();
+        try {
+            factory.makeObject();
 
-		} catch (Exception e) {
-		}
+        } catch (Exception e) {
+        }
 
-		factory.activateObject(new DefaultPooledObject<Producer<byte[], byte[]>>(
-				new Producer<byte[], byte[]>(config)));
-		try {
-			factory.activateObject(new DefaultPooledObject<Producer<byte[], byte[]>>(
-					null));
-		} catch (Exception e) {
-		}
+        factory.activateObject(new DefaultPooledObject<Producer<byte[], byte[]>>(
+                new Producer<byte[], byte[]>(config)));
+        try {
+            factory.activateObject(new DefaultPooledObject<Producer<byte[], byte[]>>(
+                    null));
+        } catch (Exception e) {
+        }
 
-		factory.validateObject(new DefaultPooledObject<Producer<byte[], byte[]>>(
-				new Producer<byte[], byte[]>(config)));
-		try {
-			factory.validateObject(new DefaultPooledObject<Producer<byte[], byte[]>>(
-					null));
-		} catch (Exception e) {
-		}
+        factory.validateObject(new DefaultPooledObject<Producer<byte[], byte[]>>(
+                new Producer<byte[], byte[]>(config)));
+        try {
+            factory.validateObject(new DefaultPooledObject<Producer<byte[], byte[]>>(
+                    null));
+        } catch (Exception e) {
+        }
 
-		factory.passivateObject(new DefaultPooledObject<Producer<byte[], byte[]>>(
-				new Producer<byte[], byte[]>(config)));
-		try {
-			factory.passivateObject(new DefaultPooledObject<Producer<byte[], byte[]>>(
-					null));
-		} catch (Exception e) {
-		}
+        factory.passivateObject(new DefaultPooledObject<Producer<byte[], byte[]>>(
+                new Producer<byte[], byte[]>(config)));
+        try {
+            factory.passivateObject(new DefaultPooledObject<Producer<byte[], byte[]>>(
+                    null));
+        } catch (Exception e) {
+        }
 
-		factory.destroyObject(new DefaultPooledObject<Producer<byte[], byte[]>>(
-				new Producer<byte[], byte[]>(config)));
-		try {
-			factory.destroyObject(new DefaultPooledObject<Producer<byte[], byte[]>>(
-					null));
-		} catch (Exception e) {
-		}
+        factory.destroyObject(new DefaultPooledObject<Producer<byte[], byte[]>>(
+                new Producer<byte[], byte[]>(config)));
+        try {
+            factory.destroyObject(new DefaultPooledObject<Producer<byte[], byte[]>>(
+                    null));
+        } catch (Exception e) {
+        }
 
-	}
+    }
 }

@@ -15,76 +15,76 @@
  */
 package org.darkphoenixs.pool.jdbc;
 
-import java.util.Properties;
-
 import org.darkphoenixs.pool.PoolConfig;
 import org.junit.Test;
 
+import java.util.Properties;
+
 public class JdbcConnectionPoolTest {
 
-	@Test
-	public void test() throws Exception {
+    @Test
+    public void test() throws Exception {
 
-		try {
-			JdbcConnectionPool pool = new JdbcConnectionPool(
-					JdbcConfig.DEFAULT_DRIVER_CLASS,
-					JdbcConfig.DEFAULT_JDBC_URL,
-					JdbcConfig.DEFAULT_JDBC_USERNAME,
-					JdbcConfig.DEFAULT_JDBC_PASSWORD);
+        try {
+            JdbcConnectionPool pool = new JdbcConnectionPool(
+                    JdbcConfig.DEFAULT_DRIVER_CLASS,
+                    JdbcConfig.DEFAULT_JDBC_URL,
+                    JdbcConfig.DEFAULT_JDBC_USERNAME,
+                    JdbcConfig.DEFAULT_JDBC_PASSWORD);
 
-			pool.close();
-		} catch (Exception e) {
-		}
+            pool.close();
+        } catch (Exception e) {
+        }
 
-		try {
-			JdbcConnectionPool pool = new JdbcConnectionPool(new PoolConfig(),
-					JdbcConfig.DEFAULT_DRIVER_CLASS,
-					JdbcConfig.DEFAULT_JDBC_URL,
-					JdbcConfig.DEFAULT_JDBC_USERNAME,
-					JdbcConfig.DEFAULT_JDBC_PASSWORD);
+        try {
+            JdbcConnectionPool pool = new JdbcConnectionPool(new PoolConfig(),
+                    JdbcConfig.DEFAULT_DRIVER_CLASS,
+                    JdbcConfig.DEFAULT_JDBC_URL,
+                    JdbcConfig.DEFAULT_JDBC_USERNAME,
+                    JdbcConfig.DEFAULT_JDBC_PASSWORD);
 
-			pool.close();
-		} catch (Exception e) {
-		}
-		Properties prop = new Properties();
-		prop.setProperty(JdbcConfig.DRIVER_CLASS_PROPERTY,
-				JdbcConfig.DEFAULT_DRIVER_CLASS);
-		prop.setProperty(JdbcConfig.JDBC_URL_PROPERTY,
-				JdbcConfig.DEFAULT_JDBC_URL);
-		prop.setProperty(JdbcConfig.JDBC_USERNAME_PROPERTY,
-				JdbcConfig.DEFAULT_JDBC_USERNAME);
-		prop.setProperty(JdbcConfig.JDBC_PASSWORD_PROPERTY,
-				JdbcConfig.DEFAULT_JDBC_PASSWORD);
-		try {
-			JdbcConnectionPool pool = new JdbcConnectionPool(prop);
-			pool.close();
-		} catch (Exception e) {
-		}
+            pool.close();
+        } catch (Exception e) {
+        }
+        Properties prop = new Properties();
+        prop.setProperty(JdbcConfig.DRIVER_CLASS_PROPERTY,
+                JdbcConfig.DEFAULT_DRIVER_CLASS);
+        prop.setProperty(JdbcConfig.JDBC_URL_PROPERTY,
+                JdbcConfig.DEFAULT_JDBC_URL);
+        prop.setProperty(JdbcConfig.JDBC_USERNAME_PROPERTY,
+                JdbcConfig.DEFAULT_JDBC_USERNAME);
+        prop.setProperty(JdbcConfig.JDBC_PASSWORD_PROPERTY,
+                JdbcConfig.DEFAULT_JDBC_PASSWORD);
+        try {
+            JdbcConnectionPool pool = new JdbcConnectionPool(prop);
+            pool.close();
+        } catch (Exception e) {
+        }
 
-		try {
-			JdbcConnectionPool pool = new JdbcConnectionPool(new PoolConfig(),
-					prop);
-			pool.close();
-		} catch (Exception e) {
-		}
+        try {
+            JdbcConnectionPool pool = new JdbcConnectionPool(new PoolConfig(),
+                    prop);
+            pool.close();
+        } catch (Exception e) {
+        }
 
-		JdbcConnectionPool pool = new JdbcConnectionPool();
+        JdbcConnectionPool pool = new JdbcConnectionPool();
 
-		try {
-			pool.getConnection();
-		} catch (Exception e) {
-		}
+        try {
+            pool.getConnection();
+        } catch (Exception e) {
+        }
 
-		try {
-			pool.returnConnection(null);
-		} catch (Exception e) {
-		}
+        try {
+            pool.returnConnection(null);
+        } catch (Exception e) {
+        }
 
-		try {
-			pool.invalidateConnection(null);
-		} catch (Exception e) {
-		}
+        try {
+            pool.invalidateConnection(null);
+        } catch (Exception e) {
+        }
 
-		pool.close();
-	}
+        pool.close();
+    }
 }

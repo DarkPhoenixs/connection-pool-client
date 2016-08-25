@@ -15,86 +15,85 @@
  */
 package org.darkphoenixs.pool.kafka;
 
-import java.util.Properties;
-
 import kafka.producer.ProducerConfig;
-
 import org.darkphoenixs.pool.PoolConfig;
 import org.junit.Test;
 
+import java.util.Properties;
+
 public class KafkaConnectionPoolTest {
 
-	@Test
-	public void test() throws Exception {
-		
-		Properties prop = new Properties();
+    @Test
+    public void test() throws Exception {
 
-		prop.setProperty(KafkaConfig.BROKERS_LIST_PROPERTY,
-				KafkaConfig.DEFAULT_BROKERS);
-		prop.setProperty(KafkaConfig.PRODUCER_TYPE_PROPERTY,
-				KafkaConfig.DEFAULT_TYPE);
-		prop.setProperty(KafkaConfig.REQUEST_ACKS_PROPERTY,
-				KafkaConfig.DEFAULT_ACKS);
-		prop.setProperty(KafkaConfig.COMPRESSION_CODEC_PROPERTY,
-				KafkaConfig.DEFAULT_CODEC);
-		prop.setProperty(KafkaConfig.BATCH_NUMBER_PROPERTY,
-				KafkaConfig.DEFAULT_BATCH);
+        Properties prop = new Properties();
 
-		ProducerConfig config = new ProducerConfig(prop);
-		
-		try {
-			KafkaConnectionPool pool = new KafkaConnectionPool(KafkaConfig.DEFAULT_BROKERS);
-			pool.close();
-		} catch (Exception e) {
-		}
+        prop.setProperty(KafkaConfig.BROKERS_LIST_PROPERTY,
+                KafkaConfig.DEFAULT_BROKERS);
+        prop.setProperty(KafkaConfig.PRODUCER_TYPE_PROPERTY,
+                KafkaConfig.DEFAULT_TYPE);
+        prop.setProperty(KafkaConfig.REQUEST_ACKS_PROPERTY,
+                KafkaConfig.DEFAULT_ACKS);
+        prop.setProperty(KafkaConfig.COMPRESSION_CODEC_PROPERTY,
+                KafkaConfig.DEFAULT_CODEC);
+        prop.setProperty(KafkaConfig.BATCH_NUMBER_PROPERTY,
+                KafkaConfig.DEFAULT_BATCH);
 
-		try {
-			KafkaConnectionPool pool = new KafkaConnectionPool(prop);
-			pool.close();
-		} catch (Exception e) {
-		}
-		
-		try {
-			KafkaConnectionPool pool = new KafkaConnectionPool(config);
-			pool.close();
-		} catch (Exception e) {
-		}
-		
-		try {
-			KafkaConnectionPool pool = new KafkaConnectionPool(new PoolConfig(), prop);
-			pool.close();
-		} catch (Exception e) {
-		}
-		
-		try {
-			KafkaConnectionPool pool = new KafkaConnectionPool(new PoolConfig(), config);
-			pool.close();
-		} catch (Exception e) {
-		}
-		
-		try {
-			KafkaConnectionPool pool = new KafkaConnectionPool(new PoolConfig(), KafkaConfig.DEFAULT_BROKERS, KafkaConfig.DEFAULT_TYPE);
-			pool.close();
-		} catch (Exception e) {
-		}
-		
-		KafkaConnectionPool pool = new KafkaConnectionPool();
-		
-		try {
-			pool.getConnection();
-		} catch (Exception e) {
-		}
+        ProducerConfig config = new ProducerConfig(prop);
 
-		try {
-			pool.returnConnection(null);
-		} catch (Exception e) {
-		}
+        try {
+            KafkaConnectionPool pool = new KafkaConnectionPool(KafkaConfig.DEFAULT_BROKERS);
+            pool.close();
+        } catch (Exception e) {
+        }
 
-		try {
-			pool.invalidateConnection(null);
-		} catch (Exception e) {
-		}
+        try {
+            KafkaConnectionPool pool = new KafkaConnectionPool(prop);
+            pool.close();
+        } catch (Exception e) {
+        }
 
-		pool.close();
-	}
+        try {
+            KafkaConnectionPool pool = new KafkaConnectionPool(config);
+            pool.close();
+        } catch (Exception e) {
+        }
+
+        try {
+            KafkaConnectionPool pool = new KafkaConnectionPool(new PoolConfig(), prop);
+            pool.close();
+        } catch (Exception e) {
+        }
+
+        try {
+            KafkaConnectionPool pool = new KafkaConnectionPool(new PoolConfig(), config);
+            pool.close();
+        } catch (Exception e) {
+        }
+
+        try {
+            KafkaConnectionPool pool = new KafkaConnectionPool(new PoolConfig(), KafkaConfig.DEFAULT_BROKERS, KafkaConfig.DEFAULT_TYPE);
+            pool.close();
+        } catch (Exception e) {
+        }
+
+        KafkaConnectionPool pool = new KafkaConnectionPool();
+
+        try {
+            pool.getConnection();
+        } catch (Exception e) {
+        }
+
+        try {
+            pool.returnConnection(null);
+        } catch (Exception e) {
+        }
+
+        try {
+            pool.invalidateConnection(null);
+        } catch (Exception e) {
+        }
+
+        pool.close();
+    }
 }

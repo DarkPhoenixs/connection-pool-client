@@ -4,41 +4,41 @@ import redis.clients.jedis.Jedis;
 
 public class JedisConn extends Jedis {
 
-	public JedisConn() {
-	}
-	
-	public JedisConn(String arg0, int arg1) {
-		super(arg0, arg1);
-	}
+    public JedisConn() {
+    }
 
-	@Override
-	public String select(int index) {
+    public JedisConn(String arg0, int arg1) {
+        super(arg0, arg1);
+    }
 
-		return String.valueOf(index);
-	}
+    @Override
+    public String select(int index) {
 
-	@Override
-	public boolean isConnected() {
+        return String.valueOf(index);
+    }
 
-		return true;
-	}
+    @Override
+    public boolean isConnected() {
 
-	@Override
-	public String ping() {
+        return true;
+    }
 
-		return "PONG";
-	}
+    @Override
+    public String ping() {
 
-	@Override
-	public String quit() {
+        return "PONG";
+    }
 
-		throw new RuntimeException("quit");
-	}
+    @Override
+    public String quit() {
 
-	@Override
-	public void disconnect() {
+        throw new RuntimeException("quit");
+    }
 
-		throw new RuntimeException("disconnect");
-	}
-	
+    @Override
+    public void disconnect() {
+
+        throw new RuntimeException("disconnect");
+    }
+
 }

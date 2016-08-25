@@ -20,17 +20,17 @@ import org.junit.Test;
 
 public class HbaseConfigTest {
 
-	@Test
-	public void test() throws Exception {
-		
-		Assert.assertEquals(HbaseConfig.DEFAULT_HOST, "localhost");
-		Assert.assertEquals(HbaseConfig.DEFAULT_PORT, "2181");
-		Assert.assertNull(HbaseConfig.DEFAULT_MASTER);
-		Assert.assertNull(HbaseConfig.DEFAULT_ROOTDIR);
+    @Test
+    public void test() throws Exception {
 
-		Assert.assertEquals(HbaseConfig.ZOOKEEPER_QUORUM_PROPERTY, "hbase.zookeeper.quorum");
-		Assert.assertEquals(HbaseConfig.ZOOKEEPER_CLIENTPORT_PROPERTY, "hbase.zookeeper.property.clientPort");
-		Assert.assertEquals(HbaseConfig.MASTER_PROPERTY, "hbase.master");
-		Assert.assertEquals(HbaseConfig.ROOTDIR_PROPERTY, "hbase.rootdir");
-	}
+        Assert.assertEquals(HbaseConfig.DEFAULT_HOST, "localhost");
+        Assert.assertEquals(HbaseConfig.DEFAULT_PORT, "2181");
+        Assert.assertNull(HbaseConfig.DEFAULT_MASTER);
+        Assert.assertNull(HbaseConfig.DEFAULT_ROOTDIR);
+
+        Assert.assertEquals(HbaseConfig.ZOOKEEPER_QUORUM_PROPERTY, "hbase.zookeeper.quorum");
+        Assert.assertEquals(HbaseConfig.ZOOKEEPER_CLIENTPORT_PROPERTY, "hbase.zookeeper.property.clientPort");
+        Assert.assertEquals(HbaseConfig.MASTER_PROPERTY, "hbase.master");
+        Assert.assertEquals(HbaseConfig.ROOTDIR_PROPERTY, "hbase.rootdir");
+    }
 }

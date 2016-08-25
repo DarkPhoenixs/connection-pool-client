@@ -15,176 +15,189 @@
  */
 package org.darkphoenixs.pool.redis;
 
-import java.util.Properties;
-import java.util.concurrent.atomic.AtomicReference;
-
 import org.apache.commons.pool2.PooledObject;
 import org.apache.commons.pool2.impl.DefaultPooledObject;
 import org.darkphoenixs.pool.ConnectionException;
 import org.darkphoenixs.pool.ConnectionFactory;
-
 import redis.clients.jedis.BinaryJedis;
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.Jedis;
+
+import java.util.Properties;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * <p>Title: RedisConnectionFactory</p>
  * <p>Description: Redis连接工厂</p>
  *
- * @since 2015年9月19日
  * @author Victor
- * @see ConnectionFactory
  * @version 1.0
+ * @see ConnectionFactory
+ * @since 2015年9月19日
  */
 class RedisConnectionFactory implements ConnectionFactory<Jedis> {
 
-	/** serialVersionUID */
-	private static final long serialVersionUID = 5692815845396189037L;
+    /**
+     * serialVersionUID
+     */
+    private static final long serialVersionUID = 5692815845396189037L;
 
-	/** hostAndPort */
-	private final AtomicReference<HostAndPort> hostAndPort = new AtomicReference<HostAndPort>();
-	/** connectionTimeout */
-	private final int connectionTimeout;
-	/** soTimeout */
-	private final int soTimeout;
-	/** password */
-	private final String password;
-	/** database */
-	private final int database;
-	/** clientName */
-	private final String clientName;
-	
-	/**
-	 * <p>Title: setHostAndPort</p>
-	 * <p>Description: 设置地址和端口</p>
-	 *
-	 * @param hostAndPort 地址和端口
-	 */
-	public void setHostAndPort(final HostAndPort hostAndPort) {
-		this.hostAndPort.set(hostAndPort);
-	}
-	
-	/**
-	 * <p>Title: RedisConnectionFactory</p>
-	 * <p>Description: 构造方法</p>
-	 *
-	 * @param host 地址
-	 * @param port 端口
-	 * @param connectionTimeout 连接超时
-	 * @param soTimeout 超时时间
-	 * @param password 密码
-	 * @param database 数据库
-	 * @param clientName 客户端名称
-	 */
-	public RedisConnectionFactory(final String host, final int port, final int connectionTimeout,
-			final int soTimeout, final String password, final int database, final String clientName) {
-		this.hostAndPort.set(new HostAndPort(host, port));
-		this.connectionTimeout = connectionTimeout;
-		this.soTimeout = soTimeout;
-		this.password = password;
-		this.database = database;
-		this.clientName = clientName;
-	}
-	
-	/**
-	 * @since 1.2.1
-	 * @param properties 参数配置
-	 */
-	public RedisConnectionFactory(final Properties properties) {
-		
-		String address = properties.getProperty(RedisConfig.ADDRESS_PROPERTY);
-		if (address == null)
-			throw new ConnectionException("[" + RedisConfig.ADDRESS_PROPERTY + "] is required !");
+    /**
+     * hostAndPort
+     */
+    private final AtomicReference<HostAndPort> hostAndPort = new AtomicReference<HostAndPort>();
+    /**
+     * connectionTimeout
+     */
+    private final int connectionTimeout;
+    /**
+     * soTimeout
+     */
+    private final int soTimeout;
+    /**
+     * password
+     */
+    private final String password;
+    /**
+     * database
+     */
+    private final int database;
+    /**
+     * clientName
+     */
+    private final String clientName;
 
-		this.hostAndPort.set(new HostAndPort(address.split(":")[0], Integer.parseInt(address.split(":")[1])));
-		
-		this.connectionTimeout = Integer.parseInt(properties.getProperty(RedisConfig.CONN_TIMEOUT_PROPERTY, String.valueOf(RedisConfig.DEFAULT_TIMEOUT)));
-		this.soTimeout = Integer.parseInt(properties.getProperty(RedisConfig.SO_TIMEOUT_PROPERTY, String.valueOf(RedisConfig.DEFAULT_TIMEOUT)));
-		this.database = Integer.parseInt(properties.getProperty(RedisConfig.DATABASE_PROPERTY, String.valueOf(RedisConfig.DEFAULT_DATABASE)));
-		this.password = properties.getProperty(RedisConfig.PASSWORD_PROPERTY);
-		this.clientName = properties.getProperty(RedisConfig.CLIENTNAME_PROPERTY);
-	}
-	
-	@Override
-	public PooledObject<Jedis> makeObject() throws Exception {
+    /**
+     * <p>Title: RedisConnectionFactory</p>
+     * <p>Description: 构造方法</p>
+     *
+     * @param host              地址
+     * @param port              端口
+     * @param connectionTimeout 连接超时
+     * @param soTimeout         超时时间
+     * @param password          密码
+     * @param database          数据库
+     * @param clientName        客户端名称
+     */
+    public RedisConnectionFactory(final String host, final int port, final int connectionTimeout,
+                                  final int soTimeout, final String password, final int database, final String clientName) {
+        this.hostAndPort.set(new HostAndPort(host, port));
+        this.connectionTimeout = connectionTimeout;
+        this.soTimeout = soTimeout;
+        this.password = password;
+        this.database = database;
+        this.clientName = clientName;
+    }
 
-		Jedis jedis = this.createConnection();
-		
-		return new DefaultPooledObject<Jedis>(jedis);
-	}
+    /**
+     * @param properties 参数配置
+     * @since 1.2.1
+     */
+    public RedisConnectionFactory(final Properties properties) {
 
-	@Override
-	public void destroyObject(PooledObject<Jedis> p) throws Exception {
+        String address = properties.getProperty(RedisConfig.ADDRESS_PROPERTY);
+        if (address == null)
+            throw new ConnectionException("[" + RedisConfig.ADDRESS_PROPERTY + "] is required !");
 
-		BinaryJedis jedis = (BinaryJedis) p.getObject();
-		if (!(jedis.isConnected()))
-			return;
-		try {
-			try {
-				jedis.quit();
-			} catch (Exception e) {
-			}
-			jedis.disconnect();
-		} catch (Exception e) {
-		}
-	}
+        this.hostAndPort.set(new HostAndPort(address.split(":")[0], Integer.parseInt(address.split(":")[1])));
 
-	@Override
-	public boolean validateObject(PooledObject<Jedis> p) {
+        this.connectionTimeout = Integer.parseInt(properties.getProperty(RedisConfig.CONN_TIMEOUT_PROPERTY, String.valueOf(RedisConfig.DEFAULT_TIMEOUT)));
+        this.soTimeout = Integer.parseInt(properties.getProperty(RedisConfig.SO_TIMEOUT_PROPERTY, String.valueOf(RedisConfig.DEFAULT_TIMEOUT)));
+        this.database = Integer.parseInt(properties.getProperty(RedisConfig.DATABASE_PROPERTY, String.valueOf(RedisConfig.DEFAULT_DATABASE)));
+        this.password = properties.getProperty(RedisConfig.PASSWORD_PROPERTY);
+        this.clientName = properties.getProperty(RedisConfig.CLIENTNAME_PROPERTY);
+    }
 
-		BinaryJedis jedis = (BinaryJedis) p.getObject();
-		try {
-			HostAndPort hostAndPort = (HostAndPort) this.hostAndPort.get();
+    /**
+     * <p>Title: setHostAndPort</p>
+     * <p>Description: 设置地址和端口</p>
+     *
+     * @param hostAndPort 地址和端口
+     */
+    public void setHostAndPort(final HostAndPort hostAndPort) {
+        this.hostAndPort.set(hostAndPort);
+    }
 
-			String connectionHost = jedis.getClient().getHost();
-			int connectionPort = jedis.getClient().getPort();
+    @Override
+    public PooledObject<Jedis> makeObject() throws Exception {
 
-			return ((hostAndPort.getHost().equals(connectionHost))
-					&& (hostAndPort.getPort() == connectionPort)
-					&& (jedis.isConnected()) && (jedis.ping().equals("PONG")));
-		} catch (Exception e) {
-		}
-		return false;
-	}
+        Jedis jedis = this.createConnection();
 
-	@Override
-	public void activateObject(PooledObject<Jedis> p) throws Exception {
+        return new DefaultPooledObject<Jedis>(jedis);
+    }
 
-		BinaryJedis jedis = (BinaryJedis) p.getObject();
-		if (jedis.getDB().longValue() != this.database)
-			jedis.select(this.database);
-	}
+    @Override
+    public void destroyObject(PooledObject<Jedis> p) throws Exception {
 
-	@Override
-	public void passivateObject(PooledObject<Jedis> p) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
+        BinaryJedis jedis = (BinaryJedis) p.getObject();
+        if (!(jedis.isConnected()))
+            return;
+        try {
+            try {
+                jedis.quit();
+            } catch (Exception e) {
+            }
+            jedis.disconnect();
+        } catch (Exception e) {
+        }
+    }
 
-	@Override
-	public Jedis createConnection() throws Exception {
+    @Override
+    public boolean validateObject(PooledObject<Jedis> p) {
 
-		HostAndPort hostAndPort = (HostAndPort) this.hostAndPort.get();
-		Jedis jedis = new Jedis(hostAndPort.getHost(), hostAndPort.getPort(),
-				this.connectionTimeout, this.soTimeout);
+        BinaryJedis jedis = (BinaryJedis) p.getObject();
+        try {
+            HostAndPort hostAndPort = (HostAndPort) this.hostAndPort.get();
 
-		try {
-			jedis.connect();
-			if (null != this.password) {
-				jedis.auth(this.password);
-			}
-			if (this.database != 0) {
-				jedis.select(this.database);
-			}
-			if (this.clientName != null) {
-				jedis.clientSetname(this.clientName);
-			}
-		} catch (Exception je) {
-			jedis.close();
-			throw je;
-		}
-		
-		return jedis;
-	}
+            String connectionHost = jedis.getClient().getHost();
+            int connectionPort = jedis.getClient().getPort();
+
+            return ((hostAndPort.getHost().equals(connectionHost))
+                    && (hostAndPort.getPort() == connectionPort)
+                    && (jedis.isConnected()) && (jedis.ping().equals("PONG")));
+        } catch (Exception e) {
+        }
+        return false;
+    }
+
+    @Override
+    public void activateObject(PooledObject<Jedis> p) throws Exception {
+
+        BinaryJedis jedis = (BinaryJedis) p.getObject();
+        if (jedis.getDB().longValue() != this.database)
+            jedis.select(this.database);
+    }
+
+    @Override
+    public void passivateObject(PooledObject<Jedis> p) throws Exception {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public Jedis createConnection() throws Exception {
+
+        HostAndPort hostAndPort = (HostAndPort) this.hostAndPort.get();
+        Jedis jedis = new Jedis(hostAndPort.getHost(), hostAndPort.getPort(),
+                this.connectionTimeout, this.soTimeout);
+
+        try {
+            jedis.connect();
+            if (null != this.password) {
+                jedis.auth(this.password);
+            }
+            if (this.database != 0) {
+                jedis.select(this.database);
+            }
+            if (this.clientName != null) {
+                jedis.clientSetname(this.clientName);
+            }
+        } catch (Exception je) {
+            jedis.close();
+            throw je;
+        }
+
+        return jedis;
+    }
 
 }

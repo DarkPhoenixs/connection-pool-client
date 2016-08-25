@@ -15,105 +15,107 @@
  */
 package org.darkphoenixs.pool.jdbc;
 
-import java.sql.Connection;
-import java.util.Properties;
-
 import org.darkphoenixs.pool.ConnectionPool;
 import org.darkphoenixs.pool.PoolBase;
 import org.darkphoenixs.pool.PoolConfig;
+
+import java.sql.Connection;
+import java.util.Properties;
 
 /**
  * <p>Title: JdbcConnectionPool</p>
  * <p>Description: Jdbc连接池</p>
  *
- * @since 2015年11月17日
  * @author Victor.Zxy
+ * @version 1.0
  * @see PoolBase
  * @see ConnectionPool
- * @version 1.0
+ * @since 2015年11月17日
  */
 public class JdbcConnectionPool extends PoolBase<Connection> implements ConnectionPool<Connection> {
 
-	/** serialVersionUID */
-	private static final long serialVersionUID = 2743612676107943708L;
+    /**
+     * serialVersionUID
+     */
+    private static final long serialVersionUID = 2743612676107943708L;
 
-	/**
-	 * <p>Title: JdbcConnectionPool</p>
-	 * <p>Description: 默认构造方法</p>
-	 */
-	public JdbcConnectionPool() {
+    /**
+     * <p>Title: JdbcConnectionPool</p>
+     * <p>Description: 默认构造方法</p>
+     */
+    public JdbcConnectionPool() {
 
-		this(JdbcConfig.DEFAULT_DRIVER_CLASS, JdbcConfig.DEFAULT_JDBC_URL, JdbcConfig.DEFAULT_JDBC_USERNAME, JdbcConfig.DEFAULT_JDBC_PASSWORD);
-	}
-	
-	/**
-	 * <p>Title: JdbcConnectionPool</p>
-	 * <p>Description: 构造方法</p>
-	 *
-	 * @param properties JDBC参数
-	 */
-	public JdbcConnectionPool(final Properties properties) {
-	
-		this(new PoolConfig(), properties);
-	}
-	
-	/**
-	 * <p>Title: JdbcConnectionPool</p>
-	 * <p>Description: 构造方法</p>
-	 *
-	 * @param driverClass 驱动类
-	 * @param jdbcUrl 数据库URL
-	 * @param username 数据库用户名
-	 * @param password 数据密码
-	 */
-	public JdbcConnectionPool(final String driverClass, final String jdbcUrl, final String username, final String password) {
+        this(JdbcConfig.DEFAULT_DRIVER_CLASS, JdbcConfig.DEFAULT_JDBC_URL, JdbcConfig.DEFAULT_JDBC_USERNAME, JdbcConfig.DEFAULT_JDBC_PASSWORD);
+    }
 
-		this(new PoolConfig(), driverClass, jdbcUrl, username, password);
-	}
-	
-	/**
-	 * <p>Title: JdbcConnectionPool</p>
-	 * <p>Description: 构造方法</p>
-	 *
-	 * @param poolConfig 池配置
-	 * @param properties JDBC参数
-	 */
-	public JdbcConnectionPool(final PoolConfig poolConfig, final Properties properties) {
-		
-		super(poolConfig, new JdbcConnectionFactory(properties));
-	}
-	
-	/**
-	 * <p>Title: JdbcConnectionPool</p>
-	 * <p>Description: 构造方法</p>
-	 *
-	 * @param poolConfig 池配置
-	 * @param driverClass 驱动类
-	 * @param jdbcUrl 数据库URL
-	 * @param username 数据库用户名
-	 * @param password 数据密码
-	 */
-	public JdbcConnectionPool(final PoolConfig poolConfig, final String driverClass, final String jdbcUrl, final String username, final String password) {
+    /**
+     * <p>Title: JdbcConnectionPool</p>
+     * <p>Description: 构造方法</p>
+     *
+     * @param properties JDBC参数
+     */
+    public JdbcConnectionPool(final Properties properties) {
 
-		super(poolConfig, new JdbcConnectionFactory(driverClass, jdbcUrl, username, password));
-	}
-	
-	@Override
-	public Connection getConnection() {
-		
-		return super.getResource();
-	}
+        this(new PoolConfig(), properties);
+    }
 
-	@Override
-	public void returnConnection(Connection conn) {
-		
-		super.returnResource(conn);
-	}
-	
-	@Override
-	public void invalidateConnection(Connection conn) {
+    /**
+     * <p>Title: JdbcConnectionPool</p>
+     * <p>Description: 构造方法</p>
+     *
+     * @param driverClass 驱动类
+     * @param jdbcUrl     数据库URL
+     * @param username    数据库用户名
+     * @param password    数据密码
+     */
+    public JdbcConnectionPool(final String driverClass, final String jdbcUrl, final String username, final String password) {
 
-		super.invalidateResource(conn);
-	}
+        this(new PoolConfig(), driverClass, jdbcUrl, username, password);
+    }
+
+    /**
+     * <p>Title: JdbcConnectionPool</p>
+     * <p>Description: 构造方法</p>
+     *
+     * @param poolConfig 池配置
+     * @param properties JDBC参数
+     */
+    public JdbcConnectionPool(final PoolConfig poolConfig, final Properties properties) {
+
+        super(poolConfig, new JdbcConnectionFactory(properties));
+    }
+
+    /**
+     * <p>Title: JdbcConnectionPool</p>
+     * <p>Description: 构造方法</p>
+     *
+     * @param poolConfig  池配置
+     * @param driverClass 驱动类
+     * @param jdbcUrl     数据库URL
+     * @param username    数据库用户名
+     * @param password    数据密码
+     */
+    public JdbcConnectionPool(final PoolConfig poolConfig, final String driverClass, final String jdbcUrl, final String username, final String password) {
+
+        super(poolConfig, new JdbcConnectionFactory(driverClass, jdbcUrl, username, password));
+    }
+
+    @Override
+    public Connection getConnection() {
+
+        return super.getResource();
+    }
+
+    @Override
+    public void returnConnection(Connection conn) {
+
+        super.returnResource(conn);
+    }
+
+    @Override
+    public void invalidateConnection(Connection conn) {
+
+        super.invalidateResource(conn);
+    }
 
 }

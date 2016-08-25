@@ -20,19 +20,19 @@ import org.junit.Test;
 
 public class KafkaConfigTest {
 
-	@Test
-	public void test() throws Exception {
+    @Test
+    public void test() throws Exception {
 
-		Assert.assertEquals(KafkaConfig.DEFAULT_BROKERS, "localhost:9092");
-		Assert.assertEquals(KafkaConfig.DEFAULT_TYPE, "sync");
-		Assert.assertEquals(KafkaConfig.DEFAULT_ACKS, "0");
-		Assert.assertEquals(KafkaConfig.DEFAULT_CODEC, "none");
-		Assert.assertEquals(KafkaConfig.DEFAULT_BATCH, "200");
-		
-		Assert.assertEquals(KafkaConfig.BROKERS_LIST_PROPERTY, "metadata.broker.list");
-		Assert.assertEquals(KafkaConfig.PRODUCER_TYPE_PROPERTY, "producer.type");
-		Assert.assertEquals(KafkaConfig.REQUEST_ACKS_PROPERTY, "request.required.acks");
-		Assert.assertEquals(KafkaConfig.COMPRESSION_CODEC_PROPERTY, "compression.codec");
-		Assert.assertEquals(KafkaConfig.BATCH_NUMBER_PROPERTY, "batch.num.messages");
-	}
+        Assert.assertEquals(KafkaConfig.DEFAULT_BROKERS, "localhost:9092");
+        Assert.assertEquals(KafkaConfig.DEFAULT_TYPE, "sync");
+        Assert.assertEquals(KafkaConfig.DEFAULT_ACKS, "0");
+        Assert.assertEquals(KafkaConfig.DEFAULT_CODEC, "none");
+        Assert.assertEquals(KafkaConfig.DEFAULT_BATCH, "200");
+
+        Assert.assertEquals(KafkaConfig.BROKERS_LIST_PROPERTY, "metadata.broker.list");
+        Assert.assertEquals(KafkaConfig.PRODUCER_TYPE_PROPERTY, "producer.type");
+        Assert.assertEquals(KafkaConfig.REQUEST_ACKS_PROPERTY, "request.required.acks");
+        Assert.assertEquals(KafkaConfig.COMPRESSION_CODEC_PROPERTY, "compression.codec");
+        Assert.assertEquals(KafkaConfig.BATCH_NUMBER_PROPERTY, "batch.num.messages");
+    }
 }

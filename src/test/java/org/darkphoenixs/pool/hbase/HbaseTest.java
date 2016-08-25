@@ -4,8 +4,8 @@ import org.junit.Test;
 
 public class HbaseTest {
 
-	@Test
-	public void test() throws Exception {
+    @Test
+    public void test() throws Exception {
 
 //		PoolConfig config = new PoolConfig();
 //		config.setMaxTotal(20);
@@ -41,5 +41,5 @@ public class HbaseTest {
 //
 //		pool.close();
 
-	}
+    }
 }

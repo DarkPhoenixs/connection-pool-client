@@ -20,18 +20,18 @@ import org.junit.Test;
 
 public class JdbcConfigTest {
 
-	@Test
-	public void test() throws Exception {
-		
-		Assert.assertEquals(JdbcConfig.DEFAULT_DRIVER_CLASS, "com.mysql.jdbc.Driver");
-		Assert.assertEquals(JdbcConfig.DEFAULT_JDBC_URL, "jdbc:mysql://localhost:3306/test");
-		Assert.assertEquals(JdbcConfig.DEFAULT_JDBC_USERNAME, "root");
-		Assert.assertEquals(JdbcConfig.DEFAULT_JDBC_PASSWORD, "root");
-		
-		Assert.assertEquals(JdbcConfig.DRIVER_CLASS_PROPERTY, "driverClass");
-		Assert.assertEquals(JdbcConfig.JDBC_URL_PROPERTY, "jdbcUrl");
-		Assert.assertEquals(JdbcConfig.JDBC_USERNAME_PROPERTY, "username");
-		Assert.assertEquals(JdbcConfig.JDBC_PASSWORD_PROPERTY, "password");
-	}
-	
+    @Test
+    public void test() throws Exception {
+
+        Assert.assertEquals(JdbcConfig.DEFAULT_DRIVER_CLASS, "com.mysql.jdbc.Driver");
+        Assert.assertEquals(JdbcConfig.DEFAULT_JDBC_URL, "jdbc:mysql://localhost:3306/test");
+        Assert.assertEquals(JdbcConfig.DEFAULT_JDBC_USERNAME, "root");
+        Assert.assertEquals(JdbcConfig.DEFAULT_JDBC_PASSWORD, "root");
+
+        Assert.assertEquals(JdbcConfig.DRIVER_CLASS_PROPERTY, "driverClass");
+        Assert.assertEquals(JdbcConfig.JDBC_URL_PROPERTY, "jdbcUrl");
+        Assert.assertEquals(JdbcConfig.JDBC_USERNAME_PROPERTY, "username");
+        Assert.assertEquals(JdbcConfig.JDBC_PASSWORD_PROPERTY, "password");
+    }
+
 }

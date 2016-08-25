@@ -15,127 +15,127 @@
  */
 package org.darkphoenixs.pool.socket;
 
+import org.apache.commons.pool2.impl.DefaultPooledObject;
+import org.junit.Before;
+import org.junit.Test;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Properties;
 
-import org.apache.commons.pool2.impl.DefaultPooledObject;
-import org.junit.Before;
-import org.junit.Test;
-
 public class SocketConnectionFactoryTest {
 
-	@Before
-	public void before() throws Exception {
-		
-		Thread th = new Thread(new Runnable() {
-			
-			private ServerSocket serverSocket;
+    @Before
+    public void before() throws Exception {
 
-			@Override
-			public void run() {
-				
-				try {
-					serverSocket = new ServerSocket(1234);
-					
-					serverSocket.accept();
-					
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		
-		th.setDaemon(true);
-		th.start();
-	}
-	
-	@Test
-	public void test_0() throws Exception {
+        Thread th = new Thread(new Runnable() {
 
-		SocketConnectionFactory factory = new SocketConnectionFactory(
-				SocketConfig.DEFAULT_HOST, SocketConfig.DEFAULT_PORT,
-				SocketConfig.DEFAULT_BUFFERSIZE,
-				SocketConfig.DEFAULT_BUFFERSIZE, SocketConfig.DEFAULT_TIMEOUT,
-				SocketConfig.DEFAULT_TIMEOUT, 1, true, true, new String[] {
-						"0", "1", "2" });
+            private ServerSocket serverSocket;
 
-		try {
-			factory.makeObject();
-		} catch (Exception e) {
-		}
+            @Override
+            public void run() {
 
-		factory.activateObject(new DefaultPooledObject<Socket>(new Socket()));
-		try {
-			factory.activateObject(new DefaultPooledObject<Socket>(null));
-		} catch (Exception e) {
-		}
+                try {
+                    serverSocket = new ServerSocket(1234);
 
-		factory.validateObject(new DefaultPooledObject<Socket>(new Socket()));
-		try {
-			factory.validateObject(new DefaultPooledObject<Socket>(null));
-		} catch (Exception e) {
-		}
+                    serverSocket.accept();
 
-		factory.passivateObject(new DefaultPooledObject<Socket>(new Socket()));
-		try {
-			factory.passivateObject(new DefaultPooledObject<Socket>(null));
-		} catch (Exception e) {
-		}
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
-		factory.destroyObject(new DefaultPooledObject<Socket>(new Socket()));
-		try {
-			factory.destroyObject(new DefaultPooledObject<Socket>(null));
-		} catch (Exception e) {
-		}
-	}
+        th.setDaemon(true);
+        th.start();
+    }
 
-	@Test
-	public void test_1() throws Exception {
+    @Test
+    public void test_0() throws Exception {
 
-		Properties pro = new Properties();
+        SocketConnectionFactory factory = new SocketConnectionFactory(
+                SocketConfig.DEFAULT_HOST, SocketConfig.DEFAULT_PORT,
+                SocketConfig.DEFAULT_BUFFERSIZE,
+                SocketConfig.DEFAULT_BUFFERSIZE, SocketConfig.DEFAULT_TIMEOUT,
+                SocketConfig.DEFAULT_TIMEOUT, 1, true, true, new String[]{
+                "0", "1", "2"});
 
-		try {
-			new SocketConnectionFactory(pro);
-		} catch (Exception e) {
-		}
+        try {
+            factory.makeObject();
+        } catch (Exception e) {
+        }
 
-		pro.setProperty(SocketConfig.ADDRESS_PROPERTY,
-				SocketConfig.DEFAULT_HOST + ":" + SocketConfig.DEFAULT_PORT);
-		pro.setProperty(SocketConfig.RECE_BUFFERSIZE_PROPERTY,
-				SocketConfig.DEFAULT_BUFFERSIZE + "");
-		pro.setProperty(SocketConfig.SEND_BUFFERSIZE_PROPERTY,
-				SocketConfig.DEFAULT_BUFFERSIZE + "");
-		pro.setProperty(SocketConfig.CONN_TIMEOUT_PROPERTY,
-				SocketConfig.DEFAULT_TIMEOUT + "");
-		pro.setProperty(SocketConfig.SO_TIMEOUT_PROPERTY,
-				SocketConfig.DEFAULT_TIMEOUT + "");
-		pro.setProperty(SocketConfig.LINGER_PROPERTY,
-				SocketConfig.DEFAULT_LINGER + "");
-		pro.setProperty(SocketConfig.KEEPALIVE_PROPERTY,
-				SocketConfig.DEFAULT_KEEPALIVE + "");
-		pro.setProperty(SocketConfig.TCPNODELAY_PROPERTY,
-				SocketConfig.TCPNODELAY_PROPERTY + "");
+        factory.activateObject(new DefaultPooledObject<Socket>(new Socket()));
+        try {
+            factory.activateObject(new DefaultPooledObject<Socket>(null));
+        } catch (Exception e) {
+        }
 
-		new SocketConnectionFactory(pro);
+        factory.validateObject(new DefaultPooledObject<Socket>(new Socket()));
+        try {
+            factory.validateObject(new DefaultPooledObject<Socket>(null));
+        } catch (Exception e) {
+        }
 
-		Properties pro2 = new Properties();
-		pro2.setProperty(SocketConfig.ADDRESS_PROPERTY,
-				SocketConfig.DEFAULT_HOST + ":" + SocketConfig.DEFAULT_PORT);
+        factory.passivateObject(new DefaultPooledObject<Socket>(new Socket()));
+        try {
+            factory.passivateObject(new DefaultPooledObject<Socket>(null));
+        } catch (Exception e) {
+        }
 
-		try {
-			new SocketConnectionFactory(pro2).createConnection();
-		} catch (Exception e) {
-		}
+        factory.destroyObject(new DefaultPooledObject<Socket>(new Socket()));
+        try {
+            factory.destroyObject(new DefaultPooledObject<Socket>(null));
+        } catch (Exception e) {
+        }
+    }
 
-		Properties pro3 = new Properties();
-		pro3.setProperty(SocketConfig.ADDRESS_PROPERTY,
-				SocketConfig.DEFAULT_HOST + ":" + 1233);
+    @Test
+    public void test_1() throws Exception {
 
-		try {
-			new SocketConnectionFactory(pro3).createConnection();
-		} catch (Exception e) {
-		}
-	}
+        Properties pro = new Properties();
+
+        try {
+            new SocketConnectionFactory(pro);
+        } catch (Exception e) {
+        }
+
+        pro.setProperty(SocketConfig.ADDRESS_PROPERTY,
+                SocketConfig.DEFAULT_HOST + ":" + SocketConfig.DEFAULT_PORT);
+        pro.setProperty(SocketConfig.RECE_BUFFERSIZE_PROPERTY,
+                SocketConfig.DEFAULT_BUFFERSIZE + "");
+        pro.setProperty(SocketConfig.SEND_BUFFERSIZE_PROPERTY,
+                SocketConfig.DEFAULT_BUFFERSIZE + "");
+        pro.setProperty(SocketConfig.CONN_TIMEOUT_PROPERTY,
+                SocketConfig.DEFAULT_TIMEOUT + "");
+        pro.setProperty(SocketConfig.SO_TIMEOUT_PROPERTY,
+                SocketConfig.DEFAULT_TIMEOUT + "");
+        pro.setProperty(SocketConfig.LINGER_PROPERTY,
+                SocketConfig.DEFAULT_LINGER + "");
+        pro.setProperty(SocketConfig.KEEPALIVE_PROPERTY,
+                SocketConfig.DEFAULT_KEEPALIVE + "");
+        pro.setProperty(SocketConfig.TCPNODELAY_PROPERTY,
+                SocketConfig.TCPNODELAY_PROPERTY + "");
+
+        new SocketConnectionFactory(pro);
+
+        Properties pro2 = new Properties();
+        pro2.setProperty(SocketConfig.ADDRESS_PROPERTY,
+                SocketConfig.DEFAULT_HOST + ":" + SocketConfig.DEFAULT_PORT);
+
+        try {
+            new SocketConnectionFactory(pro2).createConnection();
+        } catch (Exception e) {
+        }
+
+        Properties pro3 = new Properties();
+        pro3.setProperty(SocketConfig.ADDRESS_PROPERTY,
+                SocketConfig.DEFAULT_HOST + ":" + 1233);
+
+        try {
+            new SocketConnectionFactory(pro3).createConnection();
+        } catch (Exception e) {
+        }
+    }
 }
