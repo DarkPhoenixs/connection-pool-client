@@ -47,6 +47,11 @@ public class PoolBaseTest {
         ConnPool pool = new ConnPool();
 
         try {
+            pool.getNumActive();
+        } catch (Exception e) {
+        }
+
+        try {
             pool.addObjects(1);
         } catch (Exception e) {
         }
