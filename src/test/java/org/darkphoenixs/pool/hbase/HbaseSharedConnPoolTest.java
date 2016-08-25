@@ -11,9 +11,20 @@ public class HbaseSharedConnPoolTest {
         HbaseSharedConnPool pool = HbaseSharedConnPool.getInstance(HbaseConfig.DEFAULT_HOST, HbaseConfig.DEFAULT_PORT, HbaseConfig.DEFAULT_MASTER, HbaseConfig.DEFAULT_ROOTDIR);
 
         try {
+            pool = HbaseSharedConnPool.getInstance(HbaseConfig.DEFAULT_HOST, HbaseConfig.DEFAULT_PORT, "localhost:60000", "hdfs://localhost:8020/hbase");
 
+        } catch (Exception e) {
+
+        }
+
+        try {
             pool = HbaseSharedConnPool.getInstance(null, HbaseConfig.DEFAULT_PORT, "localhost:60000", "hdfs://localhost:8020/hbase");
 
+        } catch (Exception e) {
+
+        }
+
+        try {
             pool = HbaseSharedConnPool.getInstance(HbaseConfig.DEFAULT_HOST, null, "localhost:60000", "hdfs://localhost:8020/hbase");
 
         } catch (Exception e) {
@@ -26,11 +37,11 @@ public class HbaseSharedConnPoolTest {
 
         pool.returnConnection(null);
 
-        pool.returnConnection(conn);
+        pool.invalidateConnection(conn);
 
-        pool.returnConnection(conn);
+        pool.invalidateConnection(conn);
 
-        pool.returnConnection(null);
+        pool.invalidateConnection(null);
 
     }
 }
