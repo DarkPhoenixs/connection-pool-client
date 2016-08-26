@@ -98,10 +98,38 @@ public class RedisSentinelConnPoolTest {
         }
 
         try {
+            RedisSentinelConnPool pool = new RedisSentinelConnPool(new Properties());
 
-            JedisSentinelPool jsp = null;
+            pool.close();
+        } catch (Exception e) {
+        }
 
-            RedisSentinelConnPool pool = new RedisSentinelConnPool(jsp);
+        try {
+            RedisSentinelConnPool pool = new RedisSentinelConnPool(properties);
+
+            pool.close();
+        } catch (Exception e) {
+        }
+
+        JedisSentinelPool jsp = null;
+
+        RedisSentinelConnPool pool = new RedisSentinelConnPool(jsp);
+
+        try {
+            pool.getConnection();
+
+        } catch (Exception e){
+
+        }
+
+        try {
+            pool.close();
+
+        } catch (Exception e){
+
+        }
+
+        try {
 
             pool.returnConnection(null);
 
@@ -110,18 +138,17 @@ public class RedisSentinelConnPoolTest {
             RedisConnectionPool spool = new RedisConnectionPool(
                     RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT);
 
-            Jedis jedis = spool.getConnection();
+            Jedis jedis1 = spool.getConnection();
 
-            pool.returnConnection(jedis);
+            pool.returnConnection(jedis1);
 
-            pool.invalidateConnection(jedis);
+            Jedis jedis2 = spool.getConnection();
 
-            pool.close();
+            pool.invalidateConnection(jedis2);
 
         } catch (Exception e) {
 
         }
-
     }
 
 }

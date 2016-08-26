@@ -217,6 +217,16 @@ public class RedisConnectionFactoryOldTest {
         } catch (Exception e) {
         }
 
+        try {
+            boolean rev = factory3
+                    .validateObject(new DefaultPooledObject<Jedis>(
+                            new JedisConn3("1.1.1.1", 1234)));
+
+            Assert.assertFalse(rev);
+
+        } catch (Exception e) {
+        }
+
 
     }
 

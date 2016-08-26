@@ -39,7 +39,7 @@ public class RedisShardedConnPoolTest {
     }
 
     @Test
-    public void test_1() throws Exception {
+    public void test() throws Exception {
 
         JedisShardInfo info1 = new JedisShardInfo(RedisConfig.DEFAULT_HOST,
                 RedisConfig.DEFAULT_PORT);
@@ -80,6 +80,16 @@ public class RedisShardedConnPoolTest {
         try {
             pool.returnConnection(new ShardedJedisConn5(Arrays
                     .asList(new JedisShardInfo[]{info})));
+        } catch (Exception e) {
+        }
+
+        try {
+            pool.returnConnection(null);
+        } catch (Exception e) {
+        }
+
+        try {
+            pool.invalidateConnection(shardedJedis);
         } catch (Exception e) {
         }
 

@@ -39,6 +39,16 @@ public class RedisConnectionPoolTest {
     @Test
     public void test() throws Exception {
 
+        Properties prop = new Properties();
+        prop.setProperty(RedisConfig.ADDRESS_PROPERTY,
+                RedisConfig.DEFAULT_HOST + ":" + RedisConfig.DEFAULT_PORT);
+        prop.setProperty(RedisConfig.CONN_TIMEOUT_PROPERTY,
+                RedisConfig.DEFAULT_TIMEOUT + "");
+        prop.setProperty(RedisConfig.SO_TIMEOUT_PROPERTY,
+                RedisConfig.DEFAULT_TIMEOUT + "");
+        prop.setProperty(RedisConfig.DATABASE_PROPERTY,
+                RedisConfig.DEFAULT_DATABASE + "");
+
         try {
             RedisConnectionPool pool = new RedisConnectionPool(
                     RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT);
@@ -47,22 +57,18 @@ public class RedisConnectionPoolTest {
         }
 
         try {
-            Properties prop = new Properties();
-            prop.setProperty(RedisConfig.ADDRESS_PROPERTY,
-                    RedisConfig.DEFAULT_HOST + ":" + RedisConfig.DEFAULT_PORT);
-            prop.setProperty(RedisConfig.CONN_TIMEOUT_PROPERTY,
-                    RedisConfig.DEFAULT_TIMEOUT + "");
-            prop.setProperty(RedisConfig.SO_TIMEOUT_PROPERTY,
-                    RedisConfig.DEFAULT_TIMEOUT + "");
-            prop.setProperty(RedisConfig.DATABASE_PROPERTY,
-                    RedisConfig.DEFAULT_DATABASE + "");
-
             RedisConnectionPool pool = new RedisConnectionPool(
                     new PoolConfig(), prop);
             pool.close();
         } catch (Exception e) {
         }
 
+        try {
+            RedisConnectionPool pool = new RedisConnectionPool(prop);
+
+            pool.close();
+        } catch (Exception e) {
+        }
 
         RedisConnectionPool pool = new RedisConnectionPool(
                 RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT);
