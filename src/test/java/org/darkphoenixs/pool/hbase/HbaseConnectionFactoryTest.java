@@ -209,6 +209,67 @@ public class HbaseConnectionFactoryTest {
 
                 @Override
                 public boolean isClosed() {
+                    return true;
+                }
+
+                @Override
+                public void abort(String why, Throwable e) {
+
+                }
+
+                @Override
+                public boolean isAborted() {
+                    return true;
+                }
+            }));
+
+        } catch (Exception e) {
+        }
+
+        try {
+            factory.validateObject(new DefaultPooledObject<Connection>(new Connection() {
+                @Override
+                public Configuration getConfiguration() {
+                    return null;
+                }
+
+                @Override
+                public Table getTable(TableName tableName) throws IOException {
+                    return null;
+                }
+
+                @Override
+                public Table getTable(TableName tableName, ExecutorService pool) throws IOException {
+                    return null;
+                }
+
+                @Override
+                public BufferedMutator getBufferedMutator(TableName tableName) throws IOException {
+                    return null;
+                }
+
+                @Override
+                public BufferedMutator getBufferedMutator(BufferedMutatorParams params) throws IOException {
+                    return null;
+                }
+
+                @Override
+                public RegionLocator getRegionLocator(TableName tableName) throws IOException {
+                    return null;
+                }
+
+                @Override
+                public Admin getAdmin() throws IOException {
+                    return null;
+                }
+
+                @Override
+                public void close() throws IOException {
+
+                }
+
+                @Override
+                public boolean isClosed() {
                     return false;
                 }
 
