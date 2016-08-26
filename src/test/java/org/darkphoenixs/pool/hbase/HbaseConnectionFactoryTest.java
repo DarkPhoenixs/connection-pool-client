@@ -240,7 +240,7 @@ public class HbaseConnectionFactoryTest {
 
         @Override
         public boolean isClosed() {
-            return false;
+            return true;
         }
 
         @Override
@@ -250,7 +250,7 @@ public class HbaseConnectionFactoryTest {
 
         @Override
         public boolean isAborted() {
-            return true;
+            return false;
         }
     }
 
