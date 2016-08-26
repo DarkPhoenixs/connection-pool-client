@@ -140,8 +140,6 @@ public class HbaseSharedConnPoolTest {
 
             @Override
             public void close() throws IOException {
-
-                throw new IOException();
             }
 
             @Override

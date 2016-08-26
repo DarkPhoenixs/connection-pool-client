@@ -105,184 +105,19 @@ public class HbaseConnectionFactoryTest {
         }
 
         try {
-            factory.validateObject(new DefaultPooledObject<Connection>(new Connection() {
-                @Override
-                public Configuration getConfiguration() {
-                    return null;
-                }
-
-                @Override
-                public Table getTable(TableName tableName) throws IOException {
-                    return null;
-                }
-
-                @Override
-                public Table getTable(TableName tableName, ExecutorService pool) throws IOException {
-                    return null;
-                }
-
-                @Override
-                public BufferedMutator getBufferedMutator(TableName tableName) throws IOException {
-                    return null;
-                }
-
-                @Override
-                public BufferedMutator getBufferedMutator(BufferedMutatorParams params) throws IOException {
-                    return null;
-                }
-
-                @Override
-                public RegionLocator getRegionLocator(TableName tableName) throws IOException {
-                    return null;
-                }
-
-                @Override
-                public Admin getAdmin() throws IOException {
-                    return null;
-                }
-
-                @Override
-                public void close() throws IOException {
-
-                }
-
-                @Override
-                public boolean isClosed() {
-                    return false;
-                }
-
-                @Override
-                public void abort(String why, Throwable e) {
-
-                }
-
-                @Override
-                public boolean isAborted() {
-                    return true;
-                }
-            }));
+            factory.validateObject(new DefaultPooledObject<Connection>(new Conn1()));
 
         } catch (Exception e) {
         }
 
         try {
-            factory.validateObject(new DefaultPooledObject<Connection>(new Connection() {
-                @Override
-                public Configuration getConfiguration() {
-                    return null;
-                }
-
-                @Override
-                public Table getTable(TableName tableName) throws IOException {
-                    return null;
-                }
-
-                @Override
-                public Table getTable(TableName tableName, ExecutorService pool) throws IOException {
-                    return null;
-                }
-
-                @Override
-                public BufferedMutator getBufferedMutator(TableName tableName) throws IOException {
-                    return null;
-                }
-
-                @Override
-                public BufferedMutator getBufferedMutator(BufferedMutatorParams params) throws IOException {
-                    return null;
-                }
-
-                @Override
-                public RegionLocator getRegionLocator(TableName tableName) throws IOException {
-                    return null;
-                }
-
-                @Override
-                public Admin getAdmin() throws IOException {
-                    return null;
-                }
-
-                @Override
-                public void close() throws IOException {
-
-                }
-
-                @Override
-                public boolean isClosed() {
-                    return true;
-                }
-
-                @Override
-                public void abort(String why, Throwable e) {
-
-                }
-
-                @Override
-                public boolean isAborted() {
-                    return true;
-                }
-            }));
+            factory.validateObject(new DefaultPooledObject<Connection>(new Conn2()));
 
         } catch (Exception e) {
         }
 
         try {
-            factory.validateObject(new DefaultPooledObject<Connection>(new Connection() {
-                @Override
-                public Configuration getConfiguration() {
-                    return null;
-                }
-
-                @Override
-                public Table getTable(TableName tableName) throws IOException {
-                    return null;
-                }
-
-                @Override
-                public Table getTable(TableName tableName, ExecutorService pool) throws IOException {
-                    return null;
-                }
-
-                @Override
-                public BufferedMutator getBufferedMutator(TableName tableName) throws IOException {
-                    return null;
-                }
-
-                @Override
-                public BufferedMutator getBufferedMutator(BufferedMutatorParams params) throws IOException {
-                    return null;
-                }
-
-                @Override
-                public RegionLocator getRegionLocator(TableName tableName) throws IOException {
-                    return null;
-                }
-
-                @Override
-                public Admin getAdmin() throws IOException {
-                    return null;
-                }
-
-                @Override
-                public void close() throws IOException {
-
-                }
-
-                @Override
-                public boolean isClosed() {
-                    return false;
-                }
-
-                @Override
-                public void abort(String why, Throwable e) {
-
-                }
-
-                @Override
-                public boolean isAborted() {
-                    return false;
-                }
-            }));
+            factory.validateObject(new DefaultPooledObject<Connection>(new Conn3()));
 
         } catch (Exception e) {
         }
@@ -298,73 +133,182 @@ public class HbaseConnectionFactoryTest {
         }
 
         try {
-            factory.destroyObject(new DefaultPooledObject<Connection>(
-                    new Connection() {
-
-                        @Override
-                        public void abort(String why, Throwable e) {
-
-                        }
-
-                        @Override
-                        public boolean isAborted() {
-                            return false;
-                        }
-
-                        @Override
-                        public Configuration getConfiguration() {
-                            return null;
-                        }
-
-                        @Override
-                        public Table getTable(TableName tableName)
-                                throws IOException {
-                            return null;
-                        }
-
-                        @Override
-                        public Table getTable(TableName tableName,
-                                              ExecutorService pool) throws IOException {
-                            return null;
-                        }
-
-                        @Override
-                        public BufferedMutator getBufferedMutator(
-                                TableName tableName) throws IOException {
-                            return null;
-                        }
-
-                        @Override
-                        public BufferedMutator getBufferedMutator(
-                                BufferedMutatorParams params)
-                                throws IOException {
-                            return null;
-                        }
-
-                        @Override
-                        public RegionLocator getRegionLocator(
-                                TableName tableName) throws IOException {
-                            return null;
-                        }
-
-                        @Override
-                        public Admin getAdmin() throws IOException {
-                            return null;
-                        }
-
-                        @Override
-                        public void close() throws IOException {
-
-                        }
-
-                        @Override
-                        public boolean isClosed() {
-                            return false;
-                        }
-
-                    }));
+            factory.destroyObject(new DefaultPooledObject<Connection>(new Conn1()));
         } catch (Exception e) {
         }
     }
 
+    class Conn1 implements Connection {
+
+        @Override
+        public Configuration getConfiguration() {
+            return null;
+        }
+
+        @Override
+        public Table getTable(TableName tableName) throws IOException {
+            return null;
+        }
+
+        @Override
+        public Table getTable(TableName tableName, ExecutorService pool) throws IOException {
+            return null;
+        }
+
+        @Override
+        public BufferedMutator getBufferedMutator(TableName tableName) throws IOException {
+            return null;
+        }
+
+        @Override
+        public BufferedMutator getBufferedMutator(BufferedMutatorParams params) throws IOException {
+            return null;
+        }
+
+        @Override
+        public RegionLocator getRegionLocator(TableName tableName) throws IOException {
+            return null;
+        }
+
+        @Override
+        public Admin getAdmin() throws IOException {
+            return null;
+        }
+
+        @Override
+        public void close() throws IOException {
+
+        }
+
+        @Override
+        public boolean isClosed() {
+            return false;
+        }
+
+        @Override
+        public void abort(String why, Throwable e) {
+
+        }
+
+        @Override
+        public boolean isAborted() {
+            return false;
+        }
+    }
+
+    class Conn2 implements Connection {
+
+        @Override
+        public Configuration getConfiguration() {
+            return null;
+        }
+
+        @Override
+        public Table getTable(TableName tableName) throws IOException {
+            return null;
+        }
+
+        @Override
+        public Table getTable(TableName tableName, ExecutorService pool) throws IOException {
+            return null;
+        }
+
+        @Override
+        public BufferedMutator getBufferedMutator(TableName tableName) throws IOException {
+            return null;
+        }
+
+        @Override
+        public BufferedMutator getBufferedMutator(BufferedMutatorParams params) throws IOException {
+            return null;
+        }
+
+        @Override
+        public RegionLocator getRegionLocator(TableName tableName) throws IOException {
+            return null;
+        }
+
+        @Override
+        public Admin getAdmin() throws IOException {
+            return null;
+        }
+
+        @Override
+        public void close() throws IOException {
+
+        }
+
+        @Override
+        public boolean isClosed() {
+            return false;
+        }
+
+        @Override
+        public void abort(String why, Throwable e) {
+
+        }
+
+        @Override
+        public boolean isAborted() {
+            return true;
+        }
+    }
+
+    class Conn3 implements Connection {
+
+        @Override
+        public Configuration getConfiguration() {
+            return null;
+        }
+
+        @Override
+        public Table getTable(TableName tableName) throws IOException {
+            return null;
+        }
+
+        @Override
+        public Table getTable(TableName tableName, ExecutorService pool) throws IOException {
+            return null;
+        }
+
+        @Override
+        public BufferedMutator getBufferedMutator(TableName tableName) throws IOException {
+            return null;
+        }
+
+        @Override
+        public BufferedMutator getBufferedMutator(BufferedMutatorParams params) throws IOException {
+            return null;
+        }
+
+        @Override
+        public RegionLocator getRegionLocator(TableName tableName) throws IOException {
+            return null;
+        }
+
+        @Override
+        public Admin getAdmin() throws IOException {
+            return null;
+        }
+
+        @Override
+        public void close() throws IOException {
+
+        }
+
+        @Override
+        public boolean isClosed() {
+            return true;
+        }
+
+        @Override
+        public void abort(String why, Throwable e) {
+
+        }
+
+        @Override
+        public boolean isAborted() {
+            return true;
+        }
+    }
 }
