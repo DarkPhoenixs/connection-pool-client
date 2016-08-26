@@ -39,6 +39,14 @@ public class PoolBaseTest {
 
         pool.close();
 
+
+        ConnPool2 pool2 = new ConnPool2(new PoolConfig(), new ConnFactory());
+
+        try {
+            pool.getMaxBorrowWaitTimeMillis();
+        } catch (Exception e) {
+
+        }
     }
 
     @Test
@@ -180,6 +188,24 @@ public class PoolBaseTest {
         public ConnPool(final PoolConfig poolConfig, ConnFactory factory) {
 
             super(poolConfig, factory);
+        }
+    }
+
+    private static class ConnPool2 extends PoolBase<Conn> {
+
+        private static final long serialVersionUID = 1L;
+
+        public ConnPool2() {
+        }
+
+        public ConnPool2(final PoolConfig poolConfig, ConnFactory factory) {
+
+            super(poolConfig, factory);
+        }
+
+        @Override
+        public boolean isClosed() {
+            throw new RuntimeException();
         }
     }
 

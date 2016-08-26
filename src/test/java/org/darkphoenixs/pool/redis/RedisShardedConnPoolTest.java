@@ -89,7 +89,8 @@ public class RedisShardedConnPoolTest {
         }
 
         try {
-            pool.invalidateConnection(shardedJedis);
+            pool.invalidateConnection(new ShardedJedisConn5(Arrays
+                    .asList(new JedisShardInfo[]{info})));
         } catch (Exception e) {
         }
 
