@@ -2,7 +2,6 @@ package org.darkphoenixs.pool.redis;
 
 import org.apache.commons.pool2.impl.DefaultPooledObject;
 import org.darkphoenixs.pool.PoolConfig;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import redis.clients.jedis.JedisShardInfo;
@@ -16,12 +15,13 @@ import java.util.regex.Pattern;
 
 public class RedisShardedConnPoolOldTest {
 
-    private ServerSocket serverSocket;
 
     @Before
     public void before() throws Exception {
 
         Thread th = new Thread(new Runnable() {
+
+            private ServerSocket serverSocket;
 
             @Override
             public void run() {
@@ -41,12 +41,6 @@ public class RedisShardedConnPoolOldTest {
         th.start();
     }
 
-    @After
-    public void after() throws Exception {
-
-        serverSocket.close();
-    }
-    
     @Test
     public void test_0() throws Exception {
 
