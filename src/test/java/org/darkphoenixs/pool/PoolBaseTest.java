@@ -195,9 +195,6 @@ public class PoolBaseTest {
 
         private static final long serialVersionUID = 1L;
 
-        public ConnPool2() {
-        }
-
         public ConnPool2(final PoolConfig poolConfig, ConnFactory factory) {
 
             super(poolConfig, factory);
