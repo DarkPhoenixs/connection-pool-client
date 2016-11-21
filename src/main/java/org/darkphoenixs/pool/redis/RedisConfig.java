@@ -48,7 +48,10 @@ public interface RedisConfig {
      * DEFAULT_CLIENTNAME
      */
     public static final String DEFAULT_CLIENTNAME = null;
-
+    /**
+     * DEFAULT_MAXATTE
+     */
+    public static final int DEFAULT_MAXATTE = 5;
     /**
      * ADDRESS_PROPERTY
      */
@@ -81,5 +84,13 @@ public interface RedisConfig {
      * SENTINELS_PROPERTY
      */
     public static final String SENTINELS_PROPERTY = "sentinels";
+    /**
+     * CLUSTER_PROPERTY
+     */
+    public static final String CLUSTER_PROPERTY = "cluster";
+    /**
+     * MAXATTE_PROPERTY
+     */
+    public static final String MAXATTE_PROPERTY = "maxAttempts";
 
 }
