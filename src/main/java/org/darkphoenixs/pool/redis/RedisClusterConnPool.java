@@ -99,6 +99,17 @@ public class RedisClusterConnPool implements ConnectionPool<JedisCluster> {
     /**
      * Instantiates a new Redis cluster conn pool.
      *
+     * @param poolConfig   the pool config
+     * @param clusterNodes the cluster nodes
+     */
+    public RedisClusterConnPool(final PoolConfig poolConfig, final Set<HostAndPort> clusterNodes){
+
+        this(clusterNodes, RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_MAXATTE, poolConfig);
+    }
+
+    /**
+     * Instantiates a new Redis cluster conn pool.
+     *
      * @param clusterNodes      the jedis cluster nodes
      * @param connectionTimeout the connection timeout
      * @param soTimeout         the so timeout

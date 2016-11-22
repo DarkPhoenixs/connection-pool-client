@@ -1,5 +1,6 @@
 package org.darkphoenixs.pool.redis;
 
+import org.darkphoenixs.pool.PoolConfig;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -60,6 +61,11 @@ public class RedisClusterConnPoolTest {
         Assert.assertNotNull(cluster);
 
         pool.close();
+
+        pool = new RedisClusterConnPool(new PoolConfig(), jedisClusterNodes);
+
+        pool.close();
+
     }
 
 }
