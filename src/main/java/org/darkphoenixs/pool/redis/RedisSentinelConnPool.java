@@ -56,7 +56,6 @@ public class RedisSentinelConnPool implements ConnectionPool<Jedis> {
 
         this(poolConfig, masterName, sentinels,
                 RedisConfig.DEFAULT_TIMEOUT,
-                RedisConfig.DEFAULT_TIMEOUT,
                 RedisConfig.DEFAULT_PASSWORD,
                 RedisConfig.DEFAULT_DATABASE,
                 RedisConfig.DEFAULT_CLIENTNAME);
@@ -84,11 +83,32 @@ public class RedisSentinelConnPool implements ConnectionPool<Jedis> {
         this(poolConfig,
                 properties.getProperty(RedisConfig.MASTERNAME_PROPERTY),
                 new HashSet<String>(Arrays.asList(properties.getProperty(RedisConfig.SENTINELS_PROPERTY).split(","))),
-                Integer.parseInt(properties.getProperty(RedisConfig.CONN_TIMEOUT_PROPERTY, String.valueOf(RedisConfig.DEFAULT_TIMEOUT))),
-                Integer.parseInt(properties.getProperty(RedisConfig.SO_TIMEOUT_PROPERTY, String.valueOf(RedisConfig.DEFAULT_TIMEOUT))),
+                Integer.parseInt(properties.getProperty(RedisConfig.TIMEOUT_PROPERTY, String.valueOf(RedisConfig.DEFAULT_TIMEOUT))),
                 properties.getProperty(RedisConfig.PASSWORD_PROPERTY),
                 Integer.parseInt(properties.getProperty(RedisConfig.DATABASE_PROPERTY, String.valueOf(RedisConfig.DEFAULT_DATABASE))),
                 properties.getProperty(RedisConfig.CLIENTNAME_PROPERTY));
+    }
+
+    /**
+     * Instantiates a new Redis sentinel conn pool.
+     *
+     * @param poolConfig the pool config
+     * @param masterName the master name
+     * @param sentinels  the sentinels
+     * @param timeout    the timeout
+     * @param password   the password
+     * @param database   the database
+     * @param clientName the client name
+     */
+    public RedisSentinelConnPool(final PoolConfig poolConfig,
+                                 final String masterName,
+                                 final Set<String> sentinels,
+                                 final int timeout,
+                                 final String password,
+                                 final int database,
+                                 final String clientName) {
+
+        this(poolConfig, masterName, sentinels, timeout, timeout, password, database, clientName);
     }
 
     /**

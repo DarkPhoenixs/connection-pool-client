@@ -42,7 +42,6 @@ public class RedisConnectionPool implements ConnectionPool<Jedis> {
 
         this(poolConfig, host, port,
                 RedisConfig.DEFAULT_TIMEOUT,
-                RedisConfig.DEFAULT_TIMEOUT,
                 RedisConfig.DEFAULT_PASSWORD,
                 RedisConfig.DEFAULT_DATABASE,
                 RedisConfig.DEFAULT_CLIENTNAME);
@@ -69,12 +68,33 @@ public class RedisConnectionPool implements ConnectionPool<Jedis> {
         this(poolConfig,
                 properties.getProperty(RedisConfig.ADDRESS_PROPERTY).split(":")[0],
                 Integer.parseInt(properties.getProperty(RedisConfig.ADDRESS_PROPERTY).split(":")[1]),
-                Integer.parseInt(properties.getProperty(RedisConfig.CONN_TIMEOUT_PROPERTY, String.valueOf(RedisConfig.DEFAULT_TIMEOUT))),
-                Integer.parseInt(properties.getProperty(RedisConfig.SO_TIMEOUT_PROPERTY, String.valueOf(RedisConfig.DEFAULT_TIMEOUT))),
+                Integer.parseInt(properties.getProperty(RedisConfig.TIMEOUT_PROPERTY, String.valueOf(RedisConfig.DEFAULT_TIMEOUT))),
                 properties.getProperty(RedisConfig.PASSWORD_PROPERTY),
                 Integer.parseInt(properties.getProperty(RedisConfig.DATABASE_PROPERTY, String.valueOf(RedisConfig.DEFAULT_DATABASE))),
                 properties.getProperty(RedisConfig.CLIENTNAME_PROPERTY));
 
+    }
+
+    /**
+     * Instantiates a new Redis connection pool.
+     *
+     * @param poolConfig the pool config
+     * @param host       the host
+     * @param port       the port
+     * @param timeout    the timeout
+     * @param password   the password
+     * @param database   the database
+     * @param clientName the client name
+     */
+    public RedisConnectionPool(final PoolConfig poolConfig,
+                               final String host,
+                               final int port,
+                               final int timeout,
+                               final String password,
+                               final int database,
+                               final String clientName) {
+
+        this(poolConfig, host, port, timeout, timeout, password, database, clientName);
     }
 
     /**
@@ -98,7 +118,7 @@ public class RedisConnectionPool implements ConnectionPool<Jedis> {
                                final int database,
                                final String clientName) {
 
-        this.pool = new JedisPool(poolConfig, host, port, connectionTimeout, soTimeout, password, database, clientName);
+        this.pool = new JedisPool(poolConfig, host, port, connectionTimeout, soTimeout, password, database, clientName, false, null, null, null);
     }
 
     @Override

@@ -30,7 +30,19 @@ public class RedisClusterConnPool implements ConnectionPool<JedisCluster> {
      */
     public RedisClusterConnPool(final Set<HostAndPort> clusterNodes) {
 
-        this(clusterNodes, RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT);
+        this(clusterNodes, RedisConfig.DEFAULT_TIMEOUT);
+    }
+
+    /**
+     * Instantiates a new Redis cluster conn pool.
+     *
+     * @param clusterNodes the cluster nodes
+     * @param timeout      the timeout
+     */
+    public RedisClusterConnPool(final Set<HostAndPort> clusterNodes,
+                                final int timeout) {
+
+        this(clusterNodes, timeout, timeout);
     }
 
     /**
@@ -87,13 +99,13 @@ public class RedisClusterConnPool implements ConnectionPool<JedisCluster> {
 
             jedisClusterNodes.add(new HostAndPort(hostAndPort.split(":")[0], Integer.valueOf(hostAndPort.split(":")[1])));
 
-        int connectionTimeout = Integer.parseInt(properties.getProperty(RedisConfig.CONN_TIMEOUT_PROPERTY, String.valueOf(RedisConfig.DEFAULT_TIMEOUT)));
-
-        int soTimeout = Integer.parseInt(properties.getProperty(RedisConfig.SO_TIMEOUT_PROPERTY, String.valueOf(RedisConfig.DEFAULT_TIMEOUT)));
+        int timeout = Integer.parseInt(properties.getProperty(RedisConfig.TIMEOUT_PROPERTY, String.valueOf(RedisConfig.DEFAULT_TIMEOUT)));
 
         int maxAttempts = Integer.valueOf(properties.getProperty(RedisConfig.MAXATTE_PROPERTY, String.valueOf(RedisConfig.DEFAULT_MAXATTE)));
 
-        jedisCluster = new JedisCluster(jedisClusterNodes, connectionTimeout, soTimeout, maxAttempts, poolConfig);
+        String password = properties.getProperty(RedisConfig.PASSWORD_PROPERTY, RedisConfig.DEFAULT_PASSWORD);
+
+        jedisCluster = new JedisCluster(jedisClusterNodes, timeout, timeout, maxAttempts, password, poolConfig);
     }
 
     /**
@@ -102,9 +114,25 @@ public class RedisClusterConnPool implements ConnectionPool<JedisCluster> {
      * @param poolConfig   the pool config
      * @param clusterNodes the cluster nodes
      */
-    public RedisClusterConnPool(final PoolConfig poolConfig, final Set<HostAndPort> clusterNodes){
+    public RedisClusterConnPool(final PoolConfig poolConfig, final Set<HostAndPort> clusterNodes) {
 
-        this(clusterNodes, RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_MAXATTE, poolConfig);
+        this(clusterNodes, RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_MAXATTE, poolConfig);
+    }
+
+    /**
+     * Instantiates a new Redis cluster conn pool.
+     *
+     * @param clusterNodes the cluster nodes
+     * @param timeout      the timeout
+     * @param maxAttempts  the max attempts
+     * @param poolConfig   the pool config
+     */
+    public RedisClusterConnPool(final Set<HostAndPort> clusterNodes,
+                                final int timeout,
+                                final int maxAttempts,
+                                final PoolConfig poolConfig) {
+
+        this(clusterNodes, timeout, timeout, maxAttempts, RedisConfig.DEFAULT_PASSWORD, poolConfig);
     }
 
     /**
@@ -122,7 +150,27 @@ public class RedisClusterConnPool implements ConnectionPool<JedisCluster> {
                                 final int maxAttempts,
                                 final PoolConfig poolConfig) {
 
-        jedisCluster = new JedisCluster(clusterNodes, connectionTimeout, soTimeout, maxAttempts, poolConfig);
+        this(clusterNodes, connectionTimeout, soTimeout, maxAttempts, RedisConfig.DEFAULT_PASSWORD, poolConfig);
+    }
+
+    /**
+     * Instantiates a new Redis cluster conn pool.
+     *
+     * @param clusterNodes      the cluster nodes
+     * @param connectionTimeout the connection timeout
+     * @param soTimeout         the so timeout
+     * @param maxAttempts       the max attempts
+     * @param password          the password
+     * @param poolConfig        the pool config
+     */
+    public RedisClusterConnPool(final Set<HostAndPort> clusterNodes,
+                                final int connectionTimeout,
+                                final int soTimeout,
+                                final int maxAttempts,
+                                final String password,
+                                final PoolConfig poolConfig) {
+
+        jedisCluster = new JedisCluster(clusterNodes, connectionTimeout, soTimeout, maxAttempts, password, poolConfig);
     }
 
     @Override
@@ -143,6 +191,8 @@ public class RedisClusterConnPool implements ConnectionPool<JedisCluster> {
 
     /**
      * Close.
+     *
+     * @throws IOException the io exception
      */
     public void close() throws IOException {
 

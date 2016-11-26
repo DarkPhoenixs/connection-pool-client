@@ -57,6 +57,10 @@ public interface RedisConfig {
      */
     public static final String ADDRESS_PROPERTY = "address";
     /**
+     * TIMEOUT_PROPERTY
+     */
+    public static final String TIMEOUT_PROPERTY = "timeout";
+    /**
      * CONN_TIMEOUT_PROPERTY
      */
     public static final String CONN_TIMEOUT_PROPERTY = "connectionTimeout";
