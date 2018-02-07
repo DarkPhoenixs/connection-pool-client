@@ -68,4 +68,30 @@ public class RedisClusterConnPoolTest {
 
     }
 
+    @Test
+    public void test1() throws Exception {
+
+        Set<HostAndPort> jedisClusterNodes = new HashSet<HostAndPort>();
+        jedisClusterNodes.add(new HostAndPort(RedisConfig.DEFAULT_HOST, RedisConfig.DEFAULT_PORT));
+        RedisClusterConnPool pool = new RedisClusterConnPool(jedisClusterNodes);
+
+        JedisCluster cluster = pool.getConnection();
+        Assert.assertNotNull(cluster);
+
+        pool.returnConnection(cluster);
+        pool.invalidateConnection(cluster);
+
+        Properties properties = new Properties();
+        properties.setProperty(RedisConfig.CLUSTER_PROPERTY, RedisConfig.DEFAULT_HOST + ":" + RedisConfig.DEFAULT_PORT);
+        pool = new RedisClusterConnPool(properties);
+        cluster = pool.getConnection();
+        Assert.assertNotNull(cluster);
+
+        pool.close();
+
+        pool = new RedisClusterConnPool(jedisClusterNodes, RedisConfig.DEFAULT_TIMEOUT, RedisConfig.DEFAULT_MAXATTE, new PoolConfig());
+
+        pool.close();
+
+    }
 }

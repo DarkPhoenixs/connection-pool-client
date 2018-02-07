@@ -40,9 +40,35 @@ public class RedisConnectionPool implements ConnectionPool<Jedis> {
      */
     public RedisConnectionPool(final PoolConfig poolConfig, final String host, final int port) {
 
-        this(poolConfig, host, port,
-                RedisConfig.DEFAULT_TIMEOUT,
-                RedisConfig.DEFAULT_PASSWORD,
+        this(poolConfig, host, port, RedisConfig.DEFAULT_PASSWORD);
+    }
+
+    /**
+     * Instantiates a new Redis connection pool.
+     *
+     * @param poolConfig the pool config
+     * @param host       the host
+     * @param port       the port
+     * @param password   the password
+     */
+    public RedisConnectionPool(final PoolConfig poolConfig, final String host, final int port, final String password) {
+
+        this(poolConfig, host, port, password,
+                RedisConfig.DEFAULT_TIMEOUT);
+    }
+
+    /**
+     * Instantiates a new Redis connection pool.
+     *
+     * @param poolConfig the pool config
+     * @param host       the host
+     * @param port       the port
+     * @param password   the password
+     * @param timeout    the timeout
+     */
+    public RedisConnectionPool(final PoolConfig poolConfig, final String host, final int port, final String password, final int timeout) {
+
+        this(poolConfig, host, port, timeout, password,
                 RedisConfig.DEFAULT_DATABASE,
                 RedisConfig.DEFAULT_CLIENTNAME);
     }

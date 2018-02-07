@@ -54,14 +54,44 @@ public class RedisSentinelConnPool implements ConnectionPool<Jedis> {
                                  final String masterName,
                                  final Set<String> sentinels) {
 
-        this(poolConfig, masterName, sentinels,
-                RedisConfig.DEFAULT_TIMEOUT,
-                RedisConfig.DEFAULT_TIMEOUT,
-                RedisConfig.DEFAULT_PASSWORD,
+        this(poolConfig, masterName, sentinels, RedisConfig.DEFAULT_PASSWORD);
+    }
+
+    /**
+     * Instantiates a new Redis sentinel conn pool.
+     *
+     * @param poolConfig the pool config
+     * @param masterName the master name
+     * @param sentinels  the sentinels
+     * @param password   the password
+     */
+    public RedisSentinelConnPool(final PoolConfig poolConfig,
+                                 final String masterName,
+                                 final Set<String> sentinels,
+                                 final String password) {
+
+        this(poolConfig, masterName, sentinels, password, RedisConfig.DEFAULT_TIMEOUT);
+    }
+
+    /**
+     * Instantiates a new Redis sentinel conn pool.
+     *
+     * @param poolConfig the pool config
+     * @param masterName the master name
+     * @param sentinels  the sentinels
+     * @param password   the password
+     * @param timeout    the timeout
+     */
+    public RedisSentinelConnPool(final PoolConfig poolConfig,
+                                 final String masterName,
+                                 final Set<String> sentinels,
+                                 final String password,
+                                 final int timeout) {
+
+        this(poolConfig, masterName, sentinels, timeout, timeout, password,
                 RedisConfig.DEFAULT_DATABASE,
                 RedisConfig.DEFAULT_CLIENTNAME);
     }
-
 
     /**
      * Instantiates a new Redis sentinel conn pool.
