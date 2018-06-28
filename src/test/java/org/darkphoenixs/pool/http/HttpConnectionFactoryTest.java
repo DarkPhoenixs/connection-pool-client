@@ -73,6 +73,31 @@ public class HttpConnectionFactoryTest {
 
                 @Override
                 public int getResponseCode() throws IOException {
+                    return 201;
+                }
+            }));
+        } catch (Exception e) {
+        }
+
+        try {
+            factory.validateObject(new DefaultPooledObject<HttpURLConnection>(new HttpURLConnection(null) {
+                @Override
+                public void connect() throws IOException {
+
+                }
+
+                @Override
+                public void disconnect() {
+
+                }
+
+                @Override
+                public boolean usingProxy() {
+                    return false;
+                }
+
+                @Override
+                public int getResponseCode() throws IOException {
                     throw new IOException("test");
                 }
             }));

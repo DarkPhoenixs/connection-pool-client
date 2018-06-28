@@ -160,11 +160,11 @@ public class HttpConnectionFactory implements ConnectionFactory<HttpURLConnectio
     @Override
     public HttpURLConnection createConnection() throws Exception {
 
-        URL url = new URL(this.address);
-
         HttpURLConnection urlConnection = null;
 
         try {
+            URL url = new URL(this.address);
+
             if (proxy != null)
                 urlConnection = (HttpURLConnection) url.openConnection(proxy);
             else
