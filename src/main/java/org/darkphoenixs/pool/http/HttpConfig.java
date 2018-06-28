@@ -27,7 +27,7 @@ import java.util.Map;
  */
 public interface HttpConfig {
 
-    String DEFAULT_URL = "https://github.com/";
+    String DEFAULT_URL = "https://www.baidu.com/";
 
     String DEFAULT_METHOD = "GET";
 

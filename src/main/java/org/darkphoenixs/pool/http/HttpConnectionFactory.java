@@ -104,7 +104,7 @@ public class HttpConnectionFactory implements ConnectionFactory<HttpURLConnectio
 
         header = new HashMap<String, String>();
 
-        String headers = properties.getProperty(HttpConfig.HTTP_HEADER_PROPERTY, "");
+        String headers = properties.getProperty(HttpConfig.HTTP_HEADER_PROPERTY, " : ");
 
         for (String headStr : headers.split(","))
 
