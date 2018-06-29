@@ -16,6 +16,7 @@
   * [Redis](http://redis.io/)
   * RMDB (Oracle/MySQL/SQL Server)
   * Socket (TCP)
+  * HTTP
 
 ## Documentation
 
