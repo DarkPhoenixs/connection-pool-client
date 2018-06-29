@@ -4,7 +4,7 @@
 
     <groupId>org.darkphoenixs</groupId>
     <artifactId>connectionpool-client</artifactId>
-    <version>1.2.7-SNAPSHOT</version>
+    <version>1.2.7</version>
     <packaging>jar</packaging>
 
     <name>Connection Pool Client</name>
