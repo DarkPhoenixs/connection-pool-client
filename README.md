@@ -4,6 +4,7 @@
 [![Build Status](https://travis-ci.org/DarkPhoenixs/connection-pool-client.svg?branch=master)](https://travis-ci.org/DarkPhoenixs/connection-pool-client)
 [![Codecov](https://codecov.io/gh/darkphoenixs/connection-pool-client/branch/master/graph/badge.svg)](https://codecov.io/gh/DarkPhoenixs/connection-pool-client)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.darkphoenixs/connectionpool-client/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.darkphoenixs/connectionpool-client/)
+[![Javadoc](https://javadoc.io/badge2/org.darkphoenixs/connectionpool-client/javadoc.svg)](https://javadoc.io/doc/org.darkphoenixs/connectionpool-client)
 [![GitHub release](https://img.shields.io/github/release/DarkPhoenixs/connection-pool-client.svg)](https://github.com/DarkPhoenixs/connection-pool-client/releases)
 [![License](https://img.shields.io/badge/license-%20Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
